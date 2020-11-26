@@ -4,6 +4,8 @@ require("../conn.php");
 if(!isset($_SESSION['logged_']) && $_SESSION['logged_'] !=true){
   header("Location: ../login");
 }
+
+require '../clean.php';
 $_GET['page']=(isset($_GET['page']) && !empty($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
 ?>
 <?php
@@ -17,7 +19,7 @@ $_GET['page']=(isset($_GET['page']) && !empty($_GET['page']) && is_numeric($_GET
  ?>
 <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
 
-    <a class="navbar-brand mr-1" href="index">Blaise Autocare</a>
+    <a class="navbar-brand mr-1" href="index">Universal Electronics</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0 " id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>

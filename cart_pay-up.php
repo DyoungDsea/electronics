@@ -21,7 +21,7 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt(
         $ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Bearer sk_live_5b870121744e042e870166a2058b2c5012653e9c']
+        'Authorization: Bearer sk_test_a52ae7b8696d4d79a141015fbe4153555bcaf748']
     );
     $request = curl_exec($ch);
     curl_close($ch);
@@ -40,10 +40,10 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
     if (array_key_exists('data', $result) && array_key_exists('status', $result['data']) && ($result['data']['status'] === 'success')) {
         //update database and set user payment
         $d = $conn->query("SELECT * FROM login WHERE userid='$userid'")->fetch_assoc();
-       
-        if($d['referrer'] != NULL){
-            $referrer = $d['referrer'];
-            $d = $conn->query("SELECT demail, dwallet FROM login WHERE userid='$referrer'")->fetch_assoc();
+    //    echo var_dump(!is_null($d['referrer']));die();
+        if(!is_null($d['referrer'])){
+            echo $referrer = $d['referrer'];die();
+            $dd = $conn->query("SELECT * FROM login WHERE userid='$referrer'")->fetch_assoc();
             $emails = $dd['demail'];
             $names = $dd['dname'];
             $wall = (Float)$dd['dwallet'];
@@ -58,9 +58,39 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
             mail($emails,$subject,$message,$header);
 
         }
+
+
         
-        $up = $conn->query("UPDATE `dcart_holder` SET payment_status='paid' WHERE orderid='$orders' AND userid='$userid' ");
-        $conn->query("INSERT INTO history SET amt_paid='$grand', pname='$ppname', userid='$userid', orderid='$orderid', dpid='$order' ") or die($conn->error());
+        //Update cart details and update store wallet
+        $sqlx = $conn->query("SELECT * FROM dcart WHERE userid='$userid' AND orderid='$orders'");
+            if($sqlx->num_rows>0){
+                while($row=$sqlx->fetch_assoc()):
+                    //find store id and total of each items
+                    $store = $row['dstore_id'];
+                    $total = $row['dtotal'];
+                    //store
+                    $sql = $conn->query("SELECT * FROM _security WHERE userid='$store'");
+                    if($sql->num_rows>0){
+                        $user = $sql->fetch_assoc();
+                        //check is is admin or seller
+                        if($user['drank']=="seller"){
+                            $wallet = $user['dwallet'];
+                            $sum = (Int)$wallet + (Int)$total;
+                        $conn->query("UPDATE _security SET dwallet='$sum' WHERE userid='$store'");
+                        }else{
+                            $sql = $conn->query("SELECT * FROM _security WHERE userid='91234567899834'")->fetch_assoc();
+                            $wallet = $sql['dwallet'];
+                            $sum = (Int)$wallet + (Int)$total;
+                            $conn->query("UPDATE _security SET dwallet='$sum' WHERE userid='91234567899834'");
+                        }
+                    }
+
+
+                endwhile;
+            }
+        
+        $up = $conn->query("UPDATE `dcart` SET dpayment_status='paid' WHERE orderid='$orders' AND userid='$userid' ");
+        $conn->query("INSERT INTO history SET amt_paid='$grand', pname='$ppname', userid='$userid', orderid='$orderid', dpid='$order' ");
         $to = $email;
         $subject="Order Placed";
         $message="Hello ".$name.", your order  has been received. this is your tracking ID: $orderid \r\n";

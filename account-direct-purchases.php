@@ -55,7 +55,7 @@ if (!isset($_SESSION['logged']) && $_SESSION['logged'] !== true) {
 												<tr>
 													<th>Date Order</th>
 													<th>Transaction ID</th>
-													<th>Total Bill</th>
+													<!-- <th>Total Bill</th> -->
 													<th>Payment Status</th>
 													<th>Status</th>
 													<th>---</th>
@@ -65,12 +65,12 @@ if (!isset($_SESSION['logged']) && $_SESSION['logged'] !== true) {
                                             <?php
 
                                                 $id = $conn->real_escape_string($_SESSION['userid']);
-                                                $sqls = $conn->query("SELECT * FROM `dcart_holder` WHERE userid='$id' ORDER BY id DESC");
+                                                $sqls = $conn->query("SELECT * FROM `dcart` WHERE userid='$id' AND orderid !='' GROUP BY orderid ORDER BY id DESC");
                                                 $total_records =$sqls->num_rows;
                                                 $total_no_of_pages = ceil($total_records / $total_records_per_page);
                                                 $start_from = ($page_no - 1) * $total_records_per_page;
                                                 
-                                                $poo = $conn->query("SELECT * FROM `dcart_holder` WHERE userid='$id' ORDER BY id DESC LIMIT $start_from, $total_records_per_page");
+                                                $poo = $conn->query("SELECT * FROM `dcart` WHERE userid='$id' AND orderid !='' GROUP BY orderid ORDER BY id DESC LIMIT $start_from, $total_records_per_page");
                                                 if($poo->num_rows>0){
                                                     while($row = $poo->fetch_assoc()):
                                                 ?>
@@ -78,13 +78,13 @@ if (!isset($_SESSION['logged']) && $_SESSION['logged'] !== true) {
 													<td><?php echo date("d M Y", strtotime($row['created_date'])); ?></td>
 													<td><?php echo $row['orderid']; ?></td>
 
-													<td>
-                                                    &#8358;<?php echo number_format($row['dtotal_bill']);  ?>
+													<!-- <td>
+                                                    &#8358;<?php //echo number_format($row['dtotal']);  ?>
                                                     
-                                                    </td>
+                                                    </td> -->
                                                     
-													<td> <?php echo  ucfirst($row['payment_status'])  ?></td>
-													<td><?php echo ucfirst($row['dstatus']); ?></td>
+													<td> <?php echo  ucfirst($row['dpayment_status'])  ?></td>
+													<td><?php echo ucfirst($row['dorder_status']); ?></td>
 													<td>
                                                     
                                                     <a href="cart-payment-detail?orderid=<?php echo $row['orderid']; ?>&date=<?php echo date("d M Y", strtotime($row['created_date'])); ?>" class="btn-sm btn-info btn">Details</a>
@@ -93,7 +93,7 @@ if (!isset($_SESSION['logged']) && $_SESSION['logged'] !== true) {
                                                     </td>
 												</tr>
                                                     <?php endwhile; }else{
-                                                    echo '<tr><td colspan="5">No result found</td></tr>';
+                                                    echo '<tr><td colspan="7">No result found</td></tr>';
                                                 }  ?>
 												
 											</tbody>

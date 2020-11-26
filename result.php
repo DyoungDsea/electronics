@@ -21,7 +21,7 @@ if(!empty($_SESSION["budget"])){ $num = 1;
     $out .= '<tr class="cart-table__row">
             <td class="cart-table__column cart-table__column--image setimage"  style="background:reds; width:50pxx">
             <a href="product-full?product_id='.$values['id'].'&product_name='.$values['name'].'&brand='.$values['brand'].'">
-            <img src="_product_images/'.$values["img"].'" alt="">
+            <img class="display" src="_product_images/'.$values["img"].'" alt="" style="max-width:100%s">
             </a></td>
             <td class="cart-table__column cart-table__column--product"><a href="product-full?product_id='.$values['id'].'&product_name='.$values['name'].'&brand='.$values['brand'].'"
                     class="cart-table__product-name">'.$values['name'].'</a>

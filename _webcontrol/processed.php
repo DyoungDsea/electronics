@@ -102,26 +102,32 @@
                 <tbody>
                 <?php
 
+                  if($r['drank']=="seller"){
+                    $userid = $r['userid'];
+                    $site=$conn->query("SELECT * from  products where duserid='$userid' order by id desc ");
+                  }else{
+
                 if(isset($_GET['pro_name'])){
                   $orderId = $conn->real_escape_string($_GET['pro_name']);
-                  $sqls = $conn->query("SELECT * FROM dcart_holder INNER JOIN login ON dcart_holder.userid=login.userid WHERE dcart_holder.orderid LIKE '%$orderId%' AND dcart_holder.dstatus='processed' OR login.dname LIKE '%$orderId%' AND dcart_holder.dstatus='processed'  ORDER BY dcart_holder.id DESC");
+                  $sqls = $conn->query("SELECT * FROM dcart WHERE orderid LIKE '%$orderId%' AND dstatus='processed' OR login.dname LIKE '%$orderId%' AND dstatus='processed'  ORDER BY id DESC");
                   $total_records =$sqls->num_rows;
                   $total_no_of_pages = ceil($total_records / $total_records_per_page);
                   $start_from = ($page_no - 1) * $total_records_per_page;
                   
-                  $sky =$conn->query("SELECT * FROM dcart_holder INNER JOIN login ON dcart_holder.userid=login.userid WHERE dcart_holder.orderid LIKE '%$orderId%' AND dcart_holder.dstatus='processed' OR login.dname LIKE '%$orderId%' AND dcart_holder.dstatus='processed'  ORDER BY dcart_holder.id DESC LIMIT $start_from, $total_records_per_page");
+                  $sky =$conn->query("SELECT * FROM dcart WHERE orderid LIKE '%$orderId%' AND dstatus='processed' OR login.dname LIKE '%$orderId%' AND dstatus='processed'  ORDER BY id DESC LIMIT $start_from, $total_records_per_page");
 
                 }else{
 
 
-                $sqls = $conn->query("SELECT * FROM dcart_holder INNER JOIN login ON dcart_holder.userid=login.userid WHERE  dcart_holder.dstatus='processed'  ORDER BY dcart_holder.id ");
+                $sqls = $conn->query("SELECT * FROM dcart WHERE  dorder_status='processed'  ORDER BY id DESC ");
 
                   $total_records =$sqls->num_rows;
                   $total_no_of_pages = ceil($total_records / $total_records_per_page);
                   $start_from = ($page_no - 1) * $total_records_per_page;
 
-                $sky =$conn->query("SELECT * FROM dcart_holder INNER JOIN login ON dcart_holder.userid=login.userid WHERE  dcart_holder.dstatus='processed'  ORDER BY dcart_holder.id LIMIT $start_from, $total_records_per_page");
+                $sky =$conn->query("SELECT * FROM dcart WHERE  dorder_status='processed'  ORDER BY id DESC LIMIT $start_from, $total_records_per_page");
                 }
+              }
                 if($sky->num_rows>0){
                   while($k=$sky->fetch_assoc()){ ?>
                     <tr>

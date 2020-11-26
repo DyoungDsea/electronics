@@ -19,12 +19,14 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
         $brand = clean($values['brand']);
         $vcode = clean($values['vcode']);
         $sku = clean($values['sku']);
+        $store_id = clean($values['store']);
+        $company = clean($values['company']);
         $qty = clean($values['qty']);
         $price = clean($values['price']);
         $charge = clean($_SESSION['costsx']);
-        $total = $values['qty'] * $values['price'];
+        $total = ($values['qty'] * $values['price']) + (Int)$charge;
         //Insert product into database
-        $conn->query("INSERT INTO dcart SET userid='$userid', orderid='$orderid', dpid='$pid', pname='$pname', dsku='$sku', dbrand='$brand', dvcode='$vcode', dprice='$price', dqty='$qty', dcharge='$charge', dtotal='$total', dimg='$img' ");
+        $conn->query("INSERT INTO dcart SET userid='$userid', orderid='$orderid', dpid='$pid', pname='$pname', dsku='$sku', dbrand='$brand', dvcode='$vcode', dprice='$price', dqty='$qty', dcharge='$charge', dtotal='$total', dimg='$img', dcompany='$company', dstore_id='$store_id' ");
 
         // echo $userid.' '.$grand.' '.$pid.'<br>'.$pname.' '.$brand.' '.$sku.'<br>'.$vcode.' '.$img.' '.$qty.'<br> '.$cost.' '.$price.' '.$location.' '.$charge;
         $ppname .=$pname.' & ';
@@ -48,8 +50,8 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
     }
 
     
-
-    $conn->query("INSERT INTO `dcart_holder` SET orderid='$orderid', userid='$userid', dtotal_bill='$grand', dlocation='$location', dcharges='$cost', daddess='$adds' ");
+    $conn->query("UPDATE `dcart` SET dlocation='$location', daddess='$adds' WHERE orderid='$orderid' AND userid='$userid' ");
+    // $conn->query("INSERT INTO `dcart_holder` SET orderid='$orderid', userid='$userid', dtotal_bill='$grand', dlocation='$location', dcharges='$cost', daddess='$adds' ");
 
 
     // echo '<br>........................................<br>';
@@ -66,7 +68,7 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt(
         $ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Bearer sk_test_f2dcefd5078151f45f2c139507f5d24963edc622']
+        'Authorization: Bearer sk_test_a52ae7b8696d4d79a141015fbe4153555bcaf748']
     );
     $request = curl_exec($ch);
     curl_close($ch);
@@ -101,9 +103,40 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
             mail($emails,$subject,$message,$header);
 
         }
+
         
-        $up = $conn->query("UPDATE `dcart_holder` SET payment_status='paid' WHERE orderid='$orderid' AND userid='$userid' ");
-        $conn->query("INSERT INTO history SET amt_paid='$grand', pname='$ppname', userid='$user', orderid='$orderid', dpid='$order' ") or die($conn->error());
+        //Update cart details and update store wallet
+        $sqlx = $conn->query("SELECT * FROM dcart WHERE userid='$userid' AND orderid='$orders'");
+            if($sqlx->num_rows>0){
+                while($row=$sqlx->fetch_assoc()):
+                    //find store id and total of each items
+                    $store = $row['dstore_id'];
+                    $total = $row['dtotal'];
+                    //store
+                    $sql = $conn->query("SELECT * FROM _security WHERE userid='$store'");
+                    if($sql->num_rows>0){
+                        $user = $sql->fetch_assoc();
+                        //check is is admin or seller
+                        if($user['drank']=="seller"){
+                            $wallet = $user['dwallet'];
+                            $sum = (Int)$wallet + (Int)$total;
+                        $conn->query("UPDATE _security SET dwallet='$sum' WHERE userid='$store'");
+                        }else{
+                            $sql = $conn->query("SELECT * FROM _security WHERE userid='91234567899834'")->fetch_assoc();
+                            $wallet = $sql['dwallet'];
+                            $sum = (Int)$wallet + (Int)$total;
+                            $conn->query("UPDATE _security SET dwallet='$sum' WHERE userid='91234567899834'");
+                        }
+                    }
+
+
+                endwhile;
+            }
+        
+        $up = $conn->query("UPDATE `dcart` SET dpayment_status='paid' WHERE orderid='$orderid' AND userid='$userid' ");
+        
+        // $up = $conn->query("UPDATE `dcart_holder` SET payment_status='paid' WHERE orderid='$orderid' AND userid='$userid' ");
+        $conn->query("INSERT INTO history SET amt_paid='$grand', pname='$ppname', userid='$user', orderid='$orderid', dpid='$order' ");
         $to = $email;
         $subject="Order Placed";
         $message="Hello ".$name.", your order  has been received. this is your tracking ID: $orderid \r\n";

@@ -35,25 +35,28 @@ include 'track.php';
                                 <p class="pull-right" style="font-size:14px"><b>Order Id:</b> <?php echo $_GET['orderid'] ?> &nbsp;&nbsp;&nbsp; <b>Order Date:</b> <?php echo $_GET['date'] ?></p> 
 									<div class="row no-gutters">
                                     <?php
-
+                                    $transid = date("ymdhis").rand(10000, 999999);
+                                    $_SESSION['transid']=$transid;
                                     $_SESSION['orderid'] = clean( $_GET['orderid']);
                                     $_SESSION['email'] = clean($sl['demail']);
                                     $_SESSION['name'] = clean($sl['dname']);
-                                    if(isset($_GET['orderid'])){
+                                    if(isset($_GET['orderid']) AND !empty($_GET['orderid'])){
                                     $order = clean($_GET['orderid']);
                                     $idx = clean($_SESSION['userid']);
-                                    $sql = $conn->query("SELECT * FROM dcart INNER JOIN dcart_holder ON dcart.orderid=dcart_holder.orderid WHERE dcart.userid='$idx' AND dcart.orderid='$order'");
+                                    $sql = $conn->query("SELECT * FROM dcart WHERE userid='$idx' AND orderid='$order'");
                                     if($sql->num_rows>0){
-                                        $ppname ='';
+                                        $ppname =''; $total=$total_bill=0;
                                         while($row=$sql->fetch_assoc()):
-                                           $total_bill = $row['dtotal_bill'];
-                                           $charges = $row['dcharges'];
-                                           $payment = $row['payment_status'];
-                                           $transaction = $row['dstatus'];
-                                           $status = $row['dstatus'];
-                                           $ppname .= $row['pname'].' & ';
+                                           $total = $row['dtotal'];
+                                           $charges = $row['dcharge'];
+                                           $payment = $row['dpayment_status'];
+                                           $transaction = $row['dorder_status'];
+                                           $status = $row['dorder_status'];
+                                           $ppname .= $row['pname'].',';
                                            $location = $row['dlocation'];
-                                           $address = $row['daddess'];
+                                           $address = $row['daddress'];
+                                           $total_bill += $total;
+
                                            
                                     ?>
 										<div class="col-md-4 col-lg-4 col-xl-4 bg-primarys">
@@ -66,15 +69,24 @@ include 'track.php';
 
                                         <div class="col-md-8 col-lg-8 col-xl-8 bg-primaryf">
                                             <h5><?php echo $row['pname'] ?></h5>
-                                            <!-- <p><b>vendor code:</b> 	<?php //echo $row['dvcode'] ?>&nbsp;&nbsp; <span> -->
-                                            <b>Sku:</b> <?php echo $row['dsku'] ?> </span> &nbsp;&nbsp; <span><b>Brand:</b> <?php echo $row['dbrand'] ?></span> &nbsp;&nbsp;
-                                            <b>Unit Price:</b> &#8358;<?php echo number_format($row['dprice']) ?> <br>
-                                            <b>Quantity:</b> <?php echo $row['dqty'] ?> &nbsp;&nbsp; 
-                                            <b>Total:&#8358;</b> <?php echo number_format($row['dtotal']) ?>
+                                            <b>Sku:</b> <?php echo $row['dsku'] ?> </span> | <span><b>Brand:</b> <?php echo $row['dbrand'] ?></span> <br>
+                                            <b>Unit Price:</b> &#8358;<?php echo number_format($row['dprice']) ?> |
+                                            <b>Quantity:</b> <?php echo $row['dqty'] ?> | 
+                                            <b>Total:&#8358;</b> <?php echo number_format($row['dtotal']) ?> <br>
+                                            <b>Order Status: </b> 
+                                            <?php if($status=='pending'){?>
+                                            <span class="badge badge-primary"><?php echo ucfirst($status) ?></span> 
+                                            <?php }elseif($status=='processed' || $status=='shipped'){ ?>
+                                            <span class="badge badge-warning"><?php echo ucfirst($status) ?></span> 
+                                            <?php }elseif($status=='returned' || $status=='cancelled'){ ?>
+                                            <span class="badge badge-danger"><?php echo ucfirst($status) ?></span> 
+                                            <?php } ?>
+                                            
+                                            <br>
                                             
                                              </p>
                                             <?php
-                                            if($transaction=='delivered'){                                            $user = $_SESSION['userid'];
+                                            if($transaction=='delivered'){   $user = $_SESSION['userid'];
                                             $pro = $row['dpid'];
                                             $xop = $conn->query("SELECT * FROM drating WHERE duserid='$user' AND dpid='$pro' ");
                                             if($xop->num_rows==0):?>
@@ -82,8 +94,12 @@ include 'track.php';
                                             <?php endif; }?>
                                         </div>
                                         <div class="col-md-12"><hr></div>
-                                        <?php endwhile;  } $_SESSION['total-bill'] = $total_bill; $_SESSION['ppname'] = $ppname; ?>
-                                        <?php if($payment != 'paid' AND $transaction=='pending'){ ?>
+                                        <?php endwhile;  } 
+                                        // $total_bill = $total; 
+                                        $charges +=$charges;
+                                         $_SESSION['total-bill'] = $total_bill; $_SESSION['ppname'] = rtrim($ppname);
+                                         
+                                         if($payment != 'paid' AND $transaction=='pending'){ ?>
                                         <div class="col-md-7"> 
                                             <b>Shipping Charges : </b> &#8358;<?php echo number_format($charges); ?>  <br>
                                             <b>VAT(7.5%): </b>&#8358;  <?php echo number_format($total_bill * 7.5/100); ?> <br>
@@ -108,7 +124,7 @@ include 'track.php';
                                             <p>Use the icon below to make payment</p>
                                         
                                             <form action="cart_pay-up.php" method="post">                                       
-                                            <script src="https://js.paystack.co/v1/inline.js" data-key="pk_live_92d0dd9805b508c3ca3d459fff5ee5c8cd74fce7" data-email="<?php echo $sl['demail'] ?>" data-amount="<?php echo $total_bill * 100; ?>" data-ref="<?php echo $transid; ?>"></script>
+                                            <script src="https://js.paystack.co/v1/inline.js" data-key="pk_test_9ebb172d86972b4e6e8a4ad740e8fd5ca4a561c1" data-email="<?php echo $sl['demail'] ?>" data-amount="<?php echo $total_bill * 100; ?>" data-ref="<?php echo $transid; ?>"></script>
                                                         
                                             </form>
                                             </div>
@@ -129,7 +145,6 @@ include 'track.php';
                                                 <?php }else{?>
                                                 <p>
                                                 <b>Payment Status:  </b> <?php echo ucfirst($payment); ?> <span class="text-success" style="font-size:20px"> &#10004;</span><br>
-                                                <b>Transaction Status: </b>  <?php echo ucfirst($status); ?> 
                                                 </p>
                                                 <?php }?>
                                             
@@ -147,7 +162,11 @@ include 'track.php';
                                 <?php endif; ?>
 									</div>
                                              
-								</div>
+                                </div>
+                                
+
+
+                                
 							</div>
 						</div>
 					</div>

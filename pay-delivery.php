@@ -18,15 +18,17 @@ require 'clean.php';
         $brand = clean($values['brand']);
         $vcode = clean($values['vcode']);
         $sku = clean($values['sku']);
+        $store_id = clean($values['store']);
+        $company = clean($values['company']);
         $qty = clean($values['qty']);
         $price = clean($values['price']);
         $charge = clean($_SESSION['costsx']);
-        $total = $values['qty'] * $values['price'];
+        $total = ($values['qty'] * $values['price']) + (Int)$charge;
         //Insert product into database
-        $conn->query("INSERT INTO dcart SET userid='$userid', orderid='$orderid', dpid='$pid', pname='$pname', dsku='$sku', dbrand='$brand', dvcode='$vcode', dprice='$price', dqty='$qty', dcharge='$charge', dtotal='$total', dimg='$img' ");
+        $conn->query("INSERT INTO dcart SET userid='$userid', orderid='$orderid', dpid='$pid', pname='$pname', dsku='$sku', dbrand='$brand', dvcode='$vcode', dprice='$price', dqty='$qty', dcharge='$charge', dtotal='$total', dimg='$img'dcompany='$company', dstore_id='$store_id'  ");
 
         // echo $userid.' '.$grand.' '.$pid.'<br>'.$pname.' '.$brand.' '.$sku.'<br>'.$vcode.' '.$img.' '.$qty.'<br> '.$cost.' '.$price.' '.$location.' '.$charge;
-        $ppname .=$pname.' & ';
+        $ppname .=$pname.',';
 
     }   
 
@@ -47,8 +49,9 @@ require 'clean.php';
     }
 
     
-    $conn->query("INSERT INTO `dcart_holder` SET orderid='$orderid', userid='$userid', dtotal_bill='$grand', dpay_mth='ondelivery', dlocation='$location', dcharges='$cost', daddess='$adds' ");
+    // $conn->query("INSERT INTO `dcart_holder` SET orderid='$orderid', userid='$userid', dtotal_bill='$grand', dpay_mth='ondelivery', dlocation='$location', dcharges='$cost', daddess='$adds' ");
 
+    $conn->query("UPDATE `dcart` SET dlocation='$location', daddess='$adds' WHERE orderid='$orderid' AND userid='$userid' ");
 
 
    $order = date("ymdhis");
@@ -57,7 +60,7 @@ require 'clean.php';
     
    
         //$up = $conn->query("UPDATE `dcart_holder` SET payment_status='paid' WHERE orderid='$orderid' AND userid='$userid' ");
-        $conn->query("INSERT INTO history SET amt_paid='$grand', pname='$ppname', userid='$user', orderid='$orderid', dpid='$order' ") or die($conn->error());
+        $conn->query("INSERT INTO history SET amt_paid='$grand', pname='$ppname', userid='$user', orderid='$orderid', dpid='$order' ");
         $to = $email;
         $subject="Order Placed";
         $message="Hello ".$name.", your order  has been received. this is your tracking ID: $orderid \r\n";

@@ -65,5 +65,11 @@ function discount($num, $price){
 
 //include 'star-rating.php';
 
+function findBaseName($data){
+    if(basename($_SERVER["REQUEST_URI"])==$data){
+      echo 'account-nav__item--active';
+    }
+  }
+
 ?>
 

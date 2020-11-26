@@ -70,7 +70,7 @@ if (!isset($_SESSION['logged']) && $_SESSION['logged'] !== true) {
                                         <div class="newpage ml-5">
                                             <button id="shippinged" class=" btn btn-secondary">Add new shipping address  <i class="fas fa-edit text-primary"></i> </button>
                                         </div>
-											<div class="ship ml-4" id="ship">
+											<div class="ship ml-4 mt-3" id="ship">
                                                 <form action="account-shipping-process" method="POST">
                                                 <div class="col-md-12">
                                                     <div class="form-group">

@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include 'head.php'; ?>
 <body>
 <!-- site -->
 
@@ -28,7 +28,7 @@
     <div class="owl-carousel">
 		<a class="block-slideshow__item" href="#">
 
-		<span class="block-slideshow__item-image block-slideshow__item-image--desktop" style="background-image: url('images/slides/elect7.jpg')">
+		<span class="block-slideshow__item-image block-slideshow__item-image--desktop" style="background-image: url('images/slides/elect10.jpg')">
 		</span> 
 
 		<!-- <span class="block-slideshow__item-image block-slideshow__item-image--mobile" style="background-image: url('images/slides/slide-3-mobile.jpg')"> -->
@@ -37,7 +37,7 @@
 		</a>
 	<a class="block-slideshow__item" href="#">
 
-		<span class="block-slideshow__item-image block-slideshow__item-image--desktop" style="background-image: url('images/slides/elect8.jpg')">
+		<span class="block-slideshow__item-image block-slideshow__item-image--desktop" style="background-image: url('images/slides/elect7.jpg')">
 		</span> 
 
 		<!-- <span class="block-slideshow__item-image block-slideshow__item-image--mobile" style="background-image: url('images/slides/slide-2-mobile.jpg')"> -->
@@ -48,7 +48,7 @@
 	
 	<a class="block-slideshow__item" href="#">
 
-		<span class="block-slideshow__item-image block-slideshow__item-image--desktop" style="background-image: url('images/slides/elect10.jpg')">
+		<span class="block-slideshow__item-image block-slideshow__item-image--desktop" style="background-image: url('images/slides/elect8.jpg')">
 		</span> 
 
 		<!-- <span class="block-slideshow__item-image block-slideshow__item-image--mobile" style="background-image: url('images/slides/slide-1-mobile.jpg')"> -->

@@ -267,9 +267,7 @@ function reloads() {
     window.location.assign("subscribe");
 }
 
-// function reloadw() {
-//     window.location.assign("wishlist");
-// }
+
 //shopping cart functionality
 
 load_cart();
@@ -303,6 +301,8 @@ $(document).on("click", "#addToCart", function(e){
     var pname = $("#pname").val();
     var brand = $("#brand").val();
     var sku = $("#sku").val();
+    var company = $("#company").val();
+    var store = $("#store").val();
     var vcode = $("#vcode").val();
     var img = $("#img").val();
     var price = $("#fullPayment").val();
@@ -312,17 +312,7 @@ $(document).on("click", "#addToCart", function(e){
     $.ajax({
         url:"session.php",
         method:"POST",                    
-        data:{
-            addCart:1, 
-            id:pid, 
-            price:price, 
-            name:pname, 
-            brand:brand,
-            vcode:vcode,
-            sku:sku,
-            img:img,
-            qty:quantity, 
-            action:action
+        data:{ addCart:1, id:pid, price:price, name:pname, brand:brand, vcode:vcode, sku:sku, company:company, store:store, img:img, qty:quantity, action:action
         },
         
         success:function(){
@@ -345,6 +335,8 @@ $(document).on("click", "#addToCarts", function(e){
     var pname = $("#pname"+pid).val();
     var brand = $("#brand"+pid).val();
     var sku = $("#sku"+pid).val();
+    var company = $("#company"+pid).val();
+    var store = $("#store"+pid).val();
     var vcode = $("#vcode"+pid).val();
     var img = $("#img"+pid).val();
     var price = $("#fullPayment"+pid).val();
@@ -361,7 +353,7 @@ $(document).on("click", "#addToCarts", function(e){
             name:pname, 
             brand:brand,
             vcode:vcode,
-            sku:sku,
+            sku:sku, company:company, store:store,
             img:img,
             qty:quantity, 
             action:action
@@ -1092,6 +1084,8 @@ $(document).on("click", "#addToCompare", function(e){
     var pname = $("#pname").val();
     var brand = $("#brand").val();
     var sku = $("#sku").val();
+    var company = $("#company").val();
+    var store = $("#store").val();
     var avaliable = $("#avaliable").val();
     var img = $("#img").val();
     var price = $("#fullPayment").val();    
@@ -1112,6 +1106,8 @@ $(document).on("click", "#addToCompare", function(e){
             vcode:vcode,
             avaliable:avaliable,
             sku:sku,
+            company:company,
+            store:store,
             img:img, 
             action:action
         },

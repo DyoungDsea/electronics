@@ -46,7 +46,7 @@
   border:1px solid #d2d6de !important;
 }
 </style>
-      <div class="container-fluid">
+      <div class="container">
      
       
       <br>
@@ -57,158 +57,130 @@
             <i class="fas fa-table"></i>
              Orders Details </div>
           <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <style>
-                  tr,th,td{
-                      font-size:12px;
-                      font-weight:bold;
-                  }
-                  </style>
-                <thead>
-                  <tr>
-                  <th style="width:200px">---</th>
-                    <th>Details</th>
-                  </tr>
-                </thead>
-                <tbody>
-                <?php
-                if(isset($_GET['orderid'])){
-                    $orderid = $_GET['orderid'];
-                $sky =$conn->query("SELECT * FROM dcart_holder INNER JOIN login ON dcart_holder.userid=login.userid WHERE  orderid='$orderid'");
-              }
-                if($sky->num_rows>0){
-                  $k=$sky->fetch_assoc(); ?>
-                    
+                                <p class="pull-right" style="font-size:14px"><b>Order Id:</b> <?php echo $_GET['orderid'] ?></p> 
+									<div class="row no-gutters">
+                                    <?php
+                                    if(isset($_GET['orderid']) AND !empty($_GET['orderid'])){
+                                    $order = clean($_GET['orderid']);
+                                    $sql = $conn->query("SELECT * FROM dcart WHERE orderid='$order'");
+                                    if($sql->num_rows>0){
+                                        $ppname =''; $total=$total_bill=0;
+                                        while($row=$sql->fetch_assoc()):
+                                           $total = $row['dtotal'];
+                                           $charges = $row['dcharge'];
+                                           $payment = $row['dpayment_status'];
+                                           $transaction = $row['dorder_status'];
+                                           $status = $row['dorder_status'];
+                                           $ppname .= $row['pname'].',';
+                                           $location = $row['dlocation'];
+                                           $address = $row['daddress'];
+                                           $total_bill += $total;
 
-                    <tr>
-                        <td>Order ID</td>
-                        <td><?php echo $k['orderid']; ?></td>
-                    </tr>
+                                           
+                                    ?>
+										<div class="col-md-4 col-lg-4 col-xl-4 bg-primarys">
+											<div class="img bg-dangers" style="width:100%; padding:10px">
+                                              <center>  <img style="max-width:45%; margin: 0 auto !important" src="../_product_images/<?php echo $row['dimg'] ?>" alt="">
+                                              </center>
+                                            </div>
+                                            
+										</div>
 
-                    <tr>
-                        <td>Order Date</td>
-                        <td><?php echo date("d M Y", strtotime($k['created_date'])); ?></td>
-                    </tr>
+                                        <div class="col-md-8 col-lg-8 col-xl-8 bg-primaryf">
+                                            <h5><?php echo $row['pname'] ?></h5>
+                                            <b>Sku:</b> <?php echo $row['dsku'] ?> </span> | <span><b>Brand:</b> <?php echo $row['dbrand'] ?></span> <br>
+                                            <b>Unit Price:</b> &#8358;<?php echo number_format($row['dprice']) ?> |
+                                            <b>Quantity:</b> <?php echo $row['dqty'] ?> | 
+                                            <b>Total:&#8358;</b> <?php echo number_format($row['dtotal']) ?> <br>
+                                            <b>Order Status: </b> 
+                                            <?php if($status=='pending'){?>
+                                            <span class="badge badge-primary"><?php echo ucfirst($status) ?></span> 
+                                            <?php }elseif($status=='processed' || $status=='shipped'){ ?>
+                                            <span class="badge badge-warning"><?php echo ucfirst($status) ?></span> 
+                                            <?php }elseif($status=='returned' || $status=='cancelled'){ ?>
+                                            <span class="badge badge-danger"><?php echo ucfirst($status) ?></span> 
+                                            <?php } ?>
+                                            
+                                            <br>
+                                            
+                                             </p>
+                                            <?php
+                                            if($transaction=='delivered'){   $user = $_SESSION['userid'];
+                                            $pro = $row['dpid'];
+                                            $xop = $conn->query("SELECT * FROM drating WHERE duserid='$user' AND dpid='$pro' ");
+                                            if($xop->num_rows==0):?>
+                                             <a href="review-product?product_id=<?php echo $row['dpid'] ?>&orderid=<?php echo $order; ?>&date=<?php echo $_GET['date'] ?>" class="btn btn-sm btn-primary">Review</a>
+                                            <?php endif; }?>
+                                        </div>
+                                        <div class="col-md-12"><hr></div>
+                                        <?php endwhile;  } 
+                                        // $total_bill = $total; 
+                                        $charges +=$charges;
+                                         $_SESSION['total-bill'] = $total_bill; $_SESSION['ppname'] = rtrim($ppname);
+                                         
+                                         if($payment != 'paid' AND $transaction=='pending'){ ?>
+                                        <div class="col-md-7"> 
+                                            <b>Shipping Charges : </b> &#8358;<?php echo number_format($charges); ?>  <br>
+                                            <b>VAT(7.5%): </b>&#8358;  <?php echo number_format($total_bill * 7.5/100); ?> <br>
+                                            <b>Sub Total: </b>&#8358;  <?php echo number_format(($total_bill-$charges)- ($total_bill * 7.5/100)); ?> <br>
+                                            <b>Grand Total: </b>&#8358;  <?php echo number_format($total_bill); ?>
+                                            <hr>
+                                            <?php if($address !=''){?>
+                                            <p><b>Delivery Area:</b> <?php   echo $location;  ?> <br>
+                                                <b>Address: </b> <?php echo $address; ?>
+                                            </p>
+                                                <?php }else{?>
+                                                    <p><b>Delivery Station:</b> <?php echo $location;  ?> 
+                                                </p>
+                                            <?php } ?>
+                                                <!-- <p><b>Delivery Area/Station:</b> <?php //echo $location ?></p> -->
+                                             <hr>
+                                        </div>
+                                        <div class="col-md-5">
+                                        <!-- <hr> -->
+                                            
+                                            <div class="ml-3">
+                                            <p>Use the icon below to make payment</p>
+                                        
+                                            <form action="cart_pay-up.php" method="post">                                       
+                                            <script src="https://js.paystack.co/v1/inline.js" data-key="pk_test_9ebb172d86972b4e6e8a4ad740e8fd5ca4a561c1" data-email="<?php echo $sl['demail'] ?>" data-amount="<?php echo $total_bill * 100; ?>" data-ref="<?php echo $transid; ?>"></script>
+                                                        
+                                            </form>
+                                            </div>
+                                    
+                                        </div>
+                                        <?php }else{?>
 
-                    <tr>
-                        <td>Fullname</td>
-                        <td><?php echo $k['dname']; ?></td>
-                    </tr>
+                                            <div class="col-md-7">
+                                            <p>
+                                                <b>Total Charges : </b> &#8358;<?php echo number_format($charges); ?>  |
+                                                <b>Grand Total: </b>&#8358;  <?php echo number_format($total_bill); ?>  
+                                            </p>
 
-                    <tr>
-                        <td>Email</td>
-                        <td><?php echo $k['demail']; ?></td>
-                    </tr>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <?php if($transaction=='returned' || $transaction=='cancelled' ){?>
+                                                <b>Transaction Status: </b>  <?php echo ucfirst($status); ?> 
+                                                <?php }else{?>
+                                                <p>
+                                                <b>Payment Status:  </b> <?php echo ucfirst($payment); ?> <span class="text-success" style="font-size:20px"> &#10004;</span><br>
+                                                </p>
+                                                <?php }?>
+                                            
+                                            </div>
 
-                    <tr>
-                        <td>Phone</td>
-                        <td><?php echo $k['dphone']; ?></td>
-                    </tr>
-
-                    
-                    <?php $num = 1;
-                        $love = $conn->query("SELECT pname FROM dcart WHERE orderid='$orderid'");
-                        while($lover=$love->fetch_assoc()){?>
-                            <tr>
-                                <td>Product Name <?php echo $num++; ?></td>
-                                <td><?php  echo  $lover['pname'] ?></td>
-                            </tr>
-                       <?php }
-                        
-                        ?>
-
-                    <tr>
-                        <td>Total Bill</td>
-                        <td>&#8358;<?php echo number_format($k['dtotal_bill']); ?></td>
-                    </tr>
-                    <tr>
-                        <td>Payment Status</td>
-                        <td><?php  echo $k['payment_status']; ?></td> 
-                    </tr>
-
-                    <tr> 
-                        <td>Transaction Status</td>
-                        <td><?php  echo $k['dstatus']; ?></td>
-                    </tr>
-                    <?php if($k['dpay_mth']=='ondelivery'):?>
-                    <tr> 
-                        <td>Method of payment</td>
-                        <td><?php  echo $k['dpay_mth']; ?></td>
-                    </tr>
-                    <?php endif; ?>
-                    
-                    <?php if($k['daddess'] !=''){?>
-                      <tr> 
-                          <td>Delivery Area</td>
-                          <td><?php  echo $k['dlocation']; ?></td>
-                      </tr>
-                      <tr> 
-                          <td>Delivery Address</td>
-                          <td><?php  echo $k['daddess']; ?></td>
-                      </tr>
-                   <?php }else{?>
-                    <tr> 
-                        <td>Delivery Station</td>
-                        <td><?php  echo $k['dlocation']; ?></td>
-                    </tr>
-                   <?php } ?>
-
-                    <tr>
-                        <td>Address</td>
-                        <td><?php echo $k['daddress']; ?></td>
-                    </tr>
-
-               <?php
-                  
-                }else{
-                  echo '<tr>
-                  <td colspan="7" class="text-danger">Sorry! there is no pending orders </td>
-                  </tr>';
-                }
-                ?>
-                </tbody>
-            </table>
-
-            <?php 
-                      $sub = $conn->real_escape_string($_GET['orderid']);
-                      $sql = $conn->query("SELECT * FROM _security INNER JOIN dtracker ON _security.userid=dtracker.dstaff_id WHERE dtracker.dpid='$sub'");
-                      if($sql->num_rows>0){?>
-                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <style>
-                        tr,th,td{
-                            font-size:12px;
-                            font-weight:bold;
-                        }
-                        </style>
-                      <thead>
-                        <tr>
-                          <th>Staff ID</th>
-                          <th>Staff Name</th>
-                          <th >Details</th>
-                          <th>Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-
-                      
-                       <?php while($top=$sql->fetch_assoc()){?>
-                        <tr>
-                        <td><?php echo $top['dstaff_id']; ?> </td>
-                        <td><?php echo $top['uname']; ?></td>
-                        <td><?php echo $top['dstatus']; ?></td>
-                        <td><?php echo date("M d, Y h:ia",strtotime($top['ddate'])); ?></td>
-                        
-                        </tr>
-
-                      <?php  } ?>
-
-
-                      </tbody>
-                      </table>
-                      <?php  } ?>
-</div>
-             <!-- Updated Last at :  -->
+                                     <?php   } 
+                                } ?>
+                                <?php if($payment =='pending' AND $status =='pending' ):?>
+                                <div class="col-md-12">
+                                    <button class="btn btn-sm btn-secondary" btn="<?php echo $_GET['orderid']; ?>" id="remover">Remove</button>
+                                    <?php if($payment !='cancelled' AND $status !='cancelled' ):?>
+                                    <button class="btn btn-sm btn-secondary" btn="<?php echo $_GET['orderid']; ?>" id="cancelr">Cancel</button>
+                                    <?php endif; ?>
+                                </div>
+                                <?php endif; ?>
+									</div>
+                                         
 
 
     

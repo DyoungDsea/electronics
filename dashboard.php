@@ -97,7 +97,7 @@
                                             <?php
 
                                                 
-                                                $poo = $conn->query("SELECT * FROM `dcart_holder` WHERE userid='$id' AND orderid !='' ORDER BY id DESC LIMIT 2");
+                                                $poo = $conn->query("SELECT * FROM `dcart` WHERE userid='$id' AND orderid !='' GROUP BY orderid ORDER BY id DESC LIMIT 2");
                                                 if($poo->num_rows>0){
                                                     while($row = $poo->fetch_assoc()):
                                                 ?>
@@ -106,8 +106,8 @@
 													<td><?php echo $row['orderid']; ?></td>
 
 													                                                    
-													<td> <?php echo  ucfirst($row['payment_status'])  ?></td>
-													<td><?php echo $row['dstatus']; ?></td>
+													<td> <?php echo  ucfirst($row['dpayment_status'])  ?></td>
+													<td><?php echo $row['dorder_status']; ?></td>
 													<td>
                                                     
                                                     <a href="cart-payment-detail?orderid=<?php echo $row['orderid']; ?>&date=<?php echo date("d M Y", strtotime($row['created_date'])); ?>" class="btn-sm btn-info btn">Details</a>

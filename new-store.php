@@ -56,30 +56,48 @@
 										<form action="store-process" method="post">
 											<div class="form-row">
 									<div class="form-group col-md-12">
-										<label for="form-name">Your Name</label> 
+										<label for="form-name">Store Owner's Name</label> 
 										<input type="text" name="name" required class="form-control" placeholder="Your Fullname">
                                     </div>
                                     <div class="form-group col-md-12">
 										<label for="form-subject">Store Name</label> 
 										<input type="text" name="store" class="form-control" placeholder="Store Name">
 									</div>
+
+									<div class="form-group col-md-12"><label for="form-message">Address</label> 
+										<textarea name="message" class="form-control" placeholder="Address" rows="2"></textarea>
+									</div>
+									<!-- <hr> -->
+									
+									<div class="form-group col-md-12">
+										<label for="form-email">Email</label>
+										<input type="email" name="email" class="form-control" placeholder="Email Address">
+									</div>
+
+									<div class="form-group col-md-12">
+										<label for="form-subject">Phone Number</label> 
+										<input type="text" name="phone" class="form-control" placeholder="Phone Number">
+										<hr style="background-color: grey;">
+									</div>
+
+
 									<div class="form-group col-md-12">
 										<label for="form-subject">Choose Password</label> 
 										<input type="password" name="pass" class="form-control" placeholder="Choose Password">
-                                    </div>
-									<div class="form-group col-md-12"><label for="form-email">Email</label>
-										<input type="email" name="email" class="form-control" placeholder="Email Address"></div>
 									</div>
-											<div class="form-group"><label for="form-subject">Phone Number</label> 
-											<input type="text" name="phone" class="form-control" placeholder="Phone Number">
-										</div>
-										<div class="form-group"><label for="form-message">Address</label> 
-										<textarea name="message" class="form-control" placeholder="Address" rows="4"></textarea>
+
+									<div class="form-group col-md-12">
+										<label for="form-subject">Confirm Password</label> 
+										<input type="password" name="cpass" class="form-control" placeholder="Confirm Password">
+										<hr style="background-color: grey;">
 									</div>
+
+									</div>
+											
 									<p>Verify that you're a human being <i style="font-weight:600; color:#f00"><?php echo $rand; ?></i></p>
                                             <input type="hidden" required name="spam1" value="<?php echo $rand; ?>">
                                             <p><input required class="verify" type="text" id="verify" name="spam2" /></p>
-											<button type="submit" class="btn btn-primary">Create Store</button>
+											<button type="submit" class="btn btn-primary btn-lg">Create Store</button>
 										</form>
 									</div>
 								</div>

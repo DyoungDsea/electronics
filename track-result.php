@@ -47,15 +47,16 @@ header("Location: track-order");
 
 					if(isset($_POST['trid'])){
 					$order = clean($trid);
-					$sql = $conn->query("SELECT * FROM dcart INNER JOIN dcart_holder ON dcart.orderid=dcart_holder.orderid WHERE dcart.orderid='$order'");
+					$sql = $conn->query("SELECT * FROM dcart WHERE orderid='$order'");
 					if($sql->num_rows>0){
-						$ppname ='';
+						$ppname ='';$total=$total_bill=0;
 						while($row=$sql->fetch_assoc()):
-							$total_bill = $row['dtotal_bill'];
-							$charges = $row['dcharges'];
-							$payment = $row['payment_status'];
-							$status = $row['dstatus'];
+							$total = $row['dtotal'];
+							$charges = $row['dcharge'];
+							$payment = $row['dpayment_status'];
+							$status = $row['dorder_status'];
 							$ppname .= $row['pname'].' & ';
+							$total_bill += $total;
 							
 					?>
 						<div class="col-md-4 col-lg-4 col-xl-4 bg-primarys">
@@ -70,10 +71,18 @@ header("Location: track-order");
 
 						<div class="col-md-8 col-lg-8 col-xl-8 bg-primaryf">
 							<h5><?php echo $row['pname'] ?></h5>
-							<p><b>vendor code:</b> 	<?php echo $row['dvcode'] ?>&nbsp;&nbsp; <span><b>Sku:</b> <?php echo $row['dsku'] ?> </span> &nbsp;&nbsp; <br> <span><b>Brand:</b> <?php echo $row['dbrand'] ?></span> &nbsp;&nbsp;
-							<b>Unit Price:</b> &#8358;<?php echo number_format($row['dprice']) ?> &nbsp;&nbsp;
-							<b>Quantity:</b> <?php echo $row['dqty'] ?> <br><b>Charges: </b>&#8358;</b> <?php echo number_format($row['dcharge']) ?>&nbsp;&nbsp; 
-							<b>Total:&#8358;</b> <?php echo number_format($row['dtotal']) ?>
+							<p><b>vendor code:</b> 	<?php echo $row['dvcode'] ?> | <span><b>Sku:</b> <?php echo $row['dsku'] ?> </span>  | <br> <span><b>Brand:</b> <?php echo $row['dbrand'] ?></span>  |
+							<b>Unit Price:</b> &#8358;<?php echo number_format($row['dprice']) ?>  |
+							<b>Quantity:</b> <?php echo $row['dqty'] ?> <br><b>Charges: </b>&#8358;</b> <?php echo number_format($row['dcharge']) ?> | 
+							<b>Total:&#8358;</b> <?php echo number_format($row['dtotal']) ?> <br>
+							<b>Order Status: </b> 
+                                            <?php if($status=='pending'){?>
+                                            <span class="badge badge-primary"><?php echo ucfirst($status) ?></span> 
+                                            <?php }elseif($status=='processed' || $status=='shipped'){ ?>
+                                            <span class="badge badge-warning"><?php echo ucfirst($status) ?></span> 
+                                            <?php }elseif($status=='returned' || $status=='cancelled'){ ?>
+                                            <span class="badge badge-danger"><?php echo ucfirst($status) ?></span> 
+                                            <?php } ?>
 							
 								</p>
 							
@@ -85,12 +94,12 @@ header("Location: track-order");
 							</div>
 							<div class="col-md-6">
 							<p>
-							<b>Total Charges : </b> &#8358;<?php echo number_format($charges); ?>   &nbsp;&nbsp;
+							<b>Total Charges : </b> &#8358;<?php echo number_format($charges+=$charges); ?>  <br>
 								<b>Grand Total: </b>&#8358;  <?php echo number_format($total_bill); ?>  <br>
 							<b>Payment Status:  </b> <?php echo ucfirst($payment); ?>  &nbsp;&nbsp;
-							<b>Transaction Status: </b>  <?php echo ucfirst($status); ?> 
+							<!-- <b>Transaction Status: </b>  <?php //echo ucfirst($status); ?>  -->
 							</p>
-							
+							<!-- <hr> -->
 							</div>
 
 						<?php    
@@ -111,10 +120,18 @@ header("Location: track-order");
 
 						<div class="col-md-8 col-lg-8 col-xl-8 bg-primaryf">
 							<h5><?php echo $row['pname'] ?></h5>
-							<p><b>vendor code:</b> 	<?php echo $row['dvcode'] ?>&nbsp;&nbsp; <span><b>Sku:</b> <?php echo $row['dsku'] ?> </span> &nbsp;&nbsp; <br> <span><b>Brand:</b> <?php echo $row['dbrand'] ?></span> &nbsp;&nbsp;
-							<b>Unit Price:</b> &#8358;<?php echo number_format($row['dprice']) ?> &nbsp;&nbsp;
-							<b>Quantity:</b> <?php echo $row['dqty'] ?> &nbsp;&nbsp; <b>Charges: </b>&#8358;</b> <?php echo number_format($row['dcharge']) ?>  <br> 
-							<b>Total:&#8358;</b> <?php echo number_format($row['dtotal']) ?>&nbsp;&nbsp;  <b>Transaction Status: </b><?php echo $row['dtrans_status'] ?> &nbsp;&nbsp; <b> Status: </b><?php echo $row['pstatus'] ?>
+							<p><b>vendor code:</b> 	<?php echo $row['dvcode'] ?> | <span><b>Sku:</b> <?php echo $row['dsku'] ?> </span>  | <br> <span><b>Brand:</b> <?php echo $row['dbrand'] ?></span>  |
+							<b>Unit Price:</b> &#8358;<?php echo number_format($row['dprice']) ?>  |
+							<b>Quantity:</b> <?php echo $row['dqty'] ?>  | <b>Charges: </b>&#8358;</b> <?php echo number_format($row['dcharge']) ?>  <br> 
+							<b>Total:&#8358;</b> <?php echo number_format($row['dtotal']) ?> |  
+							<b>Transaction Status: </b><b>Order Status: </b> 
+                                            <?php if($status=='pending'){?>
+                                            <span class="badge badge-primary"><?php echo ucfirst($status) ?></span> 
+                                            <?php }elseif($status=='processed' || $status=='shipped'){ ?>
+                                            <span class="badge badge-warning"><?php echo ucfirst($status) ?></span> 
+                                            <?php }elseif($status=='returned' || $status=='cancelled'){ ?>
+                                            <span class="badge badge-danger"><?php echo ucfirst($status) ?></span> 
+                                            <?php } ?>
 							
 								</p>
 							

@@ -25,6 +25,8 @@ if(isset($_POST["addCart"])){
 					'img' => $_POST["img"], //product image
 					'brand' => $_POST["brand"], //product brand
                     'sku' => $_POST["sku"], //product sku
+                    'company' => $_POST["company"], //product company
+                    'store' => $_POST["store"], //product store ID
 					'vcode' => $_POST["vcode"] //product vendor code
                     
 				);
@@ -42,6 +44,8 @@ if(isset($_POST["addCart"])){
                 'img' => $_POST["img"], //product image
                 'brand' => $_POST["brand"], //product brand
                 'sku' => $_POST["sku"], //product sku
+				'company' => $_POST["company"], //product company
+				'store' => $_POST["store"], //product store ID
                 'vcode' => $_POST["vcode"] //product vendor code
 			);
 			$_SESSION["budget"][] = $item_array;

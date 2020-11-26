@@ -54,4 +54,14 @@ require 'star-rating.php';
 </script>
 <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "UA-97489509-8");
 </script>
+
+
+<style>
+    @media only screen and (max-width: 992px){
+        .setimage a img{
+            max-width:100%;
+        }			
+	}
+</style>
+
 </head>

@@ -58,6 +58,8 @@ include 'track.php';
 								<input type="hidden" id="pname<?php echo $row['dpid']; ?>" value="<?php echo $row['dpname']; ?>">
 								<input type="hidden" id="brand<?php echo $row['dpid']; ?>" value="<?php echo $row['dbrand']; ?>"> 
 								<input type="hidden" id="sku<?php echo $row['dpid']; ?>" value="<?php echo $row['dsku']; ?>">
+								<input type="hidden" id="company<?php echo $row['dpid']; ?>" value="<?php echo $row['dcompany']; ?>">
+                                <input type="hidden" id="store<?php echo $row['dpid']; ?>" value="<?php echo $row['duserid']; ?>">
 								<input type="hidden" id="vcode<?php echo $row['dpid']; ?>" value="<?php echo $row['dvcode']; ?>">
 								<input type="hidden" id="img<?php echo $row['dpid']; ?>" value="<?php echo $row['dimg1']; ?>">
 								<input type="hidden" id="quantity<?php echo $row['dpid']; ?>" value="1">

@@ -22,6 +22,9 @@ if($start>$end){
 else{
    header("Location: sub-categories?name=$name");
 }
+}elseif(isset($_POST['store'])){
+  $name = $_POST['store'];
+  header("Location: new-store?name=$name");
 }
 elseif(isset($_POST['nameb'])){
   

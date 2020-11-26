@@ -32,7 +32,8 @@ include 'track.php';
 								</div>
 								<div class="card-divider"></div>
 								<div class="card-body card-body--padding--2">
-                                <p class="pull-right" style="font-size:14px"><b>Order Id:</b> <?php echo $_SESSION['transid'] ?> &nbsp;&nbsp;&nbsp; <b>Order Date:</b> <?php echo date("d M Y"); ?></p> 
+                                <p class="pull-right" style="font-size:14px"><b>Order Id:</b> <?php echo $_SESSION['transid'] ?> &nbsp;&nbsp;&nbsp; <br> <b>Order Date:</b> <?php echo date("d M Y"); ?></p> 
+                                <hr>
 									<div class="row no-gutters">
                                     <?php
 
@@ -53,8 +54,8 @@ include 'track.php';
 
                                         <div class="col-md-8 col-lg-8 col-xl-8 bg-primaryf">
                                             <h5><?php echo $values['name'] ?></h5>
-                                            <p><b>vendor code:</b> 	<?php echo $values['vcode'] ?>&nbsp;&nbsp; <span><b>Sku:</b> <?php echo $values['sku'] ?> </span> &nbsp;&nbsp; <br> <span><b>Brand:</b> <?php echo $values['brand'] ?></span> &nbsp;&nbsp;
-                                            <b>Unit Price:</b> &#8358;<?php echo number_format($values['price']) ?> &nbsp;&nbsp;
+                                            <p><b>Sku:</b> <?php echo $values['sku'] ?> <br> <span><b>Brand:</b> <?php echo $values['brand'] ?></span> <br>
+                                            <b>Unit Price:</b> &#8358;<?php echo number_format($values['price']) ?> <br>
                                             <b>Quantity:</b> <?php echo $values['qty'] ?> <br>
                                             <b>Total:&#8358;</b> <?php echo number_format($values['qty'] * $values['price']) ?>
                                             
@@ -90,7 +91,7 @@ include 'track.php';
                                             <p>Use the icon below to make payment</p>
                                         
                                             <form action="cart_pay.php" method="post">                                       
-                                            <script src="https://js.paystack.co/v1/inline.js" data-key="pk_test_5914730490c8d7720424e5750edd6cf55533d798" data-email="<?php echo $sl['demail'] ?>" data-amount="<?php echo $_SESSION['grandx'] * 100; ?>" data-ref="<?php echo $transid; ?>"></script>
+                                            <script src="https://js.paystack.co/v1/inline.js" data-key="pk_test_9ebb172d86972b4e6e8a4ad740e8fd5ca4a561c1" data-email="<?php echo $sl['demail'] ?>" data-amount="<?php echo $_SESSION['grandx'] * 100; ?>" data-ref="<?php echo $transid; ?>"></script>
                                                         
                                             </form>
                                             </div>

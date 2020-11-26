@@ -9,7 +9,7 @@ require 'star-rating.php';
 	if(isset($_SESSION['transid'])){
 		$transid=$_SESSION['transid'];
 	}else{
-		$transid=date('ymdHis');
+		$transid=date('ymdHis').rand(10000, 999999);;
 		$_SESSION['transid']=$transid;
 	}
 
@@ -54,4 +54,13 @@ require 'star-rating.php';
 </script>
 <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "UA-97489509-8");
 </script>
+
+<style>
+    @media only screen and (max-width: 992px){
+        .setimage a img{
+            max-width:100%;
+        }			
+	}
+</style>
+
 </head>

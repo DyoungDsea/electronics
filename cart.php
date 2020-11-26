@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<!-- Mirrored from red-parts.themeforest.scompiler.ru/themes/red-ltr/cart by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 02 May 2020 23:11:54 GMT -->
 
 
 <?php include("head.php"); include 'track.php'; ?>

@@ -10,13 +10,17 @@
         </a>
       </li>     
       
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="manage-carousel"><i class="fa fa-address-book"></i> Manage Slide </a>
-      </li>
+      </li> -->
 
       
       <li class="nav-item">
         <a class="nav-link" href="products"><i class="fas fa-circle-notch"></i> Manage Products </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="new-store"><i class="fas fa-circle-notch"></i> Manage Stores </a>
       </li>
       
 

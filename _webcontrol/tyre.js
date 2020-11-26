@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+// alert("yes")
     //
     $(document).on("change", "#category", function(){
         var option = $(this).find('option:selected');
@@ -49,6 +49,33 @@ $(document).ready(function(){
 
 
 
+
+
+
+
+
+    $(document).on("click","#app", function(){
+        var cid = $(this).attr("user");
+        magicFunction('You want to approve this?', 'ajax-new', 'approveStore', 'new-store', cid, 'Approved');
+    })
+
+    $(document).on("click","#storeUn", function(){
+        var cid = $(this).attr("user");
+        magicFunction('You want to unban this?', 'ajax-new', 'storeUn', 'new-store', cid, 'Confirmed');
+    })
+
+    $(document).on("click","#storeBan", function(){
+        var cid = $(this).attr("user");
+        magicFunction('You want to ban this?', 'ajax-new', 'storeBan', 'new-store', cid, 'Confirmed');
+    })
+
+    $(document).on("click","#storeDel", function(){
+        var cid = $(this).attr("user");
+        magicFunction('You want to delete this?', 'ajax-new', 'storeDel', 'new-store', cid, 'Deleted');
+    })
+
+
+
 })
 
 
@@ -60,5 +87,46 @@ function fireDataForMe(dataLink, dataPost, dataValue, dataId){
         success:function(data){
             $(dataId).html(data);           
         }    
+    });
+}
+
+
+
+
+function magicFunction(sweetTitle, dataPost, dataTitle, dataLink, dataId, dataSuccess){
+    Swal.fire({
+        position: 'center',
+        type: 'warning',
+        title: sweetTitle,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes!'        
+        }).then((result) => {
+        if (result.value){
+            sendAjaxMessage(dataPost, dataTitle, dataLink, dataId, dataSuccess,'success')
+        }
+    });    
+   
+}
+
+
+function sendAjaxMessage(dataPost, dataTitle, dataLink, dataId, sweetTitle, sweetType, dataValueA='', dataValueB='', dataValueC='' ){
+    $.ajax({
+        url:dataPost,
+        method:"POST",                    
+        data:{Message:dataTitle, id:dataId, valueA:dataValueA, valueB:dataValueB, valueC:dataValueC},        
+        success:function(){
+            setInterval(function(){
+                window.location.assign(dataLink);
+            },2000);             
+        }
+    }) .done(function(){
+        Swal.fire({
+            type:sweetType, 
+            title:sweetTitle
+        });
+    }) .fail(function(){
+        Swal.fire('Oops...', 'Something went wrong with ajax !', 'error');
     });
 }
