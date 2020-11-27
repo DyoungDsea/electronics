@@ -75,8 +75,28 @@ $(document).ready(function(){
     })
 
 
+    //Oders fire
+
+    $(document).on("click", "#markProcess", function(){
+        var orderId = $(this).attr("orderId");
+        magicFunction('Mark as Confirmed?', 'ajax-new', 'markProcess', 'order-view?orderid='+orderId, orderId, 'Confirmed!');
+    })
+
+    $(document).on("click", "#markShip", function(){
+        // alert("yes");
+        var orderId = $(this).attr("orderId");
+        var rowId = $(this).attr("rowId");
+        magicFunction('Mark as Dispatched?', 'ajax-new', 'markShip', 'order-view?orderid='+orderId, orderId, 'Dispatched!', rowId);
+    })
 
 })
+
+
+
+
+
+
+
 
 
 function fireDataForMe(dataLink, dataPost, dataValue, dataId){
@@ -90,10 +110,7 @@ function fireDataForMe(dataLink, dataPost, dataValue, dataId){
     });
 }
 
-
-
-
-function magicFunction(sweetTitle, dataPost, dataTitle, dataLink, dataId, dataSuccess){
+function magicFunction(sweetTitle, dataPost, dataTitle, dataLink, dataId, dataSuccess, dataValueA='', dataValueB='', dataValueC='' ){
     Swal.fire({
         position: 'center',
         type: 'warning',
@@ -104,7 +121,7 @@ function magicFunction(sweetTitle, dataPost, dataTitle, dataLink, dataId, dataSu
         confirmButtonText: 'Yes!'        
         }).then((result) => {
         if (result.value){
-            sendAjaxMessage(dataPost, dataTitle, dataLink, dataId, dataSuccess,'success')
+            sendAjaxMessage(dataPost, dataTitle, dataLink, dataId, dataSuccess,'success', dataValueA, dataValueB, dataValueC)
         }
     });    
    

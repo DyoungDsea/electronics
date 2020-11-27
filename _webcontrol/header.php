@@ -41,7 +41,7 @@ $admin = $conn->real_escape_string($_SESSION['admin']);
 $fp = $conn->query("SELECT * FROM `_security` WHERE userid = '$admin' ");
 if($fp->num_rows>0){
   $r = $fp->fetch_assoc();
-  // echo $sp = $r['privilege'];
+  $_SESSION['rank'] = $r['drank'];
 }
 ?>
 <div class="ml-auto"></div>

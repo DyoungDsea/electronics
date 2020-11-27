@@ -71,5 +71,10 @@ function findBaseName($data){
     }
   }
 
+
+  function sendBack(){
+    echo '<a href="javascript:history.back()" style="margin: 20px 0" class="btn btn-info pull-rights btn-sm"> <i class="fa fa-arrow-circle-left"></i> Back</a>';
+  }
+
 ?>
 

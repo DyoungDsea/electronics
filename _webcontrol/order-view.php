@@ -75,7 +75,7 @@
                                            $location = $row['dlocation'];
                                            $address = $row['daddress'];
                                            $total_bill += $total;
-
+                                          //  echo $row['id'];
                                            
                                     ?>
 										<div class="col-md-4 col-lg-4 col-xl-4 bg-primarys">
@@ -95,35 +95,30 @@
                                             <b>Order Status: </b> 
                                             <?php if($status=='pending'){?>
                                             <span class="badge badge-primary"><?php echo ucfirst($status) ?></span> 
-                                            <?php }elseif($status=='processed' || $status=='shipped'){ ?>
+                                            <?php }elseif($status=='confirmed' || $status=='shipped'){ ?>
                                             <span class="badge badge-warning"><?php echo ucfirst($status) ?></span> 
                                             <?php }elseif($status=='returned' || $status=='cancelled'){ ?>
                                             <span class="badge badge-danger"><?php echo ucfirst($status) ?></span> 
                                             <?php } ?>
                                             
-                                            <br>
-                                            
                                              </p>
-                                            <?php
-                                            if($transaction=='delivered'){   $user = $_SESSION['userid'];
-                                            $pro = $row['dpid'];
-                                            $xop = $conn->query("SELECT * FROM drating WHERE duserid='$user' AND dpid='$pro' ");
-                                            if($xop->num_rows==0):?>
-                                             <a href="review-product?product_id=<?php echo $row['dpid'] ?>&orderid=<?php echo $order; ?>&date=<?php echo $_GET['date'] ?>" class="btn btn-sm btn-primary">Review</a>
-                                            <?php endif; }?>
+                                             <hr>
+                                             <?php if($payment=='paid' AND $status=='confirmed'){?>
+                                                <button class="btn btn-sm btn-primary" id="markShip" orderId="<?php echo $_GET['orderid']; ?>" rowId="<?php echo $row['id']; ?>" >Mark as Dispatched</button>
+                                              <?php } ?>
+                                              <?php if($payment=='paid' AND $status=='confirmed'){?>
+                                                <button class="btn btn-sm btn-primary" id="markReturned" orderId="<?php echo $_GET['orderid']; ?>" >Mark as Returned</button>
+                                              <?php } ?>
+                                              <button class="btn btn-sm btn-danger" id="corders" orderId="<?php echo $_GET['orderid']; ?>">Mark as Cancelled</button>
+                                            
                                         </div>
                                         <div class="col-md-12"><hr></div>
                                         <?php endwhile;  } 
                                         // $total_bill = $total; 
                                         $charges +=$charges;
                                          $_SESSION['total-bill'] = $total_bill; $_SESSION['ppname'] = rtrim($ppname);
-                                         
-                                         if($payment != 'paid' AND $transaction=='pending'){ ?>
+                                          ?>
                                         <div class="col-md-7"> 
-                                            <b>Shipping Charges : </b> &#8358;<?php echo number_format($charges); ?>  <br>
-                                            <b>VAT(7.5%): </b>&#8358;  <?php echo number_format($total_bill * 7.5/100); ?> <br>
-                                            <b>Sub Total: </b>&#8358;  <?php echo number_format(($total_bill-$charges)- ($total_bill * 7.5/100)); ?> <br>
-                                            <b>Grand Total: </b>&#8358;  <?php echo number_format($total_bill); ?>
                                             <hr>
                                             <?php if($address !=''){?>
                                             <p><b>Delivery Area:</b> <?php   echo $location;  ?> <br>
@@ -135,30 +130,14 @@
                                             <?php } ?>
                                                 <!-- <p><b>Delivery Area/Station:</b> <?php //echo $location ?></p> -->
                                              <hr>
-                                        </div>
-                                        <div class="col-md-5">
-                                        <!-- <hr> -->
-                                            
-                                            <div class="ml-3">
-                                            <p>Use the icon below to make payment</p>
-                                        
-                                            <form action="cart_pay-up.php" method="post">                                       
-                                            <script src="https://js.paystack.co/v1/inline.js" data-key="pk_test_9ebb172d86972b4e6e8a4ad740e8fd5ca4a561c1" data-email="<?php echo $sl['demail'] ?>" data-amount="<?php echo $total_bill * 100; ?>" data-ref="<?php echo $transid; ?>"></script>
-                                                        
-                                            </form>
-                                            </div>
-                                    
-                                        </div>
-                                        <?php }else{?>
-
-                                            <div class="col-md-7">
                                             <p>
                                                 <b>Total Charges : </b> &#8358;<?php echo number_format($charges); ?>  |
                                                 <b>Grand Total: </b>&#8358;  <?php echo number_format($total_bill); ?>  
                                             </p>
 
                                             </div>
-                                            <div class="col-md-5">
+                                            <div class="col-md-5 pl-3">
+                                                <p class="pl-3">
                                                 <?php if($transaction=='returned' || $transaction=='cancelled' ){?>
                                                 <b>Transaction Status: </b>  <?php echo ucfirst($status); ?> 
                                                 <?php }else{?>
@@ -166,26 +145,33 @@
                                                 <b>Payment Status:  </b> <?php echo ucfirst($payment); ?> <span class="text-success" style="font-size:20px"> &#10004;</span><br>
                                                 </p>
                                                 <?php }?>
+                                                </p>
                                             
                                             </div>
 
-                                     <?php   } 
+                                     <?php   
                                 } ?>
-                                <?php if($payment =='pending' AND $status =='pending' ):?>
-                                <div class="col-md-12">
-                                    <button class="btn btn-sm btn-secondary" btn="<?php echo $_GET['orderid']; ?>" id="remover">Remove</button>
-                                    <?php if($payment !='cancelled' AND $status !='cancelled' ):?>
-                                    <button class="btn btn-sm btn-secondary" btn="<?php echo $_GET['orderid']; ?>" id="cancelr">Cancel</button>
-                                    <?php endif; ?>
-                                </div>
-                                <?php endif; ?>
+                               
 									</div>
                                          
-
 
     
 
         </div>
+
+        <div class="card-footer" style="text-align: right;">
+          <?php if($payment=='pending'){?>
+            <button class="btn btn-sm btn-primary" id="markPaid" orderId="<?php echo $_GET['orderid']; ?>" >Mark As Paid</button>
+          <?php } ?>
+
+          <?php if($payment=='paid' AND $status=='pending'){?>
+            <button class="btn btn-sm btn-dark" id="markProcess" orderId="<?php echo $_GET['orderid']; ?>" >Mark as Confirmed</button>
+          <?php } ?>
+
+            <button class="btn btn-sm btn-danger" id="corders" orderId="<?php echo $_GET['orderid']; ?>">Cancel All</button>
+            <?php sendBack(); ?>
+        </div>
+
         </div>
         </div>
 

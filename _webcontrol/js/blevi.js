@@ -74,7 +74,7 @@ $(document).ready(function(){
     })
 
 
-    $(document).on("click", "#markProcess", function(){
+    $(document).on("click", "#markProcesso", function(){
         var orderId = $(this).attr("orderId");
         var referral = $("#referral"+orderId).val();
         // alert(referral);
@@ -302,7 +302,7 @@ $(document).ready(function(){
     })
 
 
-    $(document).on("click", "#markShip", function(){
+    $(document).on("click", "#markShipo", function(){
         // alert("yes");
         var orderId = $(this).attr("orderId");
         var referral = $("#referral"+orderId).val();
