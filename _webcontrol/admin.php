@@ -22,6 +22,10 @@
       <li class="nav-item">
         <a class="nav-link" href="new-store"><i class="fas fa-circle-notch"></i> Manage Stores </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="agents"><i class="fas fa-circle-notch"></i> Manage Agents </a>
+      </li>
       
 
       <li class="nav-item dropdown">
@@ -34,9 +38,9 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="orders">Pending Orders</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="processed">Processed Orders</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="shipped">Shipped Orders</a>
+          <!-- <a class="dropdown-item" href="processed">Processed Orders</a>
+          <div class="dropdown-divider"></div> -->
+          <a class="dropdown-item" href="shipped">Dispatched Orders</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="delivered">Delivered Orders</a>
           <div class="dropdown-divider"></div>

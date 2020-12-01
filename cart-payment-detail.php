@@ -56,6 +56,7 @@ include 'track.php';
                                            $location = $row['dlocation'];
                                            $address = $row['daddress'];
                                            $total_bill += $total;
+                                           $payment_mth = $row['dpay_mth'];
 
                                            
                                     ?>
@@ -76,7 +77,9 @@ include 'track.php';
                                             <b>Order Status: </b> 
                                             <?php if($status=='pending'){?>
                                             <span class="badge badge-primary"><?php echo ucfirst($status) ?></span> 
-                                            <?php }elseif($status=='processed' || $status=='shipped'){ ?>
+                                            <?php }elseif($status=='delivered'){ ?>
+                                            <span class="badge badge-info"><?php echo ucfirst($status) ?></span>
+                                            <?php }elseif($status=='dispatched'){ ?>
                                             <span class="badge badge-warning"><?php echo ucfirst($status) ?></span> 
                                             <?php }elseif($status=='returned' || $status=='cancelled'){ ?>
                                             <span class="badge badge-danger"><?php echo ucfirst($status) ?></span> 
@@ -119,6 +122,8 @@ include 'track.php';
                                         </div>
                                         <div class="col-md-5">
                                         <!-- <hr> -->
+                                        <?php
+                                        if($payment_mth == "yespay"){ ?>
                                             
                                             <div class="ml-3">
                                             <p>Use the icon below to make payment</p>
@@ -128,7 +133,7 @@ include 'track.php';
                                                         
                                             </form>
                                             </div>
-                                    
+                                        <?php } ?>
                                         </div>
                                         <?php }else{?>
 
@@ -137,6 +142,15 @@ include 'track.php';
                                                 <b>Total Charges : </b> &#8358;<?php echo number_format($charges); ?>  <br>
                                                 <b>Grand Total: </b>&#8358;  <?php echo number_format($total_bill); ?>  
                                             </p>
+                                            <hr>
+                                            <?php if($address !=''){?>
+                                            <p><b>Delivery Area:</b> <?php   echo $location;  ?> <br>
+                                                <b>Address: </b> <?php echo $address; ?>
+                                            </p>
+                                                <?php }else{?>
+                                                    <p><b>Delivery Station:</b> <?php echo $location;  ?> 
+                                                </p>
+                                            <?php } ?>
 
                                             </div>
                                             <div class="col-md-5">
@@ -221,93 +235,57 @@ include 'track.php';
     <script>
     $(document).ready(function(){
 
-
         $(document).on('click', '#remover', function(){
-            // e.preventDefault(); 
             var btnDelete =  $(this).attr("btn");
-            Swal.fire({
-                position: 'center',
-                type: 'warning',
-                title: 'Remove for me?',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes!'
-                
-                }).then((result) => {
-                if (result.value){
-                    $.ajax({
-                        url:"account-shipping.php",
-                        method:"POST",
-                        data:{Remover:1, id:btnDelete},
-                        success:function(data){
-                            setInterval(() => {
-                                window.location.assign("account-direct-purchases");
-                            }, 2000);
-                            
-                        }
-                    })
-                    .done(function(response){
-                        Swal.fire({
-                            type:'success', 
-                            title:'Removed'
-                        });
-                    })
-                    .fail(function(){
-                        Swal.fire('Oops...', 'Something went wrong with ajax !', 'error');
-                    });
-                }
-
-            });
-                    
-        });
-
+            magicFunction('Remove for me?', 'account-shipping', 'Remover', btnDelete, 'Removed');
+        })
 
         $(document).on('click', '#cancelr', function(){
-            // e.preventDefault(); 
-            var btnDefault =  $(this).attr("btn");
-            // alert(btnDefault);
-            Swal.fire({
-                position: 'center',
-                type: 'warning',
-                title: 'Cancel for me?',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes!'
-                
-                }).then((result) => {
-                if (result.value){
-                    $.ajax({
-                        url:"account-shipping.php",
-                        method:"POST",
-                        data:{Cancelr:1, id:btnDefault},
-                        success:function(data){
-                            setInterval(() => {
-                                window.location.assign("account-direct-purchases");
-                            }, 2000);
-                            
-                        }
-                    })
-                    .done(function(response){
-                        Swal.fire({
-                            type:'success', 
-                            title:'Cancelled'
-                        });
-                    })
-                    .fail(function(){
-                        Swal.fire('Oops...', 'Something went wrong with ajax !', 'error');
-                    });
-                }
-
-            });
-                    
-        });
-
+            var btnDelete =  $(this).attr("btn");
+            magicFunction('Cancel for me?', 'account-shipping', 'Cancelr', btnDelete, 'Cancelled');
+        })
 
     })
 
 
+    
+function magicFunction(sweetTitle, dataPost, dataTitle, dataId, dataSuccess){
+    Swal.fire({
+        position: 'center',
+        type: 'warning',
+        title: sweetTitle,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes!'        
+        }).then((result) => {
+        if (result.value){
+            sendAjaxMessage(dataPost, dataTitle, dataId, dataSuccess,'success')
+        }
+    });    
+   
+}
+
+
+function sendAjaxMessage(dataPost, dataTitle, dataId, sweetTitle, sweetType){
+    $.ajax({
+        url:dataPost,
+        method:"POST",                    
+        data:{Message:dataTitle, id:dataId},        
+        success:function(){
+            setInterval(function(){
+                window.location.assign("account-direct-purchases");
+            },2000);             
+        }
+    }) .done(function(){
+        Swal.fire({
+            type:sweetType, 
+            title:sweetTitle
+        });
+    }) .fail(function(){
+        Swal.fire('Oops...', 'Something went wrong with ajax !', 'error');
+    });
+}
 
     </script>
  </body>

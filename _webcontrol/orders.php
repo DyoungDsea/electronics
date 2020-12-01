@@ -111,12 +111,12 @@
                   $userid = $r['userid'];
                   if(isset($_GET['pro_name'])){
                     $orderId = $conn->real_escape_string($_GET['pro_name']);
-                    $sqls = $conn->query("SELECT * FROM dcart INNER JOIN login ON dcart.userid=login.userid  WHERE dcart.orderid LIKE '%$orderId%' AND dcart.dorder_status='pending' AND dpay_mth ='yespay' OR login.dname LIKE '%$orderId%' AND dcart.dstatus='pending' AND dpay_mth ='yespay'  ORDER BY dcart.id DESC");
+                    $sqls = $conn->query("SELECT * FROM dcart INNER JOIN login ON dcart.userid=login.userid WHERE dcart.orderid LIKE '%$orderId%' AND dcart.dorder_status='pending' AND dpay_mth ='yespay' OR login.dname LIKE '%$orderId%' AND dcart.dorder_status='pending' AND dpay_mth ='yespay' ORDER BY dcart.id DESC ");
                     $total_records =$sqls->num_rows;
                     $total_no_of_pages = ceil($total_records / $total_records_per_page);
                     $start_from = ($page_no - 1) * $total_records_per_page;
     
-                    $sky =$conn->query("SELECT * FROM dcart INNER JOIN login ON dcart.userid=login.userid  WHERE dcart.orderid LIKE '%$orderId%' AND dcart.dorder_status='pending' AND dpay_mth ='yespay' ORDER BY dcart.id DESC LIMIT $start_from, $total_records_per_page");
+                    $sky =$conn->query("SELECT * FROM dcart INNER JOIN login ON dcart.userid=login.userid WHERE dcart.orderid LIKE '%$orderId%' AND dcart.dorder_status='pending' AND dpay_mth ='yespay' OR login.dname LIKE '%$orderId%' AND dcart.dorder_status='pending' AND dpay_mth ='yespay' OR dcart.dcompany LIKE '%$orderId%' AND dcart.dorder_status='pending' AND dpay_mth ='yespay' ORDER BY dcart.id DESC  LIMIT $start_from, $total_records_per_page");
     
                     }else{
     

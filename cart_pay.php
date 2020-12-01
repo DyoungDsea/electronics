@@ -24,7 +24,7 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
         $qty = clean($values['qty']);
         $price = clean($values['price']);
         $charge = clean($_SESSION['costsx']);
-        $total = ($values['qty'] * $values['price']) + (Int)$charge;
+        $total = ($values['qty'] * $values['price']);
         //Insert product into database
         $conn->query("INSERT INTO dcart SET userid='$userid', orderid='$orderid', dpid='$pid', pname='$pname', dsku='$sku', dbrand='$brand', dvcode='$vcode', dprice='$price', dqty='$qty', dcharge='$charge', dtotal='$total', dimg='$img', dcompany='$company', dstore_id='$store_id' ");
 
@@ -49,8 +49,10 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
         $adds = $_SESSION['ship_address'];
     }
 
+    $address = $conn->query("SELECT * FROM `dship_address` WHERE userid='$userid' AND dstatus='yes' ")->fetch_assoc();
+    $adds = $address['daddress'];
     
-    $conn->query("UPDATE `dcart` SET dlocation='$location', daddess='$adds' WHERE orderid='$orderid' AND userid='$userid' ");
+    $conn->query("UPDATE `dcart` SET dlocation='$location', daddress='$adds' WHERE orderid='$orderid' AND userid='$userid' ");
     // $conn->query("INSERT INTO `dcart_holder` SET orderid='$orderid', userid='$userid', dtotal_bill='$grand', dlocation='$location', dcharges='$cost', daddess='$adds' ");
 
 

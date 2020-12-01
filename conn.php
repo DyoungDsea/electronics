@@ -39,6 +39,7 @@ $dcomm_email=$irow['demail'];
 $currency=$irow['icurrency'];
 $web_title=$irow['dtitle'];
 $web=$irow['dwebsite'];
+$namew=$irow['dname'];
 
 $aboutus=$irow['aboutus'];
 $dterms=$irow['dterms'];
@@ -75,6 +76,187 @@ function findBaseName($data){
   function sendBack(){
     echo '<a href="javascript:history.back()" style="margin: 20px 0" class="btn btn-info pull-rights btn-sm"> <i class="fa fa-arrow-circle-left"></i> Back</a>';
   }
+
+
+  
+function messageToUsers($order, $rowId='', $username, $messageSend, $phone, $address){
+  GLOBAL $conn;
+
+$message = '
+<html>
+<head>
+
+<style>
+.box{
+  /* padding: 20px; */
+  border: 1px solid grey;
+  margin: 40px;
+}
+
+.box-header {
+  margin: 20px 0;
+  border-bottom: 1px solid grey;
+  border-top: 1px solid grey;
+}
+.box-header .list{
+  width: 700px;
+  margin: 10px auto;
+  list-style-type: none;
+  display: flex;
+  /* background-color: red; */
+}
+
+.box-header .list li {
+  margin-right: 20px;
+  
+}
+
+.content, .camp{
+  padding: 20px;
+}
+
+.bog th{
+  padding: 5px !important;
+  background-color: lightgray;
+}
+
+</style>
+</head>
+<body>
+
+<div class="box">
+<div class="box-header">
+  <ul class="list">
+      <li> <a href="shop-list?dcat=Electronics">Electronics</a> </li>
+      <li> <a href="shop-list?dcat=Computer and Accessories">Computer and Accessories</a> </li>
+      <li> <a href="shop-list?dcat=Home and Kitchen">Home and Kitchen</a> </li>
+      <li> <a href="shop-list?dcat=Phones and Tablets">Phones and Tablets</a> </li>
+  </ul>
+</div>
+<div class="content">
+Dear '.$username.', <br>
+'.$messageSend.'
+</div>
+
+<div class="camp">
+<table class="table table-bordered bog">
+<tr>
+<th>Delivery method</th>
+<th>Recipient details</th>
+</tr>
+<tr>
+<td>Delivery to Your Home or Office</td>
+<td>'.$username.', '.$phone.' </td>
+</tr>
+<tr>
+ <th colspan="2">Delivery address</th>
+</tr>
+<tr>
+ <td colspan="2">
+ '.$address.'
+ </td>
+</tr>
+</table>
+
+<h6>You ordered for:</h6>
+<table class="table table-bordereds bog">
+<tr>
+<th></th>
+<th>Item</th>
+<th>Quantity</th>
+<th>Price</th>
+</tr>';
+if(!empty($rowId)){
+  $sql = $conn->query("SELECT * FROM dcart WHERE orderid='$order' AND id='$rowId'");
+}else{
+  $sql = $conn->query("SELECT * FROM dcart WHERE orderid='$order'");
+}
+if($sql->num_rows>0){
+  $total=$total_bill=0;
+  while($row=$sql->fetch_assoc()):
+  $total = $row['dtotal'];
+  $charges = $row['dcharge'];
+  $pay = $row['dpay_mth'];
+  $total_bill += $total;
+  $message .='
+  <tr>
+  <td>
+  <img src="../_product_images/'.$row['dimg'].'" style="max-width: 100px;" alt="">
+  </td>
+  <td>
+  <br>
+  '.$row['pname'].'
+  </td>
+  <td>
+  <br>
+  '.$row['dqty'].'
+  </td>
+  <td>
+  <br>
+  '.number_format($row['dprice']).'
+  </td>
+  </tr>';
+  endwhile; }$charges +=$charges;
+  $message .='
+</table>
+
+<table class="table table-bordereds">
+<tr>
+ <th>SHIPPING COST</th>
+ 
+ <td>
+     &#8358;'.number_format($charges).'
+ </td>
+
+</tr>
+<tr>
+ <th>SHIPPING DISCOUNT</th>
+ <td>
+ &#8358;0   
+ </td>
+</tr>
+
+<tr>
+ <th>DISCOUNT</th>
+ <td>
+ &#8358;0       
+ </td>
+</tr>
+
+<tr>
+ <th>TOTAL</th>
+ <td>
+ &#8358;'.number_format($total_bill).'     
+ </td>
+</tr>
+
+<tr>
+ <th>PAYMENT METHOD</th>
+ <td>';
+ if($pay !='yespay'){
+   $message .='Payment on delivery/pick-up';
+  }else{
+       $message .='Paystack';
+  }
+ $message .='  </td>
+</tr>
+
+</tr>
+
+
+</table>
+
+
+</div>
+</div>
+</body>
+</html>
+
+';
+
+return $message;
+}
+
 
 ?>
 

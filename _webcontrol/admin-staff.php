@@ -33,14 +33,14 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="orders">Pending Orders</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="processed">Processed Orders</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="shipped">Shipped Orders</a>
+          <!-- <a class="dropdown-item" href="processed">Processed Orders</a>
+          <div class="dropdown-divider"></div> -->
+          <a class="dropdown-item" href="shipped">Dispatched Orders</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="delivered">Delivered Orders</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="returned">Returned Orders
-          <div class="dropdown-divider"></div>
+          <!-- <a class="dropdown-item" href="returned">Returned Orders
+          <div class="dropdown-divider"></div> -->
           <a class="dropdown-item" href="cancelled">Cancelled Orders</a>
          </a>
           

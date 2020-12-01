@@ -78,10 +78,10 @@
  <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            Manage Shipped Orders <span class="text-danger"><?php if(isset($_GET['page_no']) AND @$_GET['page_no'] !=0){ echo "(".$_GET['page_no'].")";} ?></span></div>
+            Manage Dispatched Orders <span class="text-danger"><?php if(isset($_GET['page_no']) AND @$_GET['page_no'] !=0){ echo "(".$_GET['page_no'].")";} ?></span></div>
           <div class="card-body">
             <div class="table-responsive"  style="min-height:200px">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <style>
                   tr,th,td{
                       font-size:12px;
@@ -90,7 +90,8 @@
                   </style>
                 <thead>
                   <tr>
-                    <th>Order ID</th>
+                  <th>Order ID</th>
+                    <th>Store Name</th>
                     <th>Customer Name</th>
                     <th>Total Price(&#8358;)</th>
                     <th>Payment Status</th>
@@ -102,55 +103,77 @@
                 <tbody>
                 <?php
 
+                
+                if($r['drank']=="seller"){
+                  $userid = $r['userid'];
+                  if(isset($_GET['pro_name'])){
+                    $orderId = $conn->real_escape_string($_GET['pro_name']);
+                    $sqls = $conn->query("SELECT * FROM dcart INNER JOIN login ON dcart.userid=login.userid WHERE dcart.orderid LIKE '%$orderId%' AND dcart.dorder_status='dispatched' AND dpay_mth ='yespay' OR login.dname LIKE '%$orderId%' AND dcart.dorder_status='dispatched' AND dpay_mth ='yespay' ORDER BY dcart.id DESC ");
+                    $total_records =$sqls->num_rows;
+                    $total_no_of_pages = ceil($total_records / $total_records_per_page);
+                    $start_from = ($page_no - 1) * $total_records_per_page;
+    
+                    $sky =$conn->query("SELECT * FROM login INNER JOIN dcart ON dcart.userid=login.userid WHERE dcart.orderid LIKE '%$orderId%' AND dcart.dorder_status='dispatched' AND dpay_mth ='yespay' OR login.dname LIKE '%$orderId%' AND dcart.dorder_status='dispatched' AND dpay_mth ='yespay' OR dcart.dcompany LIKE '%$orderId%' AND dcart.dorder_status='dispatched' AND dpay_mth ='yespay' ORDER BY dcart.id DESC  LIMIT $start_from, $total_records_per_page");
+    
+    
+                    }else{
+    
+    
+                    $sqls = $conn->query("SELECT * FROM login INNER JOIN dcart ON dcart.userid=login.userid WHERE  dcart.dorder_status='dispatched' AND dcart.dpay_mth ='yespay'  ORDER BY dcart.id DESC ");
+    
+                    $total_records =$sqls->num_rows;
+                    $total_no_of_pages = ceil($total_records / $total_records_per_page);
+                    $start_from = ($page_no - 1) * $total_records_per_page;
+    
+                    $sky =$conn->query("SELECT * FROM login INNER JOIN dcart ON dcart.userid=login.userid WHERE  dcart.dorder_status='dispatched' AND dcart.dpay_mth ='yespay'  ORDER BY dcart.id DESC LIMIT $start_from, $total_records_per_page");
+                    }
+                }else{
+
                 if(isset($_GET['pro_name'])){
-                  $orderId = $conn->real_escape_string($_GET['pro_name']);
-                  $sqls = $conn->query("SELECT * FROM dcart_holder INNER JOIN login ON dcart_holder.userid=login.userid WHERE dcart_holder.orderid LIKE '%$orderId%' OR login.dname LIKE '%$orderId%' AND dcart_holder.dstatus='shipped'  ORDER BY dcart_holder.id DESC");
+                $orderId = $conn->real_escape_string($_GET['pro_name']);
+                $sqls = $conn->query("SELECT * FROM dcart WHERE orderid LIKE '%$orderId%' AND dorder_status='dispatched' AND dpay_mth ='yespay' ORDER BY id DESC");
                 $total_records =$sqls->num_rows;
-                  $total_no_of_pages = ceil($total_records / $total_records_per_page);
-                  $start_from = ($page_no - 1) * $total_records_per_page;
-                  
-                  $sky =$conn->query("SELECT * FROM dcart_holder INNER JOIN login ON dcart_holder.userid=login.userid WHERE dcart_holder.orderid LIKE '%$orderId%' OR login.dname LIKE '%$orderId%' AND dcart_holder.dstatus='shipped'  ORDER BY dcart_holder.id DESC LIMIT $start_from, $total_records_per_page");
+                $total_no_of_pages = ceil($total_records / $total_records_per_page);
+                $start_from = ($page_no - 1) * $total_records_per_page;
+
+                $sky =$conn->query("SELECT * FROM dcart WHERE orderid LIKE '%$orderId%' AND dorder_status='dispatched' AND dpay_mth ='yespay' ORDER BY id DESC LIMIT $start_from, $total_records_per_page");
 
                 }else{
 
 
-                $sqls = $conn->query("SELECT * FROM dcart_holder INNER JOIN login ON dcart_holder.userid=login.userid WHERE  dcart_holder.dstatus='shipped'  ORDER BY dcart_holder.id ");
+                $sqls = $conn->query("SELECT * FROM login INNER JOIN dcart ON dcart.userid=login.userid WHERE  dcart.dorder_status='dispatched' AND dcart.dpay_mth ='yespay'  ORDER BY dcart.id DESC ");
 
-                  $total_records =$sqls->num_rows;
-                  $total_no_of_pages = ceil($total_records / $total_records_per_page);
-                  $start_from = ($page_no - 1) * $total_records_per_page;
+                $total_records =$sqls->num_rows;
+                $total_no_of_pages = ceil($total_records / $total_records_per_page);
+                $start_from = ($page_no - 1) * $total_records_per_page;
 
-                $sky =$conn->query("SELECT * FROM dcart_holder INNER JOIN login ON dcart_holder.userid=login.userid WHERE  dcart_holder.dstatus='shipped'  ORDER BY dcart_holder.id LIMIT $start_from, $total_records_per_page");
+                $sky =$conn->query("SELECT * FROM login INNER JOIN dcart ON dcart.userid=login.userid WHERE  dcart.dorder_status='dispatched' AND dcart.dpay_mth ='yespay'  ORDER BY dcart.id DESC LIMIT $start_from, $total_records_per_page");
                 }
+
+
+                
+              }
                 if($sky->num_rows>0){
                   while($k=$sky->fetch_assoc()){ ?>
                     <tr>
                       <td><?php echo $k['orderid']; ?></td>
+                      <td><?php echo $k['dcompany']; ?></td>
                       <td><?php echo $k['dname']; ?></td>
-                      <td><?php echo number_format($k['dtotal_bill']); ?></td>
-                      <td><?php  echo $k['payment_status']; ?></td>
-                      <td><?php  echo $k['dstatus']; ?></td>
+                      <td><?php echo number_format($k['dtotal']); ?></td>
+                      <td><?php  echo $k['dpayment_status']; ?></td>                      
+                      <td><?php  echo $k['dorder_status']; ?></td>
                       <td><?php echo $k['created_date']; ?></td>
-                      <td>
+                      <td> <a class="btn btn-primary btn-sm"  href="order-view?orderid=<?php echo $k['orderid']; ?>&rope=<?php echo $k['id']; ?>"> <i class="fa fa-eye"></i> View</a>
                       <input type="hidden" value="<?php echo $k['userid']; ?>" id='referral<?php echo $k['orderid']; ?>'>
-                      <div class="btn-group">
-                      <div class="btn-group" >
-                          <button type="button" style="width:100pxs" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
-                          Action <span class="caret"></span></button>
-                          <ul class="dropdown-menu" role="menu" style="font-size:14px; width:100%;text-align:center">
-                          <li><a class="nav-link"  href="order-view?orderid=<?php echo $k['orderid']; ?>">View</a></li>
-                          <li><a class="nav-link " id="markDelivered" orderId="<?php echo $k['orderid']; ?>" href="#">Mark as Delivered</a></li>
-                          <li><a class="nav-link" id="porders" orderId="<?php echo $k['orderid']; ?>" href="#">Cancel </a></li>
-                          </ul>
-                      </div>
-                      </div>
+                      <input type="hidden" value="<?php echo $k['dtotal']; ?>" id='total<?php echo $k['orderid']; ?>'>
+                     
                       </td>
                     </tr>
                <?php
                   }
                 }else{
                   echo '<tr>
-                  <td colspan="7" class="text-danger">Sorry! no result found </td>
+                  <td colspan="8" class="text-danger">Sorry! no result found </td>
                   </tr>';
                 }
                 ?>
@@ -168,7 +191,7 @@
     if(isset($_GET['pro_name'])){
       for ($counter = 1; $counter <= $total_no_of_pages; $counter++){ 
         // $pname = $_GET["pro_name"];
-        echo "<li  class='page-item '><a class='page-link' href='orders?page_no=$counter&pro_name=".$_GET['pro_name']."' style='color:#0088cc;'>$counter</a></li>"; 
+        echo "<li  class='page-item '><a class='page-link' href='shipped?page_no=$counter&pro_name=".$_GET['pro_name']."' style='color:#0088cc;'>$counter</a></li>"; 
 
       }
     }else{

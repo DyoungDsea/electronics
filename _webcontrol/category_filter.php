@@ -25,6 +25,9 @@ else{
 }elseif(isset($_POST['store'])){
   $name = $_POST['store'];
   header("Location: new-store?name=$name");
+}elseif(isset($_POST['storer'])){
+  $name = $_POST['storer'];
+  header("Location: agents?name=$name");
 }
 elseif(isset($_POST['nameb'])){
   

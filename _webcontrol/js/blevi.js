@@ -111,7 +111,7 @@ $(document).ready(function(){
     })
 
 
-    $(document).on("click", "#markPaid", function(){
+    $(document).on("click", "#markPaidx", function(){
         var orderId = $(this).attr("orderId");
         var referral = $("#referral"+orderId).val();
         var total = $("#total"+orderId).val();
@@ -188,7 +188,7 @@ $(document).ready(function(){
 
 
 
-    $(document).on("click", "#corders", function(){
+    $(document).on("click", "#cordersp", function(){
         var orderId = $(this).attr("orderId");
         var referral = $("#referral"+orderId).val();
         // alert(referral);
@@ -227,7 +227,7 @@ $(document).ready(function(){
 
     
     //Deliver process
-    $(document).on("click", "#markDelivered", function(){
+    $(document).on("click", "#markDeliveredx", function(){
         var orderId = $(this).attr("orderId");
         var referral = $("#referral"+orderId).val();
         // alert(referral);

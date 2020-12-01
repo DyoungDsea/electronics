@@ -60,9 +60,14 @@
                                 <p class="pull-right" style="font-size:14px"><b>Order Id:</b> <?php echo $_GET['orderid'] ?></p> 
 									<div class="row no-gutters">
                                     <?php
-                                    if(isset($_GET['orderid']) AND !empty($_GET['orderid'])){
+                                    if(isset($_GET['orderid']) AND !empty($_GET['orderid']) AND isset($_GET['rope']) AND !empty($_GET['rope'])){
                                     $order = clean($_GET['orderid']);
-                                    $sql = $conn->query("SELECT * FROM dcart WHERE orderid='$order'");
+                                    $rope = clean($_GET['rope']);
+                                    $sql = $conn->query("SELECT * FROM dcart WHERE orderid='$order' AND id='$rope'");
+                                    }elseif(isset($_GET['orderid']) AND !empty($_GET['orderid'])){
+                                      $order = clean($_GET['orderid']);
+                                      $sql = $conn->query("SELECT * FROM dcart WHERE orderid='$order'");
+                                    }
                                     if($sql->num_rows>0){
                                         $ppname =''; $total=$total_bill=0;
                                         while($row=$sql->fetch_assoc()):
@@ -95,7 +100,9 @@
                                             <b>Order Status: </b> 
                                             <?php if($status=='pending'){?>
                                             <span class="badge badge-primary"><?php echo ucfirst($status) ?></span> 
-                                            <?php }elseif($status=='confirmed' || $status=='shipped'){ ?>
+                                            <?php }elseif($status=='delivered'){ ?> 
+                                            <span class="badge badge-info"><?php echo ucfirst($status) ?></span> 
+                                            <?php }elseif($status=='confirmed' || $status=='dispatched'){ ?>
                                             <span class="badge badge-warning"><?php echo ucfirst($status) ?></span> 
                                             <?php }elseif($status=='returned' || $status=='cancelled'){ ?>
                                             <span class="badge badge-danger"><?php echo ucfirst($status) ?></span> 
@@ -103,17 +110,29 @@
                                             
                                              </p>
                                              <hr>
-                                             <?php if($payment=='paid' AND $status=='confirmed'){?>
-                                                <button class="btn btn-sm btn-primary" id="markShip" orderId="<?php echo $_GET['orderid']; ?>" rowId="<?php echo $row['id']; ?>" >Mark as Dispatched</button>
-                                              <?php } ?>
-                                              <?php if($payment=='paid' AND $status=='confirmed'){?>
-                                                <button class="btn btn-sm btn-primary" id="markReturned" orderId="<?php echo $_GET['orderid']; ?>" >Mark as Returned</button>
-                                              <?php } ?>
-                                              <button class="btn btn-sm btn-danger" id="corders" orderId="<?php echo $_GET['orderid']; ?>">Mark as Cancelled</button>
-                                            
+                                             <div class="row">
+                                              <div class="col-md-8">
+                                                <?php if($payment=='paid' AND $status=='confirmed'){?>
+                                                  <button class="btn btn-sm btn-primary" id="markShip" orderId="<?php echo $_GET['orderid']; ?>" rowId="<?php echo $row['id']; ?>" >Mark as Dispatched</button>
+                                                <?php } ?>
+                                                <?php if($payment=='paid' AND $status=='dispatched'){?>
+                                                  <button class="btn btn-sm btn-primary" id="markDelivered" orderId="<?php echo $_GET['orderid']; ?>" rowId="<?php echo $row['id']; ?>" >Mark as Delivered</button>
+                                                <?php } ?>
+                                                <?php //if($payment=='paid' AND $status=='dispatched' ||  $status=='delivered'){?>
+                                                  <!-- <button class="btn btn-sm btn-primary" id="markReturned" orderId="<?php //echo $_GET['orderid']; ?>" rowId="<?php //echo $row['id']; ?>" >Mark as Returned</button> -->
+                                                <?php // } ?>
+                                                <?php if($status !='returned' AND $status!='cancelled'){ //echo $status?>
+                                                <button class="btn btn-sm btn-danger" id="corders" rowId="<?php echo $row['id']; ?>" orderId="<?php echo $_GET['orderid']; ?>">Mark as Cancelled</button>
+                                                <?php } ?>
+                                              </div>
+                                              <div class="col-md-4 text-center">
+                                              <button id="" type="button" class="btn btn-danger btn-sm"> <i class="fa fa-print"></i> Print</button>
+                                              </div>
+                                             </div>
+                                           
                                         </div>
                                         <div class="col-md-12"><hr></div>
-                                        <?php endwhile;  } 
+                                        <?php endwhile;   
                                         // $total_bill = $total; 
                                         $charges +=$charges;
                                          $_SESSION['total-bill'] = $total_bill; $_SESSION['ppname'] = rtrim($ppname);
@@ -168,7 +187,7 @@
             <button class="btn btn-sm btn-dark" id="markProcess" orderId="<?php echo $_GET['orderid']; ?>" >Mark as Confirmed</button>
           <?php } ?>
 
-            <button class="btn btn-sm btn-danger" id="corders" orderId="<?php echo $_GET['orderid']; ?>">Cancel All</button>
+            <!-- <button class="btn btn-sm btn-danger" id="corders" orderId="<?php //echo $_GET['orderid']; ?>">Cancel All</button> -->
             <?php sendBack(); ?>
         </div>
 

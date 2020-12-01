@@ -5,6 +5,7 @@ ini_set('session.gc_maxlifetime', 7200);
 include("conn.php");
 require 'clean.php';
 
+// die();
     // $email=$_SESSION['email'];
         $orderid = clean($_SESSION['transid']);
         $userid = clean($_SESSION['userid']);
@@ -23,9 +24,9 @@ require 'clean.php';
         $qty = clean($values['qty']);
         $price = clean($values['price']);
         $charge = clean($_SESSION['costsx']);
-        $total = ($values['qty'] * $values['price']) + (Int)$charge;
+        $total = ($values['qty'] * $values['price']);
         //Insert product into database
-        $conn->query("INSERT INTO dcart SET userid='$userid', orderid='$orderid', dpid='$pid', pname='$pname', dsku='$sku', dbrand='$brand', dvcode='$vcode', dprice='$price', dqty='$qty', dcharge='$charge', dtotal='$total', dimg='$img'dcompany='$company', dstore_id='$store_id'  ");
+        $conn->query("INSERT INTO dcart SET userid='$userid', orderid='$orderid', dpid='$pid', pname='$pname', dsku='$sku', dbrand='$brand', dvcode='$vcode', dprice='$price', dqty='$qty', dcharge='$charge', dtotal='$total', dimg='$img', dcompany='$company', dstore_id='$store_id', dpay_mth='ondelivery'  ");
 
         // echo $userid.' '.$grand.' '.$pid.'<br>'.$pname.' '.$brand.' '.$sku.'<br>'.$vcode.' '.$img.' '.$qty.'<br> '.$cost.' '.$price.' '.$location.' '.$charge;
         $ppname .=$pname.',';
@@ -40,7 +41,7 @@ require 'clean.php';
 
     if(isset($_SESSION['Address'])){
         $adds = clean($_SESSION['Address']);
-        //insert net address to user shipping address and set it to default
+        //insert new address to user shipping address and set it to default
         $ship_id=date('YdmHis');  
         $conn->query("UPDATE dship_address SET dstatus='no' WHERE userid='$userid' ");     
         $sql = $conn->query("INSERT INTO `dship_address` SET userid='$userid', dship_id='$ship_id', daddress='$adds', dstatus='yes' ");
@@ -48,10 +49,12 @@ require 'clean.php';
         $adds = $_SESSION['ship_address'];
     }
 
+    $address = $conn->query("SELECT * FROM `dship_address` WHERE userid='$userid' AND dstatus='yes' ")->fetch_assoc();
+    $adds = $address['daddress'];
     
     // $conn->query("INSERT INTO `dcart_holder` SET orderid='$orderid', userid='$userid', dtotal_bill='$grand', dpay_mth='ondelivery', dlocation='$location', dcharges='$cost', daddess='$adds' ");
 
-    $conn->query("UPDATE `dcart` SET dlocation='$location', daddess='$adds' WHERE orderid='$orderid' AND userid='$userid' ");
+    $conn->query("UPDATE `dcart` SET dlocation='$location', daddress='$adds' WHERE orderid='$orderid' AND userid='$userid' ");
 
 
    $order = date("ymdhis");

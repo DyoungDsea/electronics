@@ -37,21 +37,66 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     if(isset($_POST['Message']) AND $_POST['Message']=="markProcess"){
         $order = $_POST['id'];
         $storeId = '';
-        $subject="Your $web Order $order has been confirmed. ";
+        $subject="Your $namew Order $order has been confirmed. ";
             
-        $message='Thank you for shopping on '.$web.'! Your order '.$order.' has been successfully confirmed.'. "\r\n";
+        $message='Thank you for shopping on '.$namew.'! Your order '.$order.' has been successfully confirmed.'. "\r\n";
 
         $message .='It will be packaged and shipped as soon as possible. '. "\r\n";
         $message .='You will receive a notification from us.'. "\r\n";
-        $message .='Thank you for shopping on '.$web.'.'. "\r\n";
+        $message .='Thank you for shopping on '.$namew.'.'. "\r\n";
 
         $message .='Please note:';
         $message .='If you ordered for multiple items, you may receive them on different days. This is because they are sold by '. "\r\n";
         $message .='different sellers on our platform and we want to make each item available to you as soon as possible after receiving it.
         '. "\r\n";
-        markResult($storeId, $order, $staff_id, $date, $message, $subject, $web, $dcomm_email);
+        markResult($storeId, $order, $staff_id, $date, $message, $subject, $namew, $dcomm_email);
     }
 
+    if(isset($_POST['Message']) AND $_POST['Message']=="markPaid"){
+        $order = $_POST['id'];
+        $storeId = '';
+        $subject="Your $namew Order $order has been mark as paid. ";
+            
+        $message='Thank you for shopping on '.$namew.'! Your order '.$order.' has been successfully mark as paid.'. "\r\n";
+
+        $message .='It will be packaged and shipped as soon as possible. '. "\r\n";
+        $message .='You will receive a notification from us.'. "\r\n";
+        $message .='Thank you for shopping on '.$namew.'.'. "\r\n";
+
+        $message .='Please note:';
+        $message .='If you ordered for multiple items, you may receive them on different days. This is because they are sold by '. "\r\n";
+        $message .='different sellers on our platform and we want to make each item available to you as soon as possible after receiving it.
+        '. "\r\n";
+        // markResult($storeId, $order, $staff_id, $date, $message, $subject, $namew, $dcomm_email);
+        $up = $conn->query("UPDATE dcart SET dpayment_status='paid' WHERE orderid='$order'");
+        // Always set content-type when sending HTML email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        // More headers
+        $headers .= 'From: '.$namew.'<'.$dcomm_email.'>' . "\r\n";
+        // $headers .= 'Cc: myboss@example.com' . "\r\n";
+        // $messageToSend = messageToUsers($order, '', $name, $message, $phone, $address);
+        // mail($email,$subject,$messageToSend,$headers);
+        if($up){
+            //find the price and update store wallet
+            $cat = $conn->query("SELECT * FROM dcart WHERE orderid='$order'");
+            if($cat->num_rows>0){
+                while($rop=$cat->fetch_assoc()){
+                    $amount = (Int)$rop['dtotal'];
+                    $store_id=$rop['dstore_id'];
+                    $stor = $conn->query("SELECT dwallet FROM _security WHERE userid='$store_id'");
+                    if($stor->num_rows>0){
+                        $row = $stor->fetch_assoc();
+                        $wall = (Int)$row['dwallet'];
+                        $total = $amount + $wall;//total amount to pay the store
+                        $conn->query("UPDATE _security SET dwallet='$total' WHERE userid='$store_id'");
+                    }
+                }
+
+            }
+        }
+
+    }
 
 
     if(isset($_POST['Message']) AND $_POST['Message']=="markShip"){
@@ -59,23 +104,114 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $order = $conn->real_escape_string($_POST['id']);
         $status = 'dispatched';
         $trackStatus = "Mark as dispatched";
-
-        $subject="Your $web Order $order has been dispatched.";
-            
-        $message='Thank you for shopping on '.$web.'! Your item(s) on '.$order.' has been dispatched.'. "\r\n";
-        $message .='You will receive a notification from us as soon as it arrives.'. "\r\n";
-        $message .='Thank you for shopping on '.$web.'.'. "\r\n";
-
-        $message .='Please note:'. "\r\n";
-        $message .='If you ordered for multiple items, you may receive them on different days. This is because they are sold by '. "\r\n";
-        $message .='different sellers on our platform and we want to make each item available to you as soon as possible after receiving it.
-        '. "\r\n";
-
-        markResultTwo( $rowId, $status, $trackStatus, $order, $staff_id, $staff_date, $messageType, $subject, $web, $dcomm_email);
-
-        
+        $subject="Your $namew Order $order has been dispatched";            
+        $message="Thank you for shopping on $namew! Your item(s) on $order has been dispatched. \r\n";
+        $message .="You will receive a email/phone call from us as soon as it arrives. \r\n";
+        $message .="Thank you for shopping on  $namew \r\n";
+        $message .="Please note: \r\n";
+        $message .="If you ordered for multiple items, you may receive them on different days. This is because they are sold by \r\n";
+        $message .="different sellers on our platform and we want to make each item available to you as soon as possible after receiving it. \r\n";
+        markResultTwo( $rowId, $status, $trackStatus, $order, $staff_id, $date, $message, $subject, $namew, $dcomm_email);
 
     }
+
+    // if(isset($_POST['Message']) AND $_POST['Message']=="markShip"){
+    //     $rowId = $conn->real_escape_string($_POST['valueA']);
+    //     $order = $conn->real_escape_string($_POST['id']);
+    //     $status = 'dispatched';
+    //     $trackStatus = "Mark as dispatched";
+    //     $subject="Your $namew Order $order has been dispatched";            
+    //     $message="Thank you for shopping on $namew! Your item(s) on $order has been dispatched. \r\n";
+    //     $message .="You will receive a email/phone call from us as soon as it arrives. \r\n";
+    //     $message .="Thank you for shopping on  $namew \r\n";
+    //     $message .="Please note: \r\n";
+    //     $message .="If you ordered for multiple items, you may receive them on different days. This is because they are sold by \r\n";
+    //     $message .="different sellers on our platform and we want to make each item available to you as soon as possible after receiving it. \r\n";
+    //     markResultTwo( $rowId, $status, $trackStatus, $order, $staff_id, $date, $message, $subject, $namew, $dcomm_email);
+
+    // }
+
+
+    if(isset($_POST['Message']) AND $_POST['Message']=="markDelivered"){
+        $rowId = $conn->real_escape_string($_POST['valueA']);
+        $order = $conn->real_escape_string($_POST['id']);
+        $status = 'delivered';
+        $trackStatus = "Mark as delivered";
+        $subject="Your $namew Order $order has been delivered";            
+        $message="Thank you for shopping on $namew! Your item(s) on $order has been delivered. \r\n";
+        $message .="You have an option to return an item within 5 days of delivery if it does not \r\n match your expectation (wrong/defective/damaged). <a href='https:$web/contact-us'>Contact Us</a>. \r\n";
+        $message .="Thank you for shopping on  $namew \r\n <br><br>";
+        $message .="Please note: \r\n";
+        $message .="If you ordered for multiple items, you may receive them on different days. This is because they are sold by \r\n";
+        $message .="different sellers on our platform and we want to make each item available to you as soon as possible after receiving it. \r\n";
+        markResultTwo( $rowId, $status, $trackStatus, $order, $staff_id, $date, $message, $subject, $namew, $dcomm_email);
+
+        if($up){
+            //find the price and update store wallet
+            $cat = $conn->query("SELECT * FROM dcart WHERE orderid='$order' AND id='$rowId' AND dagent_id IS NOT NULL");
+            if($cat->num_rows>0){
+                while($rop=$cat->fetch_assoc()){
+                    $amount = (Int)$rop['dcharge'];
+                    $agent_id=$rop['dagent_id'];
+                    $stor = $conn->query("SELECT dwallet FROM _security WHERE userid='$store_id'");
+                    if($stor->num_rows>0){
+                        $row = $stor->fetch_assoc();
+                        $wall = (Int)$row['dwallet'];
+                        $total = $amount + $wall;//total amount to pay the store
+                        $conn->query("UPDATE _security SET dwallet='$total' WHERE userid='$store_id'");
+                    }
+                }
+
+            }
+        }
+
+
+    }
+
+    if(isset($_POST['Message']) AND $_POST['Message']=="markReturned"){
+        $rowId = $conn->real_escape_string($_POST['valueA']);
+        $order = $conn->real_escape_string($_POST['id']);
+        $status = 'returned';
+        $trackStatus = "Mark as returned";
+        $subject="Your $namew Order $order has been returned";            
+        $message="Thank you for shopping on $namew! Your item(s) on $order has been returned. \r\n";
+        $message .="You have an option to return an item within 5 days of delivery if it does not \r\n match your expectation (wrong/defective/damaged). <a href='https:$web/contact-us'>Contact Us</a>. \r\n";
+        $message .="Thank you for shopping on  $namew \r\n <br><br>";
+        $message .="Please note: \r\n";
+        $message .="If you ordered for multiple items, you may receive them on different days. This is because they are sold by \r\n";
+        $message .="different sellers on our platform and we want to make each item available to you as soon as possible after receiving it. \r\n";
+        markResultTwo( $rowId, $status, $trackStatus, $order, $staff_id, $date, $message, $subject, $namew, $dcomm_email);
+
+    }
+
+
+    if(isset($_POST['Message']) AND $_POST['Message']=="corders"){
+        $rowId = $conn->real_escape_string($_POST['valueA']);
+        $order = $conn->real_escape_string($_POST['id']);
+        $status = 'cancelled';
+        $trackStatus = "Mark as cancelled";
+        $subject="Your $namew Order $order has been cancelled";            
+        $message="Thank you for shopping on $namew!. \r\n";
+        $message .="We regret to inform you that your order $order was cancelled. \r\n";
+        $message .="Thank you for shopping on  $namew \r\n <br><br>";
+        markResultTwo( $rowId, $status, $trackStatus, $order, $staff_id, $date, $message, $subject, $namew, $dcomm_email);
+        //find store and deduct the account with the total price of each item and update the account back
+        // $sql = $conn->query("SELECT * FROM dcart WHERE orderid='$order'");
+        // if($sql->num_rows>0){
+        //     while($map=$sql->fetch_assoc()){
+        //         $userid = $map['dcart'];
+        //         $store_id = $map['dstore_id'];
+        //         $total = $map['dtotal'];
+        //         $stay = $conn->query("SELECT dwallet FROM _security WHERE ");
+
+        //     }
+        // }
+
+    }
+
+
+
+
 
 
 }
@@ -91,14 +227,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
 
 
-
-
-
-
-
-
-
-function markResultTwo( $rowId, $status, $trackStatus, $order, $staff_id, $staff_date, $messageType, $subject, $web, $dcomm_email){
+function markResultTwo( $rowId, $status, $trackStatus, $order, $staff_id, $staff_date, $messageType, $subject, $namew, $dcomm_email){
     GLOBAL $conn;
         $id = $conn->real_escape_string($rowId);
         $order = $conn->real_escape_string($order);
@@ -112,22 +241,22 @@ function markResultTwo( $rowId, $status, $trackStatus, $order, $staff_id, $staff
             
         if($up){
             $conn->query("INSERT INTO `dtracker` SET dstaff_id='$staff_id', dpid='$order', dstatus='$trackStatus', ddate='$staff_date' ");
-            // $subject="Your $web Order $order has been confirmed. ";            
+            // $subject="Your $namew Order $order has been confirmed. ";            
             $message=$messageType;
             // Always set content-type when sending HTML email
             $headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
             // More headers
-            $headers .= 'From: '.$web.'<'.$dcomm_email.'>' . "\r\n";
+            $headers .= 'From: '.$namew.'<'.$dcomm_email.'>' . "\r\n";
             // $headers .= 'Cc: myboss@example.com' . "\r\n";
-            $messageToSend = messageToUsers($order, $name, $message, $phone, $address);
+            $messageToSend = messageToUsers($order, $id, $name, $message, $phone, $address);
             mail($email,$subject,$messageToSend,$headers);
         }
 }
 
 
 
-function markResult( $storeId, $order, $staff_id, $staff_date, $messageType, $subject, $web, $dcomm_email){
+function markResult( $storeId, $order, $staff_id, $staff_date, $messageType, $subject, $namew, $dcomm_email){
     GLOBAL $conn;
         $user = $conn->real_escape_string($storeId);
         $order = $conn->real_escape_string($order);
@@ -141,190 +270,31 @@ function markResult( $storeId, $order, $staff_id, $staff_date, $messageType, $su
             
         if($up){
             $conn->query("INSERT INTO `dtracker` SET dstaff_id='$staff_id', dpid='$order', dstatus='Mark as confirmed', ddate='$staff_date' ");
-            // $subject="Your $web Order $order has been confirmed. ";            
+            // $subject="Your $namew Order $order has been confirmed. ";            
             $message=$messageType;
             // Always set content-type when sending HTML email
             $headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
             // More headers
-            $headers .= 'From: '.$web.'<'.$dcomm_email.'>' . "\r\n";
+            $headers .= 'From: '.$namew.'<'.$dcomm_email.'>' . "\r\n";
             // $headers .= 'Cc: myboss@example.com' . "\r\n";
-            $messageToSend = messageToUsers($order, $name, $message, $phone, $address);
+            $messageToSend = messageToUsers($order, '', $name, $message, $phone, $address);
             mail($email,$subject,$messageToSend,$headers);
         }
 }
 
 
-function messageToUsers($order, $username, $messageSend, $phone, $address){
-    GLOBAL $conn;
 
-$message = '
-<html>
-<head>
+// We are happy to inform you that we have initiated the refund of your order 387938765, for ₦ 2,499 into your JumiaPay account. It should appear in your JumiaPay wallet within 24 hours. 
+// Please note: 
 
-<style>
-.box{
-    /* padding: 20px; */
-    border: 1px solid grey;
-    margin: 40px;
-}
+// If you have used a voucher as means of payment or requested for your refund to be processed to a voucher, you will receive an email with the new voucher within 24 hours. You can use the voucher code to purchase any item on the Jumia NG website. Click here to learn how to pay on Jumia using vouchers.
 
-.box-header {
-    margin: 20px 0;
-    border-bottom: 1px solid grey;
-    border-top: 1px solid grey;
-}
-.box-header .list{
-    width: 700px;
-    margin: 10px auto;
-    list-style-type: none;
-    display: flex;
-    /* background-color: red; */
-}
+// If you have used a GTB or Zenith credit/debit card, Your refund will be processed into your card. It may take up to 5-7 business days for your bank to credit the refund amount to your account.
 
-.box-header .list li {
-    margin-right: 20px;
-    
-}
+// All other payment instrument goes into your JumiaPay Account. It should appear in your JumiaPay wallet within 24 hours.
 
-.content, .camp{
-    padding: 20px;
-}
-
-.bog th{
-    padding: 5px !important;
-    background-color: lightgray;
-}
-
-</style>
-</head>
-<body>
-
-<div class="box">
-<div class="box-header">
-    <ul class="list">
-        <li> <a href="shop-list?dcat=Electronics">Electronics</a> </li>
-        <li> <a href="shop-list?dcat=Computer and Accessories">Computer and Accessories</a> </li>
-        <li> <a href="shop-list?dcat=Home and Kitchen">Home and Kitchen</a> </li>
-        <li> <a href="shop-list?dcat=Phones and Tablets">Phones and Tablets</a> </li>
-    </ul>
-</div>
-<div class="content">
-Dear '.$username.', <br>
-'.$messageSend.'
-</div>
-
-<div class="camp">
-<table class="table table-bordered bog">
-<tr>
-<th>Delivery method</th>
-<th>Recipient details</th>
-</tr>
-<tr>
-<td>Delivery to Your Home or Office</td>
-<td>'.$username.', '.$phone.' </td>
-</tr>
-<tr>
-   <th colspan="2">Delivery address</th>
-</tr>
-<tr>
-   <td colspan="2">
-   '.$address.'
-   </td>
-</tr>
-</table>
-
-<h6>You ordered for:</h6>
-<table class="table table-bordereds bog">
-<tr>
-<th></th>
-<th>Item</th>
-<th>Quantity</th>
-<th>Price</th>
-</tr>';
-$sql = $conn->query("SELECT * FROM dcart WHERE orderid='$order'");
-if($sql->num_rows>0){
-    $total=$total_bill=0;
-    while($row=$sql->fetch_assoc()):
-    $total = $row['dtotal'];
-    $charges = $row['dcharge'];
-    $pay = $row['dpay_mth'];
-    $total_bill += $total;
-    $message .='
-    <tr>
-    <td>
-    <img src="../_product_images/'.$row['dimg'].'" style="max-width: 100px;" alt="">
-    </td>
-    <td>
-    <br>
-    '.$row['pname'].'
-    </td>
-    <td>
-    <br>
-    '.$row['dqty'].'
-    </td>
-    <td>
-    <br>
-    '.number_format($row['dprice']).'
-    </td>
-    </tr>';
-    endwhile; }$charges +=$charges;
-    $message .='
-</table>
-
-<table class="table table-bordereds">
-<tr>
-   <th>SHIPPING COST</th>
-   
-   <td>
-       &#8358;'.number_format($charges).'
-   </td>
-
-</tr>
-<tr>
-   <th>SHIPPING DISCOUNT</th>
-   <td>
-   &#8358;0   
-   </td>
-</tr>
-
-<tr>
-   <th>DISCOUNT</th>
-   <td>
-   &#8358;0       
-   </td>
-</tr>
-
-<tr>
-   <th>TOTAL</th>
-   <td>
-   &#8358;'.number_format($total_bill).'     
-   </td>
-</tr>
-
-<tr>
-   <th>PAYMENT METHOD</th>
-   <td>';
-   if($pay !='yespay'){
-     $message .='Payment on delivery/pick-up';
-    }else{
-         $message .='Paystack';
-    }
-   $message .='  </td>
-</tr>
-
-</tr>
-
-
-</table>
-
-
-</div>
-</div>
-</body>
-</html>
-
-';
-
-return $message;
-}
+// You can use the money in your wallet to buy on Jumia Nigeria right away. Just choose to pay by "JumiaPay" at checkout and the value in the wallet will be deducted for your next purchase. 
+// Otherwise, you can withdraw your money by clicking JumiaPay. 
+// For more details, please check our JumiaPay refund page. 
+// We hope to see you shop on Jumia soon! We received a return request for the following item(s):

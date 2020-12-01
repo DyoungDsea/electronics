@@ -82,12 +82,39 @@ $(document).ready(function(){
         magicFunction('Mark as Confirmed?', 'ajax-new', 'markProcess', 'order-view?orderid='+orderId, orderId, 'Confirmed!');
     })
 
+    $(document).on("click", "#markPaid", function(){
+        var orderId = $(this).attr("orderId");
+        magicFunction('Mark as Paid?', 'ajax-new', 'markPaid', 'order-view?orderid='+orderId, orderId, 'Confirmed!');
+    })
+
     $(document).on("click", "#markShip", function(){
-        // alert("yes");
         var orderId = $(this).attr("orderId");
         var rowId = $(this).attr("rowId");
         magicFunction('Mark as Dispatched?', 'ajax-new', 'markShip', 'order-view?orderid='+orderId, orderId, 'Dispatched!', rowId);
     })
+
+    $(document).on("click", "#markDelivered", function(){
+        var orderId = $(this).attr("orderId");
+        var rowId = $(this).attr("rowId");
+        magicFunction('Mark as Delivered?', 'ajax-new', 'markDelivered', 'order-view?orderid='+orderId, orderId, 'Delivered!', rowId);
+    })
+
+    $(document).on("click", "#markReturned", function(){
+        var orderId = $(this).attr("orderId");
+        var rowId = $(this).attr("rowId");
+        magicFunction('Mark as Returned?', 'ajax-new', 'markReturned', 'order-view?orderid='+orderId, orderId, 'Returned!', rowId);
+    })
+
+
+    $(document).on("click", "#corders", function(){
+        var orderId = $(this).attr("orderId");
+        var rowId = $(this).attr("rowId");
+        magicFunction('Mark as cancelled?', 'ajax-new', 'corders', 'order-view?orderid='+orderId, orderId, 'Returned!', rowId);
+    })
+
+
+
+
 
 })
 
@@ -128,14 +155,15 @@ function magicFunction(sweetTitle, dataPost, dataTitle, dataLink, dataId, dataSu
 }
 
 
-function sendAjaxMessage(dataPost, dataTitle, dataLink, dataId, sweetTitle, sweetType, dataValueA='', dataValueB='', dataValueC='' ){
+function sendAjaxMessage(dataPost, dataTitle, dataLink='', dataId, sweetTitle, sweetType, dataValueA='', dataValueB='', dataValueC='' ){
     $.ajax({
         url:dataPost,
         method:"POST",                    
         data:{Message:dataTitle, id:dataId, valueA:dataValueA, valueB:dataValueB, valueC:dataValueC},        
         success:function(){
             setInterval(function(){
-                window.location.assign(dataLink);
+                // window.location.assign(dataLink);
+                window.location.reload();
             },2000);             
         }
     }) .done(function(){

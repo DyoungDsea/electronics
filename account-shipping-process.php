@@ -7,7 +7,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $ship_id=date('YdmHis');
         $users = $conn->real_escape_string($_SESSION['userid']);
         
+        $sqlxv=$conn->query("SELECT * FROM `dship_address` WHERE userid='$users'");
+        if($sqlxv->num_rows==0){
+            $sql = $conn->query("INSERT INTO `dship_address` SET userid='$users', dship_id='$ship_id', daddress='$shipping', dstatus='yes' ");
+        }else{
         $sql = $conn->query("INSERT INTO `dship_address` SET userid='$users', dship_id='$ship_id', daddress='$shipping' ");
+        }
         if($sql){
             $_SESSION["msgs"]="Added successfully";
             header("Location:account-shipping-address");

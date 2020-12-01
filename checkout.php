@@ -2,10 +2,13 @@
     if (!isset($_SESSION['logged']) && $_SESSION['logged'] !== true) {
         header("location: login");
     }
+    $user =  $_SESSION['userid'];
 ?>
 
 <?php
-	include 'track.php';
+$row = $conn->query("SELECT daddress FROM login WHERE userid='$user'")->fetch_assoc();
+    include 'track.php';
+    // require 'address-default.php';
 ?>
 <body><!-- site --><div class="site">
         <?php include("mobile-header.php"); ?>
@@ -72,7 +75,7 @@
       
        <div class="form-group">
        <div class="form-check"><span class="input-check form-check-input"><span class="input-check__body">
-       <input class="input-check__input" checked type="checkbox" id="default"> <span class="input-check__box"></span> <span class="input-check__icon"><svg width="9px" height="7px"><path d="M9,1.395L3.46,7L0,3.5L1.383,2.095L3.46,4.2L7.617,0L9,1.395Z"/></svg> </span></span></span><label class="form-check-label" for="default">Use your shipping Default address</label></div>
+       <input class="input-check__input" checked value="<?php echo $row['daddress'];?>" type="checkbox" id="default"> <span class="input-check__box"></span> <span class="input-check__icon"><svg width="9px" height="7px"><path d="M9,1.395L3.46,7L0,3.5L1.383,2.095L3.46,4.2L7.617,0L9,1.395Z"/></svg> </span></span></span><label class="form-check-label" for="default">Use your shipping Default address</label></div>
 
        
        <div class="form-check mt-3"><span class="input-check form-check-input"><span class="input-check__body">
