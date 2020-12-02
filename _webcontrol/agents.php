@@ -69,7 +69,7 @@
                </div>
              </form>
       </div>
-      <div class="col-md-3"><button class="btn btn-primary it" data-toggle="modal" data-target="#add">Create New Store</button>
+      <div class="col-md-3"><button class="btn btn-primary it" data-toggle="modal" data-target="#add">Create New Agent</button>
       </div>
               
              </div>
@@ -105,6 +105,7 @@
                     <th>Fullname </th>
                     <th>Phone No</th>
                     <th>Email</th>
+                    <th>Location</th>
                     <th>Address</th>
                     <th>Status</th>
                     <th colspan="">---</th>
@@ -136,6 +137,7 @@ if($site->num_rows>=1){
 <td><?php echo $row['uname']; ?></td>
 <td><?php echo $row['dphone']; ?></td>
 <td><?php echo $row['email']; ?></td>
+<td><?php echo $row['dlocation']; ?></td>
 <td><?php echo $row['address']; ?></td>
 <td><?php if($row['dstatus']=='unban'){ echo "Active"; }else{ echo "Inactive"; } ?></td>
 <td>
@@ -215,7 +217,7 @@ if($site->num_rows>=1){
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title" id="addressModalLabel">Create New Store</h3>
+                        <h3 class="modal-title" id="addressModalLabel">Create New Agent</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -234,7 +236,24 @@ if($site->num_rows>=1){
 
 									<div class="form-group col-md-12">
 										<input type="text" name="phone" autocomplete="off" class="form-control" placeholder="Phone Number">
-									</div>
+                                    </div>
+                                    
+                                                                        
+                                    <div class="form-group col-md-12">
+                                        
+                                        <div class="form-group required-field">
+                                            <select name="location" id="" required class="form-control form-control-sm">
+                                            <option value="">Choose location </option>
+                                            <?php $lop = $conn->query("SELECT * FROM ddelivery GROUP BY dlocation ORDER BY dlocation");
+                                            if($lop->num_rows>0){
+                                                while($ram=$lop->fetch_assoc()):?>
+                                                    <option value="<?php echo $ram['dlocation']; ?>"><?php echo $ram['dlocation']; ?></option>
+                                                <?php endwhile; } ?>
+                                            </select>
+                                      
+                                        </div>
+
+                                    </div>
 
                                     <div class="form-group col-md-12">
 										<textarea name="message" autocomplete="off" class="form-control" placeholder="Address" rows="2"></textarea>
@@ -269,7 +288,7 @@ if($site->num_rows>=1){
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title" id="addressModalLabel">Edit Store Details</h3>
+                        <h3 class="modal-title" id="addressModalLabel">Edit Agent Details</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -291,6 +310,25 @@ if($site->num_rows>=1){
 									<div class="form-group col-md-12">
 										<input type="text" name="phone" value="<?php echo $row['dphone']; ?>" autocomplete="off" class="form-control" placeholder="Phone Number">
                                     </div>
+
+                                    <div class="form-group col-md-12">
+                                        
+                                        <div class="form-group required-field">
+                                            <select name="location" id="" required class="form-control form-control-sm">
+                                            <option value="">Choose location </option>
+                                            <?php $lop = $conn->query("SELECT * FROM ddelivery GROUP BY dlocation ORDER BY dlocation");
+                                            if($lop->num_rows>0){
+                                                while($ram=$lop->fetch_assoc()):?>
+                                                    <option <?php if($row['dlocation']==$ram['dlocation']) echo "selected"; ?> value="<?php echo $ram['dlocation']; ?>"><?php echo $ram['dlocation']; ?></option>
+                                                <?php endwhile; } ?>
+                                            </select>
+                                      
+                                        </div>
+
+                                    </div>
+
+                                   
+
                                     
                                     <div class="form-group col-md-12">
 										<textarea name="message" autocomplete="off" class="form-control" placeholder="Address" rows="2"><?php echo $row['address']; ?></textarea>

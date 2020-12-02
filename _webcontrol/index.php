@@ -46,7 +46,7 @@
                   <i class="fas fa-fw fa-comments"></i>
                 </div>
                 <?php 
-                $sky =$conn->query("SELECT * FROM `dcart_holder` WHERE dstatus ='pending' AND payment_status ='paid' ");
+                $sky =$conn->query("SELECT * FROM `dcart` WHERE dorder_status ='pending' AND dpayment_status ='paid' ");
                 ?>
                 <div class="mr-5">(<?php echo $sky->num_rows; ?>) Pending Orders</div>
               </div>
@@ -84,7 +84,7 @@
                   <i class="fas fa-fw fa-shopping-cart"></i>
                 </div>
                 <?php 
-                $sky =$conn->query("SELECT * FROM `dcart_holder` WHERE dstatus ='pending' AND dpay_mth ='ondelivery' ");
+                $sky =$conn->query("SELECT * FROM `dcart` WHERE dorder_status ='pending' AND dpay_mth ='ondelivery' ");
                 ?>
                 <div class="mr-5">(<?php echo $sky->num_rows; ?>) Pay on delivery</div>
               </div>

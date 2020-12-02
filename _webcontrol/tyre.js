@@ -114,9 +114,25 @@ $(document).ready(function(){
 
 
 
+    $(document).on("change", "#location", function(){
+        var option = $(this).find('option:selected');
+        var value= option.val();
+    
+        if (value != "") {
+            fireDataForMe('agent-fetch', 'Fetch', value, "#result");
+            fireDataForMe('agent-fetch', 'FetchOrder', value, "#resultorder");
+        }
+    
+        })
+
 
 
 })
+
+
+
+
+
 
 
 

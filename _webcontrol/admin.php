@@ -26,6 +26,10 @@
       <li class="nav-item">
         <a class="nav-link" href="agents"><i class="fas fa-circle-notch"></i> Manage Agents </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="assignment"><i class="fas fa-circle-notch"></i> Assign duties </a>
+      </li>
       
 
       <li class="nav-item dropdown">

@@ -7,13 +7,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     $phone = clean_up($_POST['phone']);
     $address = clean_up($_POST['message']);
     $name = clean_up($_POST['name']);
+    $location = clean_up($_POST['location']);
 
     if(isset($_POST['log'])){ 
         
         $userid = date("ymdhis").rand(10000, 999999);
         $pass = md5(clean_up($_POST['pass']));
 
-        $sql=$conn->query("INSERT INTO _security SET userid='$userid', email='$email', uname='$name', pword='$pass', drank='agent', address='$address', dphone='$phone', privilege='staff', dprivilege='agent'");
+        $sql=$conn->query("INSERT INTO _security SET userid='$userid', email='$email', dlocation='$location', uname='$name', pword='$pass', drank='agent', address='$address', dphone='$phone', privilege='staff', dprivilege='agent'");
         if($sql){
             $_SESSION['msgs']="Agent created successfully"; 
         }else{
@@ -22,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             header("Location: agents");
     }elseif(isset($_POST['logx'])){
         $userid = clean_up($_POST['id']);
-        $sql=$conn->query("UPDATE _security SET email='$email', uname='$name', address='$address', dphone='$phone' WHERE userid='$userid'");
+        $sql=$conn->query("UPDATE _security SET email='$email', dlocation='$location', uname='$name', address='$address', dphone='$phone' WHERE userid='$userid'");
         if($sql){
             $_SESSION['msgs']="Store updated successfully"; 
         }else{
