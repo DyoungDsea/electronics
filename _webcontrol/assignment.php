@@ -47,43 +47,48 @@
 }
 </style>
       <div class="container-fluid">
-      <div class="row">
-      <div class="col-md-9">
-      <form method="post" action="orders_filter" id="tarp">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="location">Choose Location</label>
-                    <select name="location" id="location" required class="form-control form-control-sm">
-                    <option value="">Choose location </option>
-                    <?php $lop = $conn->query("SELECT dlocation FROM dcart WHERE dorder_status='confirmed' OR dorder_status='dispatched' GROUP BY dlocation ORDER BY dlocation");
-                    if($lop->num_rows>0){
-                        while($ram=$lop->fetch_assoc()):?>
-                            <option value="<?php echo $ram['dlocation']; ?>"><?php echo $ram['dlocation']; ?></option>
-                        <?php endwhile; } ?>
-                    </select>
-                
-            </div>
-            <div class="mt-2">
-                <div id="result"></div>
-            </div>
-        </div>
-              
-      </div>
-      <!-- <div class="col-md-3 "><button class="btn btn-primary it" data-toggle="modal" data-target="#add">Add New Product</button>
-      </div> -->
-              
-             </div>
+      
       
       <br>
-     
+ 
  <!-- DataTables Example -->
  <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
             Orders <span class="text-danger"><?php if(isset($_GET['page_no']) AND @$_GET['page_no'] !=0){ echo "(".$_GET['page_no'].")";} ?></span></div>
           <div class="card-body">
+            <div class="row">
+                <div class="col-md-9">
+                <form method="post" action="assignment-process" id="tarp">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="location">Choose Location</label>
+                                <select name="location" id="location" required class="form-control form-control-sm">
+                                <option value="">Choose location </option>
+                                <?php $lop = $conn->query("SELECT dlocation FROM dcart WHERE dorder_status='confirmed' OR dorder_status='dispatched' GROUP BY dlocation ORDER BY dlocation");
+                                if($lop->num_rows>0){
+                                    while($ram=$lop->fetch_assoc()):?>
+                                        <option value="<?php echo $ram['dlocation']; ?>"><?php echo $ram['dlocation']; ?></option>
+                                    <?php endwhile; } ?>
+                                </select>
+                            
+                        </div>
+                        <div class="mt-2">
+                            <div id="result"></div>
+                        </div>
+                    </div>
+                        
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <!-- <label for="">Search here...</label> -->
+                        <input type="hidden" class="form-control" id="myInput" placeholder="Search">
+                    </div>
+                </div>
+                        </div>
+                        
             <div class="table-responsive"  style="min-height:200px" >
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <table class="table table-bordered" id="myDIV" width="100%" cellspacing="0">
                   <style>
                   tr,th,td{
                       font-size:12px;
@@ -93,27 +98,53 @@
                 <thead>
                   <tr>
                   <th>
-                    <div class="custom-control custom-checkbox">
+                    <!-- <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="customCheck">
                         <label class="custom-control-label" for="customCheck">Check All</label>
-                    </div>
+                    </div> -->---
                   </th>
                     <th>Store Name</th>
                     <th>Customer Name</th>
+                    <th>Location</th>
                     <th>Total Price(&#8358;)</th>
-                    <th>Payment Status</th>
                     <th>Transaction Status</th>
                     <th>Order Date</th>
                   </tr>
                 </thead>
-                <tbody id="resultorder">
-                  <tr>
-                  <td colspan="7" class="text-danger">Choose Location </td>
-                  </tr>
+                <tbody id="resultorders" >
+
+                <?php
+                $out = '';
+                $sql=$conn->query("SELECT * FROM login INNER JOIN dcart ON dcart.userid=login.userid WHERE dcart.dorder_status='confirmed' AND dcart.dagent_id IS NULL OR dcart.dorder_status='dispatched' AND dcart.dagent_id IS NULL ORDER BY dcart.id DESC");
+                if($sql->num_rows>0){
+                    
+                    while($row=$sql->fetch_assoc()):
+                        $out .='<tr>
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input checkMe" name="works[]" value="'. $row['id'].'" id="customCheck'. $row['id'].'">
+                              <label class="custom-control-label" for="customCheck'. $row['id'].'">Check this</label>
+                            </div>              
+                        </td>
+                        <td>'.$row['dcompany'].'</td>
+                        <td>'.$row['dlocation'].'</td>
+                        <td>'.$row['dname'].'</td>
+                        <td>'.number_format($row['dtotal']).'</td>                     
+                        <td>'. $row['dorder_status'].'</td>
+                        <td>'.$row['created_date'].'</td>
+                        
+                        </td>
+                      </tr>';
+                    endwhile;         
+                }
+echo $out;
+                ?>
+                  
                 
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-primary">Sumbit</button>
+          
+            <button type="submit" name="save" class="btn btn-primary">Sumbit</button>
 </div>
  
 
@@ -132,6 +163,21 @@
 <!-- /#wrapper -->
 <?php include("scripts.php"); ?>
 
+
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+
+    $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myDIV tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    });
+</script>
 
 <div class="modal fade" id="pass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

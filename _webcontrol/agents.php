@@ -239,21 +239,33 @@ if($site->num_rows>=1){
                                     </div>
                                     
                                                                         
-                                    <div class="form-group col-md-12">
-                                        
-                                        <div class="form-group required-field">
-                                            <select name="location" id="" required class="form-control form-control-sm">
-                                            <option value="">Choose location </option>
-                                            <?php $lop = $conn->query("SELECT * FROM ddelivery GROUP BY dlocation ORDER BY dlocation");
-                                            if($lop->num_rows>0){
-                                                while($ram=$lop->fetch_assoc()):?>
-                                                    <option value="<?php echo $ram['dlocation']; ?>"><?php echo $ram['dlocation']; ?></option>
-                                                <?php endwhile; } ?>
-                                            </select>
-                                      
-                                        </div>
+                  <div class="form-group col-md-12">
+                      
+                      <div class="form-group required-field">
+                          <select name="location" id="" required class="form-control form-control-sm">
+                          <option value="">Choose location </option>
+                          <?php $lop = $conn->query("SELECT * FROM ddelivery GROUP BY dlocation ORDER BY dlocation");
+                          if($lop->num_rows>0){
+                              while($ram=$lop->fetch_assoc()):?>
+                                  <option value="<?php echo $ram['dlocation']; ?>"><?php echo $ram['dlocation']; ?></option>
+                              <?php endwhile; } ?>
+                          </select>
+                    
+                      </div>
 
-                                    </div>
+                  </div>
+
+                  <div class="form-group col-md-12">
+                      <input type="text" class="form-control" placeholder="Account Name" name="account_name">
+                  </div>
+
+                  <div class="form-group col-md-12">
+                      <input type="text" class="form-control" placeholder="Account Number" name="account_num">
+                  </div>
+
+                  <div class="form-group col-md-12">
+                      <input type="text" class="form-control" placeholder="Bank Name" name="bank">
+                  </div>
 
                                     <div class="form-group col-md-12">
 										<textarea name="message" autocomplete="off" class="form-control" placeholder="Address" rows="2"></textarea>
@@ -328,11 +340,26 @@ if($site->num_rows>=1){
                                     </div>
 
                                    
-
+                  
                                     
                                     <div class="form-group col-md-12">
 										<textarea name="message" autocomplete="off" class="form-control" placeholder="Address" rows="2"><?php echo $row['address']; ?></textarea>
-									</div>
+                  </div>
+                  
+                  <!-- <hr> -->
+                  <div class="form-group col-md-12"> <hr>
+                  <p>Account Details</p>
+                      <input type="text" value="<?php echo $row['dacc_name']; ?>" class="form-control" placeholder="Account Name" name="acc_name">
+                  </div>
+
+                  <div class="form-group col-md-12">
+                      <input type="text" class="form-control" value="<?php echo $row['dacc_number']; ?>" placeholder="Account Number" name="acc_number">
+                  </div>
+
+                  <div class="form-group col-md-12">
+                      <input type="text" class="form-control" value="<?php echo $row['dbank']; ?>" placeholder="Bank Name" name="bank">
+                  </div>
+
 
 									</div>
                                         <input type="hidden" name="id" value="<?php echo $row['userid']; ?>" class="form-control form-control-sm" required>

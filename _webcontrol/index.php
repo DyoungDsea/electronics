@@ -136,7 +136,7 @@
 
 
 
-<?php include("scripts.php"); ?>
+<?php include("scripts.php"); unset($_SESSION['userid'])?>
 
 </body>
 

@@ -12,7 +12,7 @@ if(isset($_POST['search']) AND $_POST['search']=='Fetch'){
                     <select name="agent" id="agent" required class="form-control form-control-sm">
                     <option value="">Choose agent </option>';
         while($ram=$sql->fetch_assoc()):
-            $out .='<option value="'.$ram['uname'].'">'.$ram['uname'].'</option>';
+            $out .='<option value="'.$ram['userid'].'">'.$ram['uname'].'</option>';
         endwhile;
         $out .=' </select>
                 
@@ -28,12 +28,10 @@ if(isset($_POST['search']) AND $_POST['search']=='Fetch'){
         while($row=$sql->fetch_assoc()):
             $out .='<tr>
             <td>
-            <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck'. $row['id'].'">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input checkMe" name="works['. $row['id'].']" value="'. $row['id'].'" id="customCheck'. $row['id'].'">
                   <label class="custom-control-label" for="customCheck'. $row['id'].'">Check this</label>
-              </div>
-
-              
+                </div>              
             </td>
             <td>'.$row['dcompany'].'</td>
             <td>'.$row['dname'].'</td>
@@ -44,7 +42,7 @@ if(isset($_POST['search']) AND $_POST['search']=='Fetch'){
             
             </td>
           </tr>';
-        endwhile;
+        endwhile;         
     }
 
     echo $out;

@@ -120,10 +120,48 @@ $(document).ready(function(){
     
         if (value != "") {
             fireDataForMe('agent-fetch', 'Fetch', value, "#result");
-            fireDataForMe('agent-fetch', 'FetchOrder', value, "#resultorder");
+            // fireDataForMe('agent-fetch', 'FetchOrder', value, "#resultorder");
+            $("#myInput").val(value)
+            var value = $(this).val().toLowerCase();
+            $("#myDIV tbody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+
         }
     
         })
+
+        $(document).on("click", "#customCheck", function(){
+            // var checkMe = $(".checkMe");
+            CheckPowerAll("#customCheck");
+        })
+
+        // $('#myTable').DataTable();
+
+
+
+        $(document).on("click", "#approve", function(){
+            var vid = $(this).attr("vid");        
+            var user = $(this).attr("user"); 
+            magicFunction('Approve this request?', 'ajax-new', 'Approve', '', vid, 'Approved!', user);
+        })
+    
+        $(document).on("click", "#cancel", function(){
+            var vid = $(this).attr("vid");        
+            var user = $(this).attr("user");      
+            var amount = $(this).attr("amount");    
+            magicFunction('Cancel this request?', 'ajax-new', 'CanReq', '', vid, 'Cancelled!', user, amount);
+        })
+    
+    
+        $(document).on("click", "#paid", function(){
+            var vid = $(this).attr("vid");         
+            var user = $(this).attr("user");     
+            magicFunction('Mark as Paid?', 'ajax-new', 'Paid', '', vid, 'Paid!', user); 
+        })
+
+
+
 
 
 
@@ -134,7 +172,20 @@ $(document).ready(function(){
 
 
 
+function CheckPowerAll(dataId) {
+    var elements = $(".checkMe");
+    var l = elements.length;
 
+    if ($(dataId).is(":checked")) {
+        for (var i = 0; i < l; i++) {
+            elements[i].checked = true;
+        }
+    } else {
+        for (var i = 0; i < l; i++) {
+            elements[i].checked = false;
+        }
+    }
+}
 
 
 

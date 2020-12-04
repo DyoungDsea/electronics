@@ -210,6 +210,36 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     }
 
 
+        
+    if(isset($_POST['Message']) AND $_POST['Message']=='Approve'){
+        $wid = $conn->real_escape_string($_POST['id']);
+        $user = $conn->real_escape_string($_POST['valueA']);
+        $conn->query("UPDATE dwithdrawal SET dstatus='approved' WHERE dwithid='$wid' AND userid='$user'");
+        
+    }
+
+    if(isset($_POST['Message']) AND $_POST['Message']=='Paid'){
+        $wid = $conn->real_escape_string($_POST['id']);
+        $user = $conn->real_escape_string($_POST['valueA']); 
+        $conn->query("UPDATE dwithdrawal SET dstatus='paid' WHERE dwithid='$wid' AND userid='$user'");
+        
+    }
+
+    if(isset($_POST['Message']) AND $_POST['Message']=='CanReq'){
+        $wid = $conn->real_escape_string($_POST['id']);
+        $user = $conn->real_escape_string($_POST['valueA']);
+        $amount = $conn->real_escape_string($_POST['valueB']);
+        $sql = $conn->query("UPDATE dwithdrawal SET dstatus='cancelled' WHERE dwithid='$wid' AND userid='$user'");
+        if($sql){
+            $sql = $conn->query("SELECT dwallet FROM _security WHERE userid='$user'")->fetch_assoc();
+            $wall = $sql['dwallet'];
+            $final  =(INT)$amount + $wall;
+            $conn->query("UPDATE _security SET dwallet='$final' WHERE duserid='$user'");
+        }
+        
+    }
+
+
 
 
 

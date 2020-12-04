@@ -3,12 +3,14 @@
 
   <title>Universal Electronics | Admin Dashboard</title>
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <!-- <link href="dataTables.bootstrap4.css" rel="stylesheet"> -->
   <link href="css/sb-admin.css" rel="stylesheet">
   <link href="../css/sweetalert2.min.css" rel="stylesheet">
   <link href="../css/toastr.min.css" rel="stylesheet">
   <link rel="icon" href="../assets/images/slider/logow.png">
   <link rel="stylesheet" href="../datepicker/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+  <!-- <link rel="stylesheet" type="text/css" href="DataTables/css/dataTables.bootstrap4.min.css"/> -->
   <style>
  
 input[type='number'] {

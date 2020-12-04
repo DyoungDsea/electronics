@@ -12,6 +12,9 @@
   <script src="tyre.js"></script>
   <script src="../image_upload/load-image.all.min.js"></script>
   <script src="../js/sweetalert2.all.min.js"></script>
+  <!-- <script type="text/javascript" src="DataTables/js/dataTables.bootstrap4.min.js"></script> -->
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js">
+  </script>
  <script>
  function fire(f){
    var image= f.files[0];

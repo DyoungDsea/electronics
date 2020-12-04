@@ -20,17 +20,33 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="new-store"><i class="fas fa-circle-notch"></i> Manage Stores </a>
+        <a class="nav-link" href="new-store"><i class="fas fa-fw fa-cog"></i> Manage Stores </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="agents"><i class="fas fa-circle-notch"></i> Manage Agents </a>
+        <a class="nav-link" href="agents"><i class="fas fa-fw fa-cog"></i> Manage Agents </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="assignment"><i class="fas fa-circle-notch"></i> Assign duties </a>
+        <a class="nav-link" href="my-wallet"><i class="fas fa-fw fa-cog"></i> My Wallet </a>
       </li>
+
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="assignment"><i class="fas fa-circle-notch"></i>  </a>
+      </li> -->
       
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-fw fa-shopping-cart"></i>
+          <span>Manage Duties</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" href="assignment">Assign duties</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="pending-duties">Pending Duties</a>          
+        </div>
+      </li>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,6 +74,26 @@
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Withdrawal Request</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" href="pending-request">Pending Request</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="approved-request">Approved Request</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="paid-request">Paid Request</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="cancelled-request">Cancelled Request</a>
+          <div class="dropdown-divider"></div>
+         
+         </a>
+          
+        </div>
+      </li>
+
+      <!-- <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-fw fa-store"></i>
           <span style="font-size:15px">Manage Subscriptions</span>
         </a>
@@ -77,7 +113,7 @@
           <a class="dropdown-item" href="sub-cancel">Cancelled Subscriptions</a>
           
         </div>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" href="accounts"><i class="fa fa-address-book"></i> Manage Customers </a>
       </li>
