@@ -26,7 +26,7 @@ require 'star-rating.php';
 <meta name="format-detection" content="telephone=no">
 <title>Home Two — Red Parts </title>
 
-<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="icon" type="image/png" href="images/favi.gif">
 <!-- fonts -->
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i">

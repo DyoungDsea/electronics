@@ -89,7 +89,7 @@ function clean_reals($value){
             <i class="fas fa-table"></i>
             Manage Products <span class="text-danger"></span></div>
           <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive" style="max-height: 300px;">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <style>
                   tr,th,td{

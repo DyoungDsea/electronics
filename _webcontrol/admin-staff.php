@@ -29,8 +29,8 @@
           <span>Manage Orders</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-          <a class="dropdown-item" href="pay-on-delivery">Pay on Delivery</a>
-          <div class="dropdown-divider"></div>
+          <!-- <a class="dropdown-item" href="pay-on-delivery">Pay on Delivery</a>
+          <div class="dropdown-divider"></div> -->
           <a class="dropdown-item" href="orders">Pending Orders</a>
           <div class="dropdown-divider"></div>
           <!-- <a class="dropdown-item" href="processed">Processed Orders</a>

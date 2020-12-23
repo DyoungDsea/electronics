@@ -17,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $userid = date("ymdhis").rand(10000, 999999);
         $pass = md5(clean_up($_POST['pass']));
 
-        $sql=$conn->query("INSERT INTO _security SET userid='$userid', email='$email', dlocation='$location', uname='$name', pword='$pass', drank='agent', address='$address', dphone='$phone', privilege='staff', dprivilege='agent', dbank='$bank', dacc_name='$acc_name', dacc_number='$acc_number' ");
+        $sql=$conn->query("INSERT INTO _security SET userid='$userid', email='$email', dlocation='$location', uname='$name', pword='$pass', drank='agent', address='$address', dphone='$phone', privilege='staff', dprivilege='Orders', dbank='$bank', dacc_name='$acc_name', dacc_number='$acc_number' ");
         if($sql){
             $_SESSION['msgs']="Agent created successfully"; 
         }else{

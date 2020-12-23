@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2020 at 11:20 PM
+-- Generation Time: Dec 21, 2020 at 12:05 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -185,6 +185,15 @@ CREATE TABLE `dcart` (
   `dcharge` varchar(100) NOT NULL,
   `dtotal` varchar(100) NOT NULL,
   `dimg` varchar(100) DEFAULT NULL,
+  `dstore_id` varchar(45) DEFAULT NULL,
+  `dcompany` varchar(100) DEFAULT NULL,
+  `dpayment_status` varchar(10) DEFAULT 'pending',
+  `dorder_status` varchar(15) DEFAULT 'pending',
+  `dlocation` text NOT NULL,
+  `dpay_mth` varchar(20) DEFAULT 'yespay',
+  `daddress` text NOT NULL,
+  `dagent_id` varchar(30) DEFAULT NULL,
+  `dagent_name` varchar(50) DEFAULT NULL,
   `created_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -192,27 +201,19 @@ CREATE TABLE `dcart` (
 -- Dumping data for table `dcart`
 --
 
-INSERT INTO `dcart` (`id`, `userid`, `orderid`, `dpid`, `pname`, `dsku`, `dbrand`, `dvcode`, `dprice`, `dqty`, `dcharge`, `dtotal`, `dimg`, `created_date`) VALUES
-(5, '21052020135731', '200530143624', '05182020261405', 'Maxxis MAXXIS TYRE 205 65R15', '20052620-2002', 'Kelly', 'TOB-202005U2002-S', '99000', '1', '1000', '99000', '202005144018-1', '2020-05-30 12:37:50'),
-(6, '21052020135731', '200530143624', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '3', '1000', '270000', '202005141117-1', '2020-05-30 12:37:50'),
-(7, '21052020135731', '200530144044', '05342020201305', 'MICHELIN 275/45R21', '20052036-3601', 'Golden Crown', 'TOB-203605U3601-S', '76000', '1', '1000', '76000', '202005135434-1', '2020-05-30 20:26:09'),
-(8, '21052020135731', '200530144044', '05182020261405', 'Maxxis MAXXIS TYRE 205 65R15', '20052620-2002', 'Kelly', 'TOB-202005U2002-S', '99000', '2', '1000', '198000', '202005144018-1', '2020-05-30 20:26:09'),
-(9, '21052020135731', '200530144044', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '1', '1000', '90000', '202005141117-1', '2020-05-30 20:26:09'),
-(10, '21052020135731', '200530222609', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '1', '500', '90000', '202005141117-1', '2020-05-30 20:44:26'),
-(11, '21052020135731', '200608173004', '05342020201305', 'MICHELIN 275/45R21', '20052036-3601', 'Golden Crown', 'TOB-203605U3601-S', '85500', '1', '1000', '85500', '202005135434-1', '2020-06-08 15:58:49'),
-(12, '29052020100934', '200623104224', '06452020181606', 'Battery', '20061846-4604', 'Sakura', 'TOB-204606U4604-S', '5000', '1', '500', '5000', '202006161245-1', '2020-06-23 11:15:41'),
-(13, '29052020100934', '200623131546', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '1', '500', '90000', '202005141117-1', '2020-06-23 12:41:12'),
-(14, '29052020100934', '200623144117', '05342020201305', 'MICHELIN 275/45R21', '20052036-3601', 'Golden Crown', 'TOB-203605U3601-S', '85500', '1', '500', '85500', '202005135434-1', '2020-06-23 13:01:43'),
-(16, '29052020100934', '200626161054', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '1', '500', '90000', '202005141117-1', '2020-06-26 15:41:06'),
-(17, '29052020100934', '200626161054', '06232020181306', 'Mobil 1 Full Synthetic', '20061826-2601', 'Total', 'TOB-202606U2601-S', '7840', '2', '500', '15680', '202006135123-1', '2020-06-26 15:41:06'),
-(18, '29052020100934', '200626174110', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '2', '500', '180000', '202005141117-1', '2020-06-26 15:44:21'),
-(19, '29052020100934', '200626174110', '05322020201305', 'Maxxis MAXXIS TYRE 205 65R15', '20052034-3401', 'Evergreen', 'TOB-203405U3401-S', '113050', '1', '500', '113050', '202005130632-1', '2020-06-26 15:44:21'),
-(24, '29052020100934', '200629150031', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '3', '500', '270000', '202005141117-1', '2020-06-29 13:01:21'),
-(25, '29052020100934', '200629150419', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '3', '200', '270000', '202005141117-1', '2020-06-29 13:07:54'),
-(26, '29052020100934', '200629150758', '06422020181606', 'Battery', '20061843-4304', 'Sakura', 'TOB-204306U4304-S', '5000', '2', '200', '10000', '202006161242-1', '2020-06-29 13:10:52'),
-(27, '29052020100934', '200629150758', '06232020181306', 'Mobil 1 Full Synthetic', '20061826-2601', 'Total', 'TOB-202606U2601-S', '7840', '1', '200', '7840', '202006135123-1', '2020-06-29 13:10:52'),
-(28, '29052020100934', '200629151057', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '2', '500', '180000', '202005141117-1', '2020-06-29 13:16:14'),
-(29, '29052020100934', '200629151618', '05172020201405', 'Brandix Brake Kit BDX-750Z370-S', '20052020-2002', 'Blacklion', 'TOB-202005U2002-S', '90000', '2', '500', '180000', '202005141117-1', '2020-06-29 13:25:53');
+INSERT INTO `dcart` (`id`, `userid`, `orderid`, `dpid`, `pname`, `dsku`, `dbrand`, `dvcode`, `dprice`, `dqty`, `dcharge`, `dtotal`, `dimg`, `dstore_id`, `dcompany`, `dpayment_status`, `dorder_status`, `dlocation`, `dpay_mth`, `daddress`, `dagent_id`, `dagent_name`, `created_date`) VALUES
+(31, '29052020100934', '201126095719', '20111802514936439826', 'Notebook', '20111849-4902', 'Computer and Accessories', 'TOB-204911U4902-S', '320000', '1', '1000', '321000', '202011145149-1', '91234567899834', 'Universal Electronics', 'paid', 'confirmed', '4 Toyin Street Ikeja', 'yespay', ' 	No 11, Redemption Street Rumuekini . River State', '201203031508784570', 'Babatunde Fashola', '2020-11-26 10:04:03'),
+(32, '29052020100934', '201126095719', '20112004495564675344', 'Apple MacBook Pro 13', '20112056-5604', 'Apple', 'NIG-205611U5604-S', '760000', '1', '1000', '761000', '202011164956-1', '201120035323502137', 'IsaacNewton Ltd', 'paid', 'confirmed', '4 Toyin Street Ikeja', 'yespay', ' 	No 11, Redemption Street Rumuekini . River State', '201203031508784570', 'Babatunde Fashola', '2020-11-26 10:04:03'),
+(33, '21052020135731', '201126150911635594', '20112004495564675344', 'Apple MacBook Pro 13', '20112056-5604', 'Apple', 'NIG-205611U5604-S', '760000', '1', '500', '760500', '202011164956-1', '201120035323502137', 'IsaacNewton Ltd', 'paid', 'returned', 'Yaba Area', 'yespay', ' 	No 11, Redemption Street Rumuekini . River State', NULL, NULL, '2020-11-26 14:14:54'),
+(34, '21052020135731', '201126150911635594', '20112301311611523823', 'SHARE THIS PRODUCT   Haier Thermocool Single Door Small Refrigerator 142 MBS R6 SLV', '20112316-1601', 'LG', 'NIG-201611U1601-S', '73000', '1', '500', '73500', '202011133116-1', '91234567899834', 'Universal Electronics', 'paid', 'delivered', 'Ogba', 'yespay', ' 	No 11, Redemption Street Rumuekini . River State', NULL, NULL, '2020-11-26 14:14:54'),
+(35, '21052020135731', 'Elect-201126041705', '20112301062862106907', 'Dexter 43&quot; Inches High Standard LED TV', '20112328-2801', 'Dexter', 'NIG-202811U2801-S', '73000', '1', '200', '73200', '202011130628-1', '91234567899834', 'Universal Electronics', 'paid', 'delivered', 'Yaba Area', 'yespay', ' 	No 11, Redemption Street Rumuekini . River State', NULL, NULL, '2020-11-26 15:22:21'),
+(36, '21052020135731', 'Elect-201126041705', '20111805051198890337', 'Infinix Hot 9', '20111811-1105', 'Phones and Tablets', 'NIG-201111U1105-S', '46000', '1', '200', '46200', '202011170511-1', '91234567899834', 'Universal Electronics', 'paid', 'confirmed', 'Ogba', 'yespay', ' 	No 11, Redemption Street Rumuekini . River State', NULL, NULL, '2020-11-26 15:22:21'),
+(37, '21052020135731', '201201082245304916', '20112004495564675344', 'Apple MacBook Pro 13', '20112056-5604', 'Apple', 'NIG-205611U5604-S', '760000', '1', '500', '760500', '202011164956-1', '201120035323502137', 'IsaacNewton Ltd', 'cancelled', 'cancelled', 'Ogba', 'yespay', ' 	No 11, Redemption Street Rumuekini . River State', NULL, NULL, '2020-12-01 07:29:32'),
+(38, '21052020135731', '201201082245304916', '20111802514936439826', 'Notebook', '20111849-4902', 'Computer and Accessories', 'TOB-204911U4902-S', '320000', '1', '500', '320500', '202011145149-1', '91234567899834', 'Universal Electronics', 'cancelled', 'cancelled', 'Yaba Area', 'yespay', ' 	No 11, Redemption Street Rumuekini . River State', NULL, NULL, '2020-12-01 07:29:32'),
+(40, '21052020135731', '201201120716577837', '20112301004396754025', 'Hisense TV 40 B5100 - 40', '20112343-4301', 'Hisense', 'NIG-204311U4301-S', '80000', '1', '500', '80500', '202011130043-1', '91234567899834', 'Universal Electronics', 'paid', 'confirmed', 'Yaba Area', 'yespay', ' 	No 11, Redemption Street Rumuekini . River State', '201201033434497519', NULL, '2020-12-01 11:51:42'),
+(42, '21052020135731', '201201125601985266', '20111801174710175347', 'Notebook', '20111848-4801', 'Computer and Accessories', 'TOB-204811U4801-S', '250000', '1', '1000', '251000', '202011131747-1', '91234567899834', 'Universal Electronics', 'paid', 'dispatched', 'Abule Egba', 'yespay', 'No 1, Aso rock villa, Abuja', NULL, NULL, '2020-12-01 11:57:45'),
+(43, '21052020135731', '201201125748685242', '20111801282770781318', 'Notebook', '20111827-2701', 'Computer and Accessories', 'TOB-202711U2701-S', '270000', '1', '1000', '271000', '202011132827-1', '91234567899834', 'Universal Electronics', 'paid', 'confirmed', 'Abule Egba', 'yespay', 'No 1, Aso rock villa, Abuja', '201201033434497519', NULL, '2020-12-01 11:59:17'),
+(44, '21052020135731', '201201010924774050', '20112301311611523823', 'SHARE THIS PRODUCT   Haier Thermocool Single Door Small Refrigerator 142 MBS R6 SLV', '20112316-1601', 'LG', 'NIG-201611U1601-S', '73000', '1', '1000', '74000', '202011133116-1', '91234567899834', 'Universal Electronics', 'pending', 'pending', 'Abule Egba', 'ondelivery', 'No 1, Aso rock villa, Abuja', NULL, NULL, '2020-12-01 12:14:02');
 
 -- --------------------------------------------------------
 
@@ -376,7 +377,8 @@ INSERT INTO `dship_address` (`id`, `dship_id`, `userid`, `daddress`, `dstatus`) 
 (5, '20202606122822', '26062020100736', ' No 1 Redemption Street, Takete Onisu, Yagba East LGA, River State', 'yes'),
 (6, '20202606161241', '29052020100934', 'No 11, Redemption Street Rumuekini . River State', 'no'),
 (7, '20202906152553', '29052020100934', 'This is too much i don\'t understand it', 'no'),
-(8, '20202906174240', '29052020100934', 'This is Young Elefiku testing', 'yes');
+(8, '20202906174240', '29052020100934', 'This is Young Elefiku testing', 'yes'),
+(9, '20202611151328', '21052020135731', 'No 1, Aso rock villa, Abuja', 'yes');
 
 -- --------------------------------------------------------
 
@@ -493,7 +495,33 @@ INSERT INTO `dtracker` (`id`, `dpid`, `dstaff_id`, `dstatus`, `ddate`) VALUES
 (15, '200623144117', '05062020122454', 'Mark as paid', '2020-06-24 02:55:47'),
 (16, '200623144117', '05062020122454', 'Mark as delivered', '2020-06-24 02:56:04'),
 (17, '2007020315380', '91234567899834', 'Mark as approved', '2020-07-02 03:50:45'),
-(18, '2007020507380', '91234567899834', 'Mark as declined(subscription)', '2020-07-02 04:09:04');
+(18, '2007020507380', '91234567899834', 'Mark as declined(subscription)', '2020-07-02 04:09:04'),
+(19, 'Elect-201126041705', '201120035323502137', 'Mark as confirmed', '2020-11-27 14:31:05'),
+(20, 'Elect-201126041705', '201120035323502137', 'Mark as confirmed', '2020-11-27 16:08:30'),
+(21, 'Elect-201126041705', '201120035323502137', 'Mark as confirmed', '2020-11-27 16:13:31'),
+(22, 'Elect-201126041705', '201120035323502137', 'Mark as confirmed', '2020-11-27 16:16:05'),
+(23, '201126150911635594', '201120035323502137', 'Mark as confirmed', '2020-11-30 11:40:26'),
+(24, '201126150911635594', '201120035323502137', 'Mark as dispatched', ''),
+(25, 'Elect-201126041705', '201120035323502137', 'Mark as confirmed', '2020-11-30 13:09:15'),
+(26, 'Elect-201126041705', '201120035323502137', 'Mark as dispatched', ''),
+(27, 'Elect-201126041705', '201120035323502137', 'Mark as delivered', '2020-11-30 01:13:16'),
+(28, '201126150911635594', '201120035323502137', 'Mark as confirmed', '2020-11-30 13:16:25'),
+(29, '201126150911635594', '201120035323502137', 'Mark as delivered', ''),
+(30, '201126150911635594', '201120035323502137', 'Mark as delivered', ''),
+(31, '201126150911635594', '201120035323502137', 'Mark as delivered', ''),
+(32, '201126150911635594', '201120035323502137', 'Mark as delivered', '2020-11-30 13:24:53'),
+(33, '201126150911635594', '201120035323502137', 'Mark as delivered', '2020-11-30 13:27:40'),
+(34, '201126150911635594', '201120035323502137', 'Mark as returned', '2020-11-30 13:44:24'),
+(35, '201126150911635594', '201120035323502137', 'Mark as dispatched', '2020-11-30 13:45:30'),
+(36, '201126150911635594', '201120035323502137', 'Mark as dispatched', '2020-11-30 13:45:30'),
+(37, '201126150911635594', '201120035323502137', 'Mark as delivered', '2020-11-30 14:32:08'),
+(38, 'Elect-201126041705', '201120035323502137', 'Mark as delivered', '2020-11-30 15:37:34'),
+(39, '201201125601985266', '201120035323502137', 'Mark as confirmed', '2020-12-01 13:30:24'),
+(40, '201201125601985266', '201120035323502137', 'Mark as dispatched', '2020-12-01 14:02:57'),
+(41, '201201125601985266', '201120035323502137', 'Mark as dispatched', '2020-12-01 14:02:57'),
+(42, '201126095719', '91234567899834', 'Mark as confirmed', '2020-12-01 14:30:28'),
+(43, '201201125748685242', '201201033434497519', 'Mark as confirmed', '2020-12-21 10:00:16'),
+(44, '201201120716577837', '201201033434497519', 'Mark as confirmed', '2020-12-21 10:02:47');
 
 -- --------------------------------------------------------
 
@@ -515,6 +543,31 @@ CREATE TABLE `dwishlist` (
 INSERT INTO `dwishlist` (`id`, `wish_id`, `userid`, `pid`) VALUES
 (4, '200603014223', '21052020135731', 'undefined'),
 (5, '200608122339', '29052020100934', '05172020201405');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dwithdrawal`
+--
+
+CREATE TABLE `dwithdrawal` (
+  `id` int(11) NOT NULL,
+  `dwithid` varchar(20) DEFAULT NULL,
+  `userid` varchar(20) DEFAULT NULL,
+  `dname` varchar(50) DEFAULT NULL,
+  `damount` int(11) NOT NULL,
+  `dstatus` varchar(10) NOT NULL DEFAULT 'pending',
+  `ddate` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `dwithdrawal`
+--
+
+INSERT INTO `dwithdrawal` (`id`, `dwithid`, `userid`, `dname`, `damount`, `dstatus`, `ddate`) VALUES
+(3, '20120410303835528', '91234567899834', 'admin : Universal Electronics', 4000, 'paid', '2020-12-04 10:30:38'),
+(4, '201204105622445241', '91234567899834', 'admin : Universal Electronics', 3000, 'cancelled', '2020-12-04 10:56:22'),
+(5, '201204105631723737', '91234567899834', 'admin : Universal Electronics', 5000, 'pending', '2020-12-04 10:56:31');
 
 -- --------------------------------------------------------
 
@@ -574,7 +627,19 @@ INSERT INTO `history` (`id`, `userid`, `orderid`, `dpid`, `pname`, `amt_paid`, `
 (35, '', '200629150758', '200629031053', 'Battery & Mobil 1 Full Synthetic & ', '19040', '2020-06-29 14:10:53'),
 (36, '', '200629151057', '200629031614', 'Brandix Brake Kit BDX-750Z370-S & ', '181000', '2020-06-29 14:16:14'),
 (37, '', '200629151618', '200629032553', 'Brandix Brake Kit BDX-750Z370-S & ', '181000', '2020-06-29 14:25:53'),
-(38, '', '200702144330', '200702025648', 'Brandix Brake Kit BDX-750Z370-S & ', '91000', '2020-07-02 13:56:48');
+(38, '', '200702144330', '200702025648', 'Brandix Brake Kit BDX-750Z370-S & ', '91000', '2020-07-02 13:56:48'),
+(39, '', '201126095719', '201126110405', 'Notebook & Apple MacBook Pro 13 & ', '1084000', '2020-11-26 11:04:07'),
+(40, '29052020100934', 'Elect-201126022502', '201126022520', 'Notebook & Apple MacBook Pro 13 & ', '1082000', '2020-11-26 14:25:20'),
+(41, '', '201126150911635594', '201126031454', 'Apple MacBook Pro 13 & SHARE THIS PRODUCT   Haier Thermocool Single Door Small Refrigerator 142 MBS ', '835000', '2020-11-26 15:14:54'),
+(42, '', 'Elect-201126041705', '201126042222', 'Dexter 43&quot; Inches High Standard LED TV & Infinix Hot 9 & ', '119800', '2020-11-26 16:22:22'),
+(43, '', '201201082004409639', '201201082110', 'Apple MacBook Pro 13,Notebook,', '1084000', '2020-12-01 08:21:10'),
+(44, '', '201201082245304916', '201201082932', 'Apple MacBook Pro 13,Notebook,', '1082000', '2020-12-01 08:29:32'),
+(45, '', '201201120350164803', '201201120513', 'Dexter 43&quot; Inches High Standard LED TV,', '73500', '2020-12-01 12:05:13'),
+(46, '', '201201120716577837', '201201125142', 'Hisense TV 40 B5100 - 40,', '80500', '2020-12-01 12:51:42'),
+(47, '', '201201125145723574', '201201125558', 'Infinix Hot 9,', '47000', '2020-12-01 12:55:58'),
+(48, '', '201201125601985266', '201201125745', 'Notebook,', '251000', '2020-12-01 12:57:45'),
+(49, '', '201201125748685242', '201201125918', 'Notebook & ', '271000', '2020-12-01 12:59:18'),
+(50, '', '201201010924774050', '201201011402', 'SHARE THIS PRODUCT   Haier Thermocool Single Door Small Refrigerator 142 MBS R6 SLV,', '74000', '2020-12-01 13:14:02');
 
 -- --------------------------------------------------------
 
@@ -591,7 +656,7 @@ CREATE TABLE `login` (
   `dphone` varchar(20) NOT NULL,
   `daddress` text NOT NULL,
   `dstatuss` varchar(10) NOT NULL DEFAULT 'active',
-  `referrer` varchar(30) NOT NULL,
+  `referrer` varchar(30) DEFAULT NULL,
   `dwallet` varchar(100) NOT NULL,
   `created_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -601,10 +666,10 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`id`, `userid`, `dname`, `dpass`, `demail`, `dphone`, `daddress`, `dstatuss`, `referrer`, `dwallet`, `created_date`) VALUES
-(1, '21052020135731', 'Young Elefiku', '827ccb0eea8a706c4c34a16891f84e7b', 'youngelefiku@gmail.com', '08061382683', 'Aso Rock Villa, Abuja', 'active', 'NULL', '105000', '2020-05-21 12:57:31'),
-(2, '29052020100934', 'Elefiku Young', '4adf7d6eebb0266197b2d52a6273865b', 'youngelefiku44@gmail.com', '08061382683', 'PHC', 'active', 'NULL', '97000', '2020-05-29 09:09:34'),
+(1, '21052020135731', 'Young Elefiku', '4adf7d6eebb0266197b2d52a6273865b', 'youngelefiku@gmail.com', '08061382683', 'Aso Rock Villa, Abuja', 'active', NULL, '105000', '2020-05-21 12:57:31'),
+(2, '29052020100934', 'Elefiku Young', '4adf7d6eebb0266197b2d52a6273865b', 'youngelefiku44@gmail.com', '08061382683', 'PHC', 'active', NULL, '97000', '2020-05-29 09:09:34'),
 (3, '04062020182631', 'Paul Elefiku', '6c63212ab48e8401eaf6b59b95d816a9', 'paulelefiku44@gmail.com', '08061382683', 'PHC', 'active', '21052020135731', '0', '2020-06-04 17:26:31'),
-(4, '26062020100736', 'Elefiku Young', '4adf7d6eebb0266197b2d52a6273865b', 'youngelefiku123@gmail.com', '08061382683', 'Aso rock villa, Abuja', 'active', 'NULL', '0', '2020-06-26 09:07:36');
+(4, '26062020100736', 'Elefiku Young', '4adf7d6eebb0266197b2d52a6273865b', 'youngelefiku123@gmail.com', '08061382683', 'Aso rock villa, Abuja', 'active', NULL, '0', '2020-06-26 09:07:36');
 
 -- --------------------------------------------------------
 
@@ -795,7 +860,8 @@ INSERT INTO `sub_categories` (`id`, `dcategory`, `name`, `status`, `created_at`,
 (26, 'Cameras &amp; Photos', 'Camcorders', 'inactive', '2020-11-18 09:19:35', '2020-11-18 08:19:35'),
 (27, 'Phones and Tablets', 'Mobile Phones', 'active', '2020-11-18 16:56:07', '2020-11-18 15:56:07'),
 (28, 'Phones and Tablets', 'Tablets', 'active', '2020-11-18 16:56:40', '2020-11-18 15:56:40'),
-(29, 'Electronics', 'Television and Video', 'active', '2020-11-23 12:57:11', '2020-11-23 11:57:11');
+(29, 'Electronics', 'Television and Video', 'active', '2020-11-23 12:57:11', '2020-11-23 11:57:11'),
+(30, '', 'Young Elefiku', 'active', '2020-11-25 13:46:18', '2020-11-25 12:46:18');
 
 -- --------------------------------------------------------
 
@@ -1099,12 +1165,15 @@ CREATE TABLE `_security` (
   `id` int(4) NOT NULL,
   `userid` varchar(20) DEFAULT NULL,
   `email` varchar(60) NOT NULL,
+  `dname` varchar(100) DEFAULT NULL,
   `uname` varchar(60) NOT NULL,
   `pword` varchar(60) NOT NULL,
   `dcompany` varchar(250) NOT NULL,
   `drank` varchar(20) NOT NULL DEFAULT 'admin',
   `address` varchar(250) NOT NULL,
+  `dlocation` varchar(150) DEFAULT NULL,
   `dphone` varchar(30) NOT NULL,
+  `dwallet` varchar(20) DEFAULT '0',
   `dphone2` varchar(30) NOT NULL,
   `demail` varchar(60) NOT NULL,
   `dwebsite` varchar(120) NOT NULL,
@@ -1123,17 +1192,25 @@ CREATE TABLE `_security` (
   `status` varchar(30) NOT NULL DEFAULT 'offline',
   `dprivilege` text NOT NULL,
   `dstatus` varchar(10) NOT NULL DEFAULT 'unban',
-  `privilege` varchar(10) DEFAULT NULL
+  `privilege` varchar(10) DEFAULT NULL,
+  `dbank` varchar(30) DEFAULT NULL,
+  `dacc_name` varchar(60) DEFAULT NULL,
+  `dacc_number` varchar(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `_security`
 --
 
-INSERT INTO `_security` (`id`, `userid`, `email`, `uname`, `pword`, `dcompany`, `drank`, `address`, `dphone`, `dphone2`, `demail`, `dwebsite`, `icurrency`, `aboutus`, `dterms`, `dservices`, `dlogo`, `dtitle`, `social_fb`, `social_tw`, `social_lk`, `social_gp`, `social_in`, `social_you`, `status`, `dprivilege`, `dstatus`, `privilege`) VALUES
-(1, '91234567899834', 'admin@admin.com', 'admin : Blaise Autocare', '21232f297a57a5a743894a0e4a801fc3', 'Universal Electronics', 'admin', 'No 1 Aso rock villa, Garriki Abuja', '+2347083333777', '', 'uiversal@gmail.com', 'www.electronics.com', 'â‚¦', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut\r\n									purus fermentum, ac pretium nibh facilisis. Vivamus venenatis viverra iaculis.\r\n									Suspendisse tempor orci non sapien ullamcorper dapibus. Suspendisse at velit diam.\r\n									Donec pharetra nec enim blandit vulputate. Suspendisse potenti. Pellentesque et\r\n									molestie ante. In feugiat ante vitae ultricies malesuada.</p>', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut\r\n									purus fermentum, ac pretium nibh facilisis. Vivamus venenatis viverra iaculis.\r\n									Suspendisse tempor orci non sapien ullamcorper dapibus. Suspendisse at velit diam.\r\n									Donec pharetra nec enim blandit vulputate. Suspendisse potenti. Pellentesque et\r\n									molestie ante. In feugiat ante vitae ultricies malesuada.</p>', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut\r\n									purus fermentum, ac pretium nibh facilisis. Vivamus venenatis viverra iaculis.\r\n									Suspendisse tempor orci non sapien ullamcorper dapibus. Suspendisse at velit diam.\r\n									Donec pharetra nec enim blandit vulputate. Suspendisse potenti. Pellentesque et\r\n									molestie ante. In feugiat ante vitae ultricies malesuada.</p>', 'default.png', 'Universal :: Home :: Electronics', 'http://www.facebook.com/', '#', '', '#', '#', '', 'offline', '', 'unban', 'admin'),
-(3, '05062020122454', 'youngelefiku443@gmail.com', 'Elefiku Young', '4adf7d6eebb0266197b2d52a6273865b', '', 'admin', '', '08061382683', '', '', '', '&pound;', '', '', '', 'default.png', 'My Shopping Cart ', '#', '#', '#', '#', '#', '', 'offline', 'Product,Orders,Subscription,Category,Product,Withdrawals,Star Rating,', 'unban', 'staff'),
-(6, '201120035323502137', 'isaacnewton@gmail.com', 'Isaac Newton', '84311803c723cad9fcda143909218a89', 'IsaacNewton Ltd', 'seller', '', '08061234567', '', '', '', '&pound;', '', '', '', 'default.png', 'My Shopping Cart ', '#', '#', '#', '#', '#', '', 'offline', 'Product,', 'unban', 'staff');
+INSERT INTO `_security` (`id`, `userid`, `email`, `dname`, `uname`, `pword`, `dcompany`, `drank`, `address`, `dlocation`, `dphone`, `dwallet`, `dphone2`, `demail`, `dwebsite`, `icurrency`, `aboutus`, `dterms`, `dservices`, `dlogo`, `dtitle`, `social_fb`, `social_tw`, `social_lk`, `social_gp`, `social_in`, `social_you`, `status`, `dprivilege`, `dstatus`, `privilege`, `dbank`, `dacc_name`, `dacc_number`) VALUES
+(1, '91234567899834', 'admin@admin.com', 'Electronics', 'admin :  Electrons', '21232f297a57a5a743894a0e4a801fc3', 'Universal Electronics', 'admin', 'No 1 Aso rock villa, Garriki Abuja', NULL, '+2347083333777', '3920500', '', 'electron@gmail.com', 'www.electrons.com', 'â‚¦', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut\r\n									purus fermentum, ac pretium nibh facilisis. Vivamus venenatis viverra iaculis.\r\n									Suspendisse tempor orci non sapien ullamcorper dapibus. Suspendisse at velit diam.\r\n									Donec pharetra nec enim blandit vulputate. Suspendisse potenti. Pellentesque et\r\n									molestie ante. In feugiat ante vitae ultricies malesuada.</p>', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut\r\n									purus fermentum, ac pretium nibh facilisis. Vivamus venenatis viverra iaculis.\r\n									Suspendisse tempor orci non sapien ullamcorper dapibus. Suspendisse at velit diam.\r\n									Donec pharetra nec enim blandit vulputate. Suspendisse potenti. Pellentesque et\r\n									molestie ante. In feugiat ante vitae ultricies malesuada.</p>', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut\r\n									purus fermentum, ac pretium nibh facilisis. Vivamus venenatis viverra iaculis.\r\n									Suspendisse tempor orci non sapien ullamcorper dapibus. Suspendisse at velit diam.\r\n									Donec pharetra nec enim blandit vulputate. Suspendisse potenti. Pellentesque et\r\n									molestie ante. In feugiat ante vitae ultricies malesuada.</p>', 'default.png', 'Electron :: Home', 'http://www.facebook.com/', '#', '', '#', '#', '', 'offline', '', 'unban', 'admin', NULL, NULL, NULL),
+(3, '05062020122454', 'youngelefiku443@gmail.com', NULL, 'Elefiku Young', '4adf7d6eebb0266197b2d52a6273865b', '', 'admin', '', NULL, '08061382683', '0', '', '', '', '&pound;', '', '', '', 'default.png', 'My Shopping Cart ', '#', '#', '#', '#', '#', '', 'offline', 'Product,Orders,Subscription,Category,Product,Withdrawals,Star Rating,', 'unban', 'staff', NULL, NULL, NULL),
+(6, '201120035323502137', 'isaacnewton@gmail.com', NULL, 'Isaac Newton', '84311803c723cad9fcda143909218a89', 'IsaacNewton Ltd', 'seller', 'No 1 Aso rock villa, Garriki Abuja', NULL, '08061234567', '761000', '', '', '', '&pound;', '', '', '', 'default.png', 'My Shopping Cart ', '#', '#', '#', '#', '#', '', 'offline', 'Product,Orders', 'unban', 'staff', NULL, NULL, NULL),
+(7, '201125014757510483', 'dyseatech@gmail.com', NULL, 'Young Elefiku', '166f6c0f049be72814f68dfb8a0e44a0', 'DyseaTech', 'seller', 'No. 1, Aso rock villa, Abuja', NULL, '09098520438', '0', '', '', '', '&pound;', '', '', '', 'default.png', 'My Shopping Cart ', '#', '#', '#', '#', '#', '', 'offline', 'Product,Orders', 'unban', 'staff', NULL, NULL, NULL),
+(9, '201201033434497519', 'youngadeyemi@gmail.com', NULL, 'Young Adeyemi', 'f6182f0359f72aae12fb90d305ccf9eb', '', 'agent', 'Aso rock', 'Abule Egba', '08028378784', '0', '', '', '', '&pound;', '', '', '', 'default.png', 'My Shopping Cart ', '#', '#', '#', '#', '#', '', 'offline', 'Orders', 'unban', 'staff', NULL, 'Young Elefiku', '1203948590'),
+(10, '201201033829886558', 'tundeadeyemi@admin.com', NULL, 'Tunde Adeyemi', '8561f4eacced64527e6a195af846c2ae', '', 'agent', 'Aso rock', 'Ogba', '09098787653', '0', '', '', '', '&pound;', '', '', '', 'default.png', 'My Shopping Cart ', '#', '#', '#', '#', '#', '', 'offline', 'Orders', 'unban', 'staff', NULL, NULL, NULL),
+(11, '201202011622106940', 'femi@gmail.com', NULL, 'Femi Fagbemi', '5c8e82f0bdac09f37b0111c79f1fe0fa', '', 'agent', 'Aso Rock', 'Yaba Area', '07098765782', '0', '', '', '', '&pound;', '', '', '', 'default.png', 'My Shopping Cart ', '#', '#', '#', '#', '#', '', 'offline', 'Orders', 'unban', 'staff', NULL, NULL, NULL),
+(12, '201203031508784570', 'babafashola@gmail.com', NULL, 'Babatunde Fashola', '21661093e56e24cd60b10092005c4ac7', '', 'agent', 'Toyin ni', '4 Toyin Street Ikeja', '09098986758', '0', '', '', '', '&pound;', '', '', '', 'default.png', 'My Shopping Cart ', '#', '#', '#', '#', '#', '', 'offline', 'Orders', 'unban', 'staff', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1233,6 +1310,12 @@ ALTER TABLE `dtracker`
 -- Indexes for table `dwishlist`
 --
 ALTER TABLE `dwishlist`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dwithdrawal`
+--
+ALTER TABLE `dwithdrawal`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1376,7 +1459,7 @@ ALTER TABLE `dblog`
 -- AUTO_INCREMENT for table `dcart`
 --
 ALTER TABLE `dcart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `dcart_holder`
@@ -1412,7 +1495,7 @@ ALTER TABLE `drating`
 -- AUTO_INCREMENT for table `dship_address`
 --
 ALTER TABLE `dship_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `dslide`
@@ -1430,7 +1513,7 @@ ALTER TABLE `dsub`
 -- AUTO_INCREMENT for table `dtracker`
 --
 ALTER TABLE `dtracker`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `dwishlist`
@@ -1439,10 +1522,16 @@ ALTER TABLE `dwishlist`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `dwithdrawal`
+--
+ALTER TABLE `dwithdrawal`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -1478,7 +1567,7 @@ ALTER TABLE `sub`
 -- AUTO_INCREMENT for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `_ads_run`
@@ -1538,7 +1627,7 @@ ALTER TABLE `_register`
 -- AUTO_INCREMENT for table `_security`
 --
 ALTER TABLE `_security`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

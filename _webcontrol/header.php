@@ -19,7 +19,7 @@ $_GET['page']=(isset($_GET['page']) && !empty($_GET['page']) && is_numeric($_GET
  ?>
 <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
 
-    <a class="navbar-brand mr-1" href="index">Universal Electronics</a>
+    <a class="navbar-brand mr-1" href="index">Electrons</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0 " id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>

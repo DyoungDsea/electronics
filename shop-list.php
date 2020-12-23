@@ -352,7 +352,7 @@
 						</div>
 	
 						<div class="product-card__image">
-							<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>">
+							<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>&category=<?php echo $row['dcategory']; ?>">
 								<img src="_product_images/<?php echo $row['dimg1']; ?>" alt="">
 							</a>
 							
@@ -372,7 +372,7 @@
 								<div class="tag-badge tag-badge--hot">hot</div>
 								<?php } ?>
 								</div>
-								<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>"><?php echo $row['dpname']; ?></a>
+								<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>&category=<?php echo $row['dcategory']; ?>"><?php echo $row['dpname']; ?></a>
 							</div>
 						</div>
 

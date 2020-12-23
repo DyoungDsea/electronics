@@ -1,7 +1,7 @@
  <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Universal Electronics &copy; <?php echo date("Y"); ?></span>
+            <span>Electrons &copy; <?php echo date("Y"); ?></span>
           </div>
         </div>
       </footer>

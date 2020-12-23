@@ -125,6 +125,9 @@ $message = '
 <body>
 
 <div class="box">
+<center>
+<img src="../images/logo.png" style="max-width: 50%;" alt="Logo">
+</center>
 <div class="box-header">
   <ul class="list">
       <li> <a href="shop-list?dcat=Electronics">Electronics</a> </li>
