@@ -7,7 +7,8 @@
   <link href="css/sb-admin.css" rel="stylesheet">
   <link href="../css/sweetalert2.min.css" rel="stylesheet">
   <link href="../css/toastr.min.css" rel="stylesheet">
-  <link rel="icon" href="../assets/images/slider/logow.png">
+<link rel="icon" type="image/png" href="../images/favi.gif">  
+  <!-- <link rel="icon" href="../assets/images/slider/logow.png"> -->
   <link rel="stylesheet" href="../datepicker/jquery-ui.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
   <!-- <link rel="stylesheet" type="text/css" href="DataTables/css/dataTables.bootstrap4.min.css"/> -->

@@ -33,6 +33,12 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $conn->query("DELETE FROM _security WHERE userid='$id'");
     }
 
+    if(isset($_POST['Message']) AND $_POST['Message']=="doMeFore"){
+        
+        $store = $conn->real_escape_string($_POST['valueA']);
+        $id = $conn->real_escape_string($_POST['id']);
+        $conn->query("UPDATE charge SET dstore='$store' WHERE id='$id'");
+    }
     
     if(isset($_POST['Message']) AND $_POST['Message']=="markProcess"){
         $order = $_POST['id'];
@@ -97,6 +103,55 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         }
 
     }
+
+
+    if(isset($_POST['Message']) AND $_POST['Message']=="penOrders"){
+        $order = $_POST['id'];
+        $row = $_POST['valueA'];
+        $storeId = '';
+        $subject="Your $namew Order $order has been mark as paid. ";
+            
+        $message='Thank you for shopping on '.$namew.'! Your order '.$order.' has been successfully mark as paid.'. "\r\n";
+
+        $message .='It will be packaged and shipped as soon as possible. '. "\r\n";
+        $message .='You will receive a notification from us.'. "\r\n";
+        $message .='Thank you for shopping on '.$namew.'.'. "\r\n";
+
+        $message .='Please note:';
+        $message .='If you ordered for multiple items, you may receive them on different days. This is because they are sold by '. "\r\n";
+        $message .='different sellers on our platform and we want to make each item available to you as soon as possible after receiving it.
+        '. "\r\n";
+        // markResult($storeId, $order, $staff_id, $date, $message, $subject, $namew, $dcomm_email);
+        $up = $conn->query("UPDATE dcart SET dpayment_status='paid', dorder_status='pending' WHERE orderid='$order' AND id='$row' ");
+        // Always set content-type when sending HTML email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        // More headers
+        $headers .= 'From: '.$namew.'<'.$dcomm_email.'>' . "\r\n";
+        // $headers .= 'Cc: myboss@example.com' . "\r\n";
+        // $messageToSend = messageToUsers($order, '', $name, $message, $phone, $address);
+        // mail($email,$subject,$messageToSend,$headers);
+        if($up){
+            //find the price and update store wallet
+            $cat = $conn->query("SELECT * FROM dcart WHERE orderid='$order' AND id='$row' ");
+            if($cat->num_rows>0){
+                while($rop=$cat->fetch_assoc()){
+                    $amount = (Int)$rop['dtotal'];
+                    $store_id=$rop['dstore_id'];
+                    $stor = $conn->query("SELECT dwallet FROM _security WHERE userid='$store_id'");
+                    if($stor->num_rows>0){
+                        $row = $stor->fetch_assoc();
+                        $wall = (Int)$row['dwallet'];
+                        $total = $amount + $wall;//total amount to pay the store
+                        $conn->query("UPDATE _security SET dwallet='$total' WHERE userid='$store_id'");
+                    }
+                }
+
+            }
+        }
+
+    }
+
 
 
     if(isset($_POST['Message']) AND $_POST['Message']=="markShip"){

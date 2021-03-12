@@ -119,7 +119,7 @@ if($site->num_rows>=1){
    
       
     <td>
-<img src="../_brands_images/<?php echo $row['img']; ?>" style="height:50px;width:50px;" alt=""></td>
+<img src="../_brands_images/<?php echo $row['img']; ?>.jpg" style="height:50px;width:50px;" alt=""></td>
 <td><?php echo $row['dcategory']; ?></td>
 <td><?php echo $row['name']; ?></td>
 <td>

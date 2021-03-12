@@ -106,8 +106,8 @@
                                             <span class="badge badge-warning"><?php echo ucfirst($status) ?></span> 
                                             <?php }elseif($status=='returned' || $status=='cancelled'){ ?>
                                             <span class="badge badge-danger"><?php echo ucfirst($status) ?></span> 
-                                            <?php } ?>
-                                            
+                                            <?php }?>|
+                                            <b>Payment Status:  </b> <span class="badge badge-info"><?php echo ucfirst($payment); ?></span> 
                                              </p>
                                              <hr>
                                              <div class="row">
@@ -123,10 +123,13 @@
                                                 <?php // } ?>
                                                 <?php if($status !='returned' AND $status!='cancelled'){ //echo $status?>
                                                 <button class="btn btn-sm btn-danger" id="corders" rowId="<?php echo $row['id']; ?>" orderId="<?php echo $_GET['orderid']; ?>">Mark as Cancelled</button>
-                                                <?php } ?>
+                                                <?php }  
+                                            if($payment=='pending'){ ?>
+                                              <button class="btn btn-sm btn-warning text-white" id="penOrders" rowId="<?php echo $row['id']; ?>" orderId="<?php echo $_GET['orderid']; ?>">Mark as Paid</button>
+                                              <?php } ?>
                                               </div>
                                               <div class="col-md-4 text-center">
-                                              <button id="" type="button" class="btn btn-danger btn-sm"> <i class="fa fa-print"></i> Print</button>
+                                              <!-- <button id="" type="button" class="btn btn-danger btn-sm"> <i class="fa fa-print"></i> Print</button> -->
                                               </div>
                                              </div>
                                            
@@ -157,13 +160,19 @@
                                             </div>
                                             <div class="col-md-5 pl-3">
                                                 <p class="pl-3">
-                                                <?php if($transaction=='returned' || $transaction=='cancelled' ){?>
+                                                <?php if($transaction=='returned' || $transaction=='cancelled'){?>
                                                 <b>Transaction Status: </b>  <?php echo ucfirst($status); ?> 
-                                                <?php }else{?>
+                                                <?php }else{
+                                                  if($payment=="pending" ){?>
+                                                    <p>
+                                                    <b>Payment Status:  </b> <?php echo ucfirst($payment); ?> <br>
+                                                    </p>
+                                                 <?php }else{
+                                                  ?>
                                                 <p>
                                                 <b>Payment Status:  </b> <?php echo ucfirst($payment); ?> <span class="text-success" style="font-size:20px"> &#10004;</span><br>
                                                 </p>
-                                                <?php }?>
+                                                <?php } }?>
                                                 </p>
                                             
                                             </div>

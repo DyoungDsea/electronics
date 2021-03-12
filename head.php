@@ -24,7 +24,7 @@ require 'star-rating.php';
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="format-detection" content="telephone=no">
-<title>Home Two — Red Parts </title>
+<title>Home Of Electronics </title>
 
 <link rel="icon" type="image/png" href="images/favi.gif">
 <!-- fonts -->
@@ -43,6 +43,9 @@ require 'star-rating.php';
 <link rel="stylesheet" href="vendor/select2/css/select2.min.css">
 
 <link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet" href="css/sweetalert2.min.css">
+<link rel="stylesheet" href="css/toastr.min.css">
 
 <link rel="stylesheet" href="css/style.header-classic-variant-one.css" media="(min-width: 1200px)">
 

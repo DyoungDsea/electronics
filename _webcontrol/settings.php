@@ -19,7 +19,7 @@
   display:none;
 }
 
-#doMe:hover, #soMe:hover{
+#doMe:hover, #soMe:hover, #doMeFore:hover{
   color:blue;
   cursor:pointer;
 }
@@ -51,7 +51,7 @@
       <div class="row my-3">
         <div class="col-md-4">
         <?php $ree = $conn->query("SELECT * FROM dpercent ")->fetch_assoc(); ?>
-        <p id="soMe">Referral Percentage: <?php echo number_format($ree['reef']); ?>% &nbsp;&nbsp;   <i class="fa fa-edit text-primary" title="Click here"></i> </p>
+        <p id="soMe">Referral Percentage :: <?php echo number_format($ree['reef']); ?>% &nbsp;&nbsp;   <i class="fa fa-edit text-primary" title="Click here"></i> </p>
         <p>            
             <form class="form-inline"  action="reef" method="post"  id="ree" style="width:60%">
               <input type="text" class="form-control mb-2 mr-sm-2 form-control-sm" required  value="<?php echo $ree['reef']; ?>" name="fees">
@@ -61,7 +61,7 @@
         </div>
         <div class="col-md-4">
         <?php $fee = $conn->query("SELECT * FROM charge ")->fetch_assoc(); ?>
-          <p class="" id="doMe">Withdrawal Limit:: &#8358;<?php echo number_format($fee['fees']); ?> &nbsp;&nbsp;  <i class="fa fa-edit text-primary" title="Click here"></i> </p>
+          <p class="" id="doMe">Withdrawal Limit :: &#8358;<?php echo number_format($fee['fees']); ?> &nbsp;&nbsp;  <i class="fa fa-edit text-primary" title="Click here"></i> </p>
           <p>            
             <form class="form-inline"  action="fee" method="post"  id="fee" style="width:60%">
               <input type="text" class="form-control mb-2 mr-sm-2 form-control-sm" required  value="<?php echo $fee['fees']; ?>" name="fees">
@@ -69,6 +69,13 @@
             </form>
           </p>
         </div>
+
+        <div class="col-md-4">
+        <?php $fee = $conn->query("SELECT * FROM charge ")->fetch_assoc(); ?>
+          <p class="" id="doMeFore" status='<?php echo $fee['dstore']; ?>'>Create Store :: Status:: <?php if($fee['dstore']=="yes"){ echo "ON"; }else{ echo "OFF"; } ?> &nbsp;&nbsp;  <i class="fa fa-edit text-primary" title="Click here"></i> </p>          
+        </div>
+
+
       </div>
 
  <!-- DataTables Example -->
@@ -203,7 +210,7 @@ while($row=$site->fetch_assoc()){ ?>
     $site=$conn->query("select * from `blaise_set`");
     while($row=$site->fetch_assoc()){ ?>
   <div class="modal fade" id="edited<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5><?php echo ucwords($row['dtitle']); ?> Setting</h5>

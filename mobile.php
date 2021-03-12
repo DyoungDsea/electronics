@@ -114,7 +114,9 @@
 <li data-mobile-menu-item><a href="shop-list" class="highlights" data-mobile-menu-trigger>All Products</a></li>
 <li data-mobile-menu-item><a href="contact" class="highlights" data-mobile-menu-trigger>Help</a></li>
 <li data-mobile-menu-item><a href="track-order" class="highlights" data-mobile-menu-trigger>Track Order</a></li>
-<li data-mobile-menu-item><a href="new-store" class="highlights" data-mobile-menu-trigger>Create Store</a></li>
+<?php $fee = $conn->query("SELECT * FROM charge ")->fetch_assoc(); if($fee['dstore']=='yes'){ ?>
+	<li data-mobile-menu-item><a href="new-store" class="highlights" data-mobile-menu-trigger>Create Store</a></li>
+<?php } ?>
 </ul>
 
 <div class="mobile-menu__spring">

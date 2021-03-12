@@ -25,7 +25,7 @@ $row=$queryz->fetch_assoc();
     <input type="hidden" name="oldsecond" value="<?php echo $row['dimg2']; ?>">    
     </td>
     <td style="width:50px;">
-    <img style="height:100px;width:100px;" src="../_product_images/<?php echo $row['dimg2']; ?>" alt="">
+    <img style="height:100px;width:100px;" src="../_product_images/<?php echo $row['dimg2']; ?>.jpg" alt="">
     </td>
 
     </tr>
@@ -36,7 +36,7 @@ $row=$queryz->fetch_assoc();
     <input type="hidden" name="oldthird" value="<?php echo $row['dimg3']; ?>">    
     </td>
     <td style="width:50px;">
-    <img style="height:100px;width:100px;" src="../_product_images/<?php echo $row['dimg3']; ?>" alt="">
+    <img style="height:100px;width:100px;" src="../_product_images/<?php echo $row['dimg3']; ?>.jpg" alt="">
     </td>
 
     </tr>
@@ -48,7 +48,7 @@ $row=$queryz->fetch_assoc();
     <input type="hidden" name="oldlast" value="<?php echo $row['dimg4']; ?>">    
     </td>
     <td style="width:50px;">
-    <img style="height:100px;width:100px;" src="../_product_images/<?php echo $row['dimg4']; ?>" alt="">
+    <img style="height:100px;width:100px;" src="../_product_images/<?php echo $row['dimg4']; ?>.jpg" alt="">
     </td>
 
     </tr>

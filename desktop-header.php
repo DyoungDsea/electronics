@@ -158,7 +158,9 @@
     <li class="main-menu__item"><a href="about-us" class="main-menu__link" >About Us</a></li>
     <li class="main-menu__item"><a href="contact-us" class="main-menu__link" >Help</a></li>
     <li class="main-menu__item"><a href="track-order" class="main-menu__link" >Track order</a></li>
+    <?php $fee = $conn->query("SELECT * FROM charge ")->fetch_assoc(); if($fee['dstore']=='yes'){ ?>
     <li class="main-menu__item"><a href="new-store" class="main-menu__link" >Create Store</a></li>
+    <?php } ?>
 </ul>
 </div>
 </div>

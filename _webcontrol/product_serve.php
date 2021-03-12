@@ -26,22 +26,22 @@ if(isset($_POST['id'])){
 
 <div class="carousel-inner" role="listbox">
   <div class="carousel-item  active">
-    <img src="../_product_images/<?php echo $row['dimg1']; ?>">
+    <img src="../_product_images/<?php echo $row['dimg1']; ?>.jpg">
   </div>
 <?php if($row['dimg2'] !=''): ?>
   <div class="carousel-item  ">
-    <img src="../_product_images/<?php echo $row['dimg2']; ?>">
+    <img src="../_product_images/<?php echo $row['dimg2']; ?>.jpg">
   </div>
 <?php endif; ?>
 <?php if($row['dimg2'] !=''): ?>
   <div class="carousel-item  ">
-    <img src="../_product_images/<?php echo $row['dimg3']; ?>">
+    <img src="../_product_images/<?php echo $row['dimg3']; ?>.jpg">
   </div>
 <?php endif; ?>
 
 <?php if($row['dimg4'] !=''): ?>
   <div class="carousel-item  ">
-    <img src="../_product_images/<?php echo $row['dimg4']; ?>">
+    <img src="../_product_images/<?php echo $row['dimg4']; ?>.jpg">
   </div>
 <?php endif; ?>
 </div>

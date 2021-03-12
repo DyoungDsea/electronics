@@ -28,23 +28,24 @@ ini_set('session.gc_maxlifetime', 7200);
 					<div class="post-view__body">
 						<div class="post-view__item post-view__item-post">
 							<div class="post-view__card post">
-								<div class="post__body typography text-center">
+								<div class="post__body typography text-centers">
 								<!-- <h1 class="document__title dodo" style="margin-bottom:0px!important;">Terms And Conditions</h1>
                                 <h2></h2> -->
 								
 								<?php 
 								$go = $conn->query("SELECT * FROM blaise_set WHERE bid='76718909823432'");
 									$row=$go->fetch_assoc();
-									if($row['dimg']!=''){
+									if($row['dimg']==''){
 										?>								
 										<figure><img src="_slide_images/<?php echo $row['dimg']; ?> " alt=""></figure>
 											<?php }else{?>
-												<figure><img src="images/pic2.jpg" alt=""></figure>
+												<!-- <figure><img src="images/pic2.jpg" alt=""></figure> -->
 										<?php	} ?>
 										<br>
 										<?php 
 										echo $row['ddesc'];
 										 ?>
+										
                                 
 </div>
 </div>
@@ -62,7 +63,7 @@ ini_set('session.gc_maxlifetime', 7200);
 		
 			
 
-	<?php include("block2.php"); ?>
+	<?php //include("block2.php"); ?>
 		<?php include("footer.php"); ?>
 	</div><!-- mobile-menu / end -->
 	<?php include("mobile-header2.php"); ?>

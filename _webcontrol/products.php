@@ -89,7 +89,7 @@ function clean_reals($value){
             <i class="fas fa-table"></i>
             Manage Products <span class="text-danger"></span></div>
           <div class="card-body">
-            <div class="table-responsive" style="max-height: 300px;">
+            <div class="table-responsive" style="min-height: 300px;">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <style>
                   tr,th,td{
@@ -135,7 +135,7 @@ if($r['drank']=="seller"){
 if($site->num_rows>=1){
   while($row=$site->fetch_assoc()){ ?>
     <tr>
-    <td><img style="height:50px;width:50px;" src="../_product_images/<?php echo $row['dimg1']; ?>" alt=""></td>
+    <td><img style="height:50px;width:50px;" src="../_product_images/<?php echo $row['dimg1']; ?>.jpg" alt=""></td>
     <td><?php echo $row['dpname']; ?></td>
     <td title="<?php echo remove_tags($row['dpdesc']); ?>"><?php echo substr(remove_tags($row['dpdesc']),0,30); ?>....</td>
     <td>&#8358;<?php echo number_format($row['dprice'],2); ?></td>

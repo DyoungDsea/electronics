@@ -102,7 +102,7 @@
 					<div class="container">
 						<div class="site-footer__bottom-row">
 							<div class="site-footer__copyright">
-							<p class="copyright">Copyright <?php echo date('Y'); ?> - Quick Enterprises. All rights reserved ... Website Design by <a href="http://www.luzoma.com" target="_blank">Luzoma Microsystems</a></p>
+							<p class="copyright">Copyright <?php echo date('Y'); ?>  All rights reserved ... Website Design by <a href="http://www.luzoma.com" target="_blank">Luzoma Microsystems</a></p>
 							</div>
 							<div class="site-footer__payments"><img src="images/payments.png" alt=""></div>
 						</div>

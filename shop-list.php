@@ -160,7 +160,7 @@
 			<div class="widget-products__image" style="max-width:40%">
 				<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>">
 				<!-- <img src="images/products/product-1-64x64.jpg" alt=""> -->
-				<img style="width:100%" src="_product_images/<?php echo $row['dimg1']; ?>" alt="">
+				<img style="width:100%" src="_product_images/<?php echo $row['dimg1']; ?>.jpg" alt="">
 				</a>
 			</div>
 			<div class="widget-products__info">
@@ -305,6 +305,14 @@
 				$startFrom = ($pn - 1) * $limit;
 				
 				$sql = $conn->query("SELECT * FROM products WHERE dcategory='$category' AND dsub_cat='$subcat' ORDER BY id DESC LIMIT $startFrom, $limit");
+			}elseif(isset($_GET['dcat'])){
+				$category = $_GET["dcat"];
+				$sqls = $conn->query("SELECT * FROM products WHERE dcategory='$category' ORDER BY id DESC ");
+				$totalRecords = $sqls->num_rows;
+				$totalPages = ceil($totalRecords / $limit);
+				$startFrom = ($pn - 1) * $limit;
+				
+				$sql = $conn->query("SELECT * FROM products WHERE dcategory='$category' ORDER BY id DESC LIMIT $startFrom, $limit");
 			}else{
 
 			$sqls = $conn->query("SELECT * FROM products ORDER BY id DESC ");
@@ -353,7 +361,7 @@
 	
 						<div class="product-card__image">
 							<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>&category=<?php echo $row['dcategory']; ?>">
-								<img src="_product_images/<?php echo $row['dimg1']; ?>" alt="">
+								<img src="_product_images/<?php echo $row['dimg1']; ?>.jpg" alt="">
 							</a>
 							
 						</div>

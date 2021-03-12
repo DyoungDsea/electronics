@@ -62,7 +62,7 @@ include 'track.php';
                                     ?>
 										<div class="col-md-4 col-lg-4 col-xl-4 bg-primarys">
 											<div class="img bg-dangers" style="width:100%; padding:10px">
-                                              <center>  <img style="max-width:45%; margin: 0 auto !important" src="_product_images/<?php echo $row['dimg'] ?>" alt="">
+                                              <center>  <img style="max-width:45%; margin: 0 auto !important" src="_product_images/<?php echo $row['dimg'] ?>.jpg" alt="">
                                               </center>
                                             </div>
                                             
@@ -78,13 +78,22 @@ include 'track.php';
                                             <?php if($status=='pending'){?>
                                             <span class="badge badge-primary"><?php echo ucfirst($status) ?></span> 
                                             <?php }elseif($status=='delivered'){ ?>
-                                            <span class="badge badge-info"><?php echo ucfirst($status) ?></span>
+                                            <span class="badge badge-info text-white"><?php echo ucfirst($status) ?></span>
                                             <?php }elseif($status=='dispatched'){ ?>
-                                            <span class="badge badge-warning"><?php echo ucfirst($status) ?></span> 
+                                            <span class="badge badge-warning text-white"><?php echo ucfirst($status) ?></span> 
                                             <?php }elseif($status=='returned' || $status=='cancelled'){ ?>
-                                            <span class="badge badge-danger"><?php echo ucfirst($status) ?></span> 
-                                            <?php } ?>
-                                            
+                                            <span class="badge badge-danger text-white"><?php echo ucfirst($status) ?></span> 
+                                            <?php } ?> 
+                                            <?php if($payment =='paid'){?>|
+                                            <b>Payment Status:  </b> <span class="badge badge-primary text-white"><?php echo ucfirst($payment); ?> </span>
+                                            <?php }elseif($payment =="cancelled"){ ?>|
+                                            <b>Payment Status:  </b> <span class="badge badge-danger text-white"><?php echo ucfirst($payment); ?> </span>
+                                            <?php }else{ ?>|
+                                            <b>Payment Status:  </b> <span class="badge badge-warning text-white"><?php echo ucfirst($payment); ?> </span>
+                                            <?php } 
+                                            if($payment_mth =='ondelivery'){?> <br>
+                                                <b>Method of Payment  </b> <span class="badge badge-success text-white"><?php echo ucfirst("Pay on delivery"); ?> </span>
+                                                <?php }?>
                                             <br>
                                             
                                              </p>
@@ -126,12 +135,15 @@ include 'track.php';
                                         if($payment_mth == "yespay"){ ?>
                                             
                                             <div class="ml-3">
+                                           
+                                            
                                             <p>Use the icon below to make payment</p>
                                         
                                             <form action="cart_pay-up.php" method="post">                                       
                                             <script src="https://js.paystack.co/v1/inline.js" data-key="pk_test_9ebb172d86972b4e6e8a4ad740e8fd5ca4a561c1" data-email="<?php echo $sl['demail'] ?>" data-amount="<?php echo $total_bill * 100; ?>" data-ref="<?php echo $transid; ?>"></script>
                                                         
                                             </form>
+                                            
                                             </div>
                                         <?php } ?>
                                         </div>

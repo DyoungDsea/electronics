@@ -49,7 +49,7 @@
 		
 			
 
-	<?php include("block2.php"); ?>
+	<?php //include("block2.php"); ?>
 		<?php include("footer.php"); ?>
 	</div><!-- mobile-menu / end -->
 	<?php include("mobile-header2.php"); ?>

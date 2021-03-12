@@ -35,8 +35,8 @@
                             </div>
                             <div class="profile-card__email bg-primarys" style=" text-align:center">
                                 Referral Link
-                                <a  href="http://blaisetyres.com?referral_id=<?php echo $sl['userid']; ?>">
-                                http://blaisetyres.com?referral_id=<?php echo $sl['userid']; ?>
+                                <a  href="https://electron-ng.com/?referral_id=<?php echo $sl['userid']; ?>">
+                                https://electron-ng.com/?referral_id=<?php echo $sl['userid']; ?>
                                 </a>
                             </div>
                             <div class="profile-card__edit">

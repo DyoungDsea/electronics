@@ -58,45 +58,9 @@
               </a>
             </div>
           </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-warning o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-list"></i>
-                </div>
-                <?php 
-                $skys =$conn->query("SELECT * FROM `dsub` WHERE dtrans_status ='completed' AND pstatus ='pending' ");
-                ?>
-                <div class="mr-5">(<?php echo $skys->num_rows; ?>) Pending Subscritpion</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="sub-fulfilled">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-success o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-shopping-cart"></i>
-                </div>
-                <?php 
-                $sky =$conn->query("SELECT * FROM `dcart` WHERE dorder_status ='pending' AND dpay_mth ='ondelivery' ");
-                ?>
-                <div class="mr-5">(<?php echo $sky->num_rows; ?>) Pay on delivery</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="pay-on-delivery">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
+          
+          
+          <!-- <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-danger o-hidden h-100">
               <div class="card-body">
                 <div class="card-body-icon">
@@ -111,7 +75,7 @@
                 </span>
               </a>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 

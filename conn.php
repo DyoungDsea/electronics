@@ -15,10 +15,15 @@ define('DB_ENGINE', "electronics");
 }
 else {
 define('DB_SERVER', "localhost");
-define('DB_USER', "tyrezghb_server");
-define('DB_PASSWORD', "blaiseautocare100@");
-define('DB_ENGINE', "tyrezghb_blaise");
+define('DB_USER', "elecjdbi_server");
+define('DB_PASSWORD', "@admin100@");
+define('DB_ENGINE', "elecjdbi_server");
 }
+ // User: elecjdbi_users
+
+  // Database: elecjdbi_database
+
+  // electron-ng.com100@
 
 $conn = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_ENGINE);
 
@@ -52,8 +57,8 @@ $sin=$irow['social_in'];
 $syt=$irow['social_gp'];
 $slk=$irow['social_lk'];
 $you=$irow['social_you'];
-$nname="blaisetyres";
-$next="blaisetyres.com";
+$nname="Electron";
+$next="electron-ng.com";
 $rand=date('his');
 }
 require("last_seen.php");
@@ -78,6 +83,9 @@ function findBaseName($data){
   }
 
 
+
+
+ 
   
 function messageToUsers($order, $rowId='', $username, $messageSend, $phone, $address){
   GLOBAL $conn;

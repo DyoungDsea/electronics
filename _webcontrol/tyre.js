@@ -109,9 +109,14 @@ $(document).ready(function(){
     $(document).on("click", "#corders", function(){
         var orderId = $(this).attr("orderId");
         var rowId = $(this).attr("rowId");
-        magicFunction('Mark as cancelled?', 'ajax-new', 'corders', 'order-view?orderid='+orderId, orderId, 'Returned!', rowId);
+        magicFunction('Mark as cancelled?', 'ajax-new', 'corders', 'order-view?orderid='+orderId, orderId, 'Cancelled!', rowId);
     })
 
+    $(document).on("click", "#penOrders", function(){
+        var orderId = $(this).attr("orderId");
+        var rowId = $(this).attr("rowId");
+        magicFunction('Mark as Paid?', 'ajax-new', 'penOrders', 'order-view?orderid='+orderId, orderId, 'Paid!', rowId);
+    })
 
 
     $(document).on("change", "#location", function(){
@@ -158,6 +163,21 @@ $(document).ready(function(){
             var vid = $(this).attr("vid");         
             var user = $(this).attr("user");     
             magicFunction('Mark as Paid?', 'ajax-new', 'Paid', '', vid, 'Paid!', user); 
+        })
+
+
+        $(document).on("click", "#doMeFore", function(){
+            var vid = 1;   var text, statusChange;  
+            var status = $(this).attr("status");  
+            if(status=='yes'){
+                text = "OFF";
+                statusChange = 'no';
+            }else{
+                text = "ON";
+                statusChange = 'yes';
+            }
+
+            magicFunction(text+' Create Store?', 'ajax-new', 'doMeFore', '', vid, 'Create store is '+text+'!', statusChange); 
         })
 
 

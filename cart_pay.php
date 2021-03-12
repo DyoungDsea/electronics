@@ -122,7 +122,7 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
                         if($user['drank']=="seller"){
                             $wallet = $user['dwallet'];
                             $sum = (Int)$wallet + (Int)$total;
-                        $conn->query("UPDATE _security SET dwallet='$sum' WHERE userid='$store'");
+                            $conn->query("UPDATE _security SET dwallet='$sum' WHERE userid='$store'");
                         }else{
                             $sql = $conn->query("SELECT * FROM _security WHERE userid='91234567899834'")->fetch_assoc();
                             $wallet = $sql['dwallet'];
@@ -155,6 +155,8 @@ $reep = $conn->query("SELECT * FROM dpercent ")->fetch_assoc();
 
         $_SESSION['msg']="Your payment was not successful!";
     }
+
+
 //unset pay reference
 unset($_SESSION['transid']);
 unset($_SESSION['budget']);
@@ -165,6 +167,6 @@ unset($_SESSION['costsx']);
 unset($_SESSION['name']);
 unset($_SESSION['email']);
 unset($_SESSION['Address']);
-//---------------
+
 header("location: account-direct-purchases");
 ?> 

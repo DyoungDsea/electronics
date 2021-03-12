@@ -76,7 +76,7 @@
                 ?>
                 <li class="block-brands__item">
                     <a href="shop-list?categorybr=<?php echo $cat['dcategory'] ?>&brand=<?php echo $cat['name'] ?>" class="block-brands__item-link">
-                        <img src="_brands_images/<?php echo $cat['img'] ?>" alt=""> 
+                        <img src="_brands_images/<?php echo $cat['img'] ?>.jpg" alt=""> 
                         <span class="block-brands__item-name"><?php echo $cat['name'] ?></span>
                     </a>
                 </li>
@@ -145,12 +145,12 @@
 
 <div class="category-card__content">
 
-<div class="category-card__image"><a href="#"><img src="images/categories/computer.jpg" alt=""></a>
+<div class="category-card__image"><a href="shop-list?dcat=Computer and Accessories"><img src="images/categories/computer.jpg" alt=""></a>
 </div>
 
 <div class="category-card__info">
 
-<div class="category-card__name"><a href="#">Computers And Accessories</a>
+<div class="category-card__name"><a href="shop-list?dcat=Computer and Accessories">Computers And Accessories</a>
 </div>
 <ul class="category-card__children">
 <li><a href="shop-list?dcat=Computer and Accessories&subcat=Desktop">Desktop</a></li>
@@ -175,12 +175,12 @@
 
 <div class="category-card__content">
 
-<div class="category-card__image"><a href="#"><img src="images/categories/elect3.jpg" alt=""></a>
+<div class="category-card__image"><a href="shop-list?dcat=Electronics"><img src="images/categories/elect3.jpg" alt=""></a>
 </div>
 
 <div class="category-card__info">
 
-<div class="category-card__name"><a href="#">Electronics</a>
+<div class="category-card__name"><a href="shop-list?dcat=Electronics">Electronics</a>
 </div>
 <ul class="category-card__children">
 <li><a href="shop-list?dcat=Electronics&subcat=Television and Video">Television and Video</a></li>
@@ -204,12 +204,12 @@
 
 <div class="category-card__content">
 
-<div class="category-card__image"><a href="#"><img src="images/categories/home.jpg" alt=""></a>
+<div class="category-card__image"><a href="shop-list?dcat=Home and Kitchen"><img src="images/categories/home.jpg" alt=""></a>
 </div>
 
 <div class="category-card__info">
 
-<div class="category-card__name"><a href="#">Home and Kitchen</a>
+<div class="category-card__name"><a href="shop-list?dcat=Home and Kitchen">Home and Kitchen</a>
 </div>
 <ul class="category-card__children">
 <li><a href="shop-list?dcat=Home and Kitchen&subcat=Air Conditioners and coolers">Air Conditioners and coolers</a></li>
@@ -369,10 +369,10 @@
 													<path d="M14,15h-4v-2h3v-3h2v4C15,14.6,14.6,15,14,15z M13,3h-3V1h4c0.6,0,1,0.4,1,1v4h-2V3z M6,3H3v3H1V2c0-0.6,0.4-1,1-1h4V3z M3,13h3v2H2c-0.6,0-1-0.4-1-1v-4h2V13z" /></svg>
 											</button> 
 											
-								<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>&category=<?php echo $row['dcategory']; ?>				</div>
+												</div>
 										<div class="product-card__image">
-										<a href="product-full?product_id=">
-										<img src="_product_images/<?php echo $row['dimg1']; ?>" alt="">
+										<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>&category=<?php echo $row['dcategory']; ?>">
+										<img src="_product_images/<?php echo $row['dimg1']; ?>.jpg" alt="">
 										</a>
 											<div
 												class="status-badge status-badge--style--success product-card__fit status-badge--has-icon status-badge--has-text">
@@ -451,35 +451,39 @@
 
 <div class="container">
 
-<div class="block-banners__list"><a href="#" class="block-banners__item block-banners__item--style--one">
+<div class="block-banners__list"><a href="shop-list?dcat=Electronics" class="block-banners__item block-banners__item--style--one">
 
-<span class="block-banners__item-image"><img src="images/banners/banner1.jpg" alt="">
+<span class="block-banners__item-image"><img src="images/banners/banner3.jpg" alt="">
 </span>
 
-<span class="block-banners__item-image block-banners__item-image--blur"><img src="images/banners/banner1.jpg" alt="">
+<span class="block-banners__item-image block-banners__item-image--blur"><img src="images/banners/banner3.jpg" alt="">
 </span>
 
-<span class="block-banners__item-title">Motor Oils
+<span class="block-banners__item-title">Home Electronics
 </span> 
 
-<span class="block-banners__item-details">Synthetic motor oil with free shipping
-<br>Friction free life guaranteed 
+<span class="block-banners__item-details">
+	Our home electronics is the best in town
+<br>We deliver at your door steps
 </span>
 
 <span class="block-banners__item-button btn btn-primary btn-sm">Shop Now 
-</span></a><a href="#" class="block-banners__item block-banners__item--style--two">
-
-<span class="block-banners__item-image"><img src="images/banners/banner2.jpg" alt="">
 </span>
 
-<span class="block-banners__item-image block-banners__item-image--blur"><img src="images/banners/banner2.jpg" alt="">
+</a>
+<a href="shop-list?dcat=Computer and Accessories" class="block-banners__item block-banners__item--style--two">
+
+<span class="block-banners__item-image"><img src="images/banners/ban.jpg" alt="">
 </span>
 
-<span class="block-banners__item-title">Save up to $40
+<span class="block-banners__item-image block-banners__item-image--blur"><img src="images/banners/ban.jpg" alt="">
+</span>
+
+<span class="block-banners__item-title">Save up to 10%
 </span> 
 
-<span class="block-banners__item-details">Luxurious interior part for real aesthetes
-<br>Leather, fabric, ivory and more. 
+<span class="block-banners__item-details">We are ready to make it up to you.
+<br>Save more money
 </span>
 
 <span class="block-banners__item-button btn btn-primary btn-sm">Shop Now
@@ -630,7 +634,7 @@
 													</div>
 											<div class="product-card__image">
 											<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>&category=<?php echo $row['dcategory']; ?>">
-													<img src="_product_images/<?php echo $row['dimg1']; ?>" alt="">
+													<img src="_product_images/<?php echo $row['dimg1']; ?>.jpg" alt="">
 												</a>
 												<div
 													class="status-badge status-badge--style--success product-card__fit status-badge--has-icon status-badge--has-text">
@@ -735,7 +739,7 @@
 								<div class="post-card">
 									<div class="post-card__image">
 										<a href="post-full-width?id=<?php echo $row['dblog_id'] ?>">
-											<img src="_slide_blog/<?php echo $row['dimg'] ?>" alt=""></a></div>
+											<img src="_slide_blog/<?php echo $row['dimg'] ?>.jpg" alt=""></a></div>
 									<div class="post-card__content">
 										
 										<div class="post-card__title">
@@ -789,7 +793,7 @@
 													<path d="M14,15h-4v-2h3v-3h2v4C15,14.6,14.6,15,14,15z M13,3h-3V1h4c0.6,0,1,0.4,1,1v4h-2V3z M6,3H3v3H1V2c0-0.6,0.4-1,1-1h4V3z M3,13h3v2H2c-0.6,0-1-0.4-1-1v-4h2V13z" /></svg></button></div>
 										<div class="product-card__image">
 												<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>&category=<?php echo $row['dcategory']; ?>">
-													<img src="_product_images/<?php echo $row['dimg1']; ?>" alt="">
+													<img src="_product_images/<?php echo $row['dimg1']; ?>.jpg" alt="">
 												</a>
 												</div>
 										<div class="product-card__info">
@@ -856,7 +860,7 @@
 													<path d="M14,15h-4v-2h3v-3h2v4C15,14.6,14.6,15,14,15z M13,3h-3V1h4c0.6,0,1,0.4,1,1v4h-2V3z M6,3H3v3H1V2c0-0.6,0.4-1,1-1h4V3z M3,13h3v2H2c-0.6,0-1-0.4-1-1v-4h2V13z" /></svg></button></div>
 										<div class="product-card__image">
 												<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>&category=<?php echo $row['dcategory']; ?>">
-													<img src="_product_images/<?php echo $row['dimg1']; ?>" alt="">
+													<img src="_product_images/<?php echo $row['dimg1']; ?>.jpg" alt="">
 												</a>
 												</div>
 										<div class="product-card__info">
@@ -922,7 +926,7 @@
 													<path d="M14,15h-4v-2h3v-3h2v4C15,14.6,14.6,15,14,15z M13,3h-3V1h4c0.6,0,1,0.4,1,1v4h-2V3z M6,3H3v3H1V2c0-0.6,0.4-1,1-1h4V3z M3,13h3v2H2c-0.6,0-1-0.4-1-1v-4h2V13z" /></svg></button></div>
 										<div class="product-card__image">
 												<a href="product-full?product_id=<?php echo $row['dpid']; ?>&product_name=<?php echo $row['dpname']; ?>&brand=<?php echo $row['dbrand']; ?>&category=<?php echo $row['dcategory']; ?>">
-													<img src="_product_images/<?php echo $row['dimg1']; ?>" alt="">
+													<img src="_product_images/<?php echo $row['dimg1']; ?>.jpg" alt="">
 												</a>
 												</div>
 										<div class="product-card__info">
@@ -1238,7 +1242,7 @@ if(isset($_SESSION['notification_session']) AND @$_SESSION['notification_session
 
         if($not['dimg']!=''){
         ?>			
-        <p> <img style="max-width:100%" src="_slide_blog/<?php echo $not['dimg']; ?>"> </p>
+        <p> <img style="max-width:100%" src="_slide_blog/<?php echo $not['dimg']; ?>.jpg"> </p>
         <?php } ?>
         <h4><?php echo $not['dtitle']; ?> </h4>
         <p>
